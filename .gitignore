@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Vite
+.vite/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor / IDE
+.idea/
+*.swp
+*.swo
+*~
+
+# Python (data/parsers)
+__pycache__/
+*.py[cod]
+*.pyo
+venv/
+.venv/
+.pytest_cache/
+.mypy_cache/
