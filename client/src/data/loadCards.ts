@@ -1,31 +1,70 @@
 import Papa from 'papaparse'
-import type { ActionCard } from '../types'
+import type { ActionCard, StrategyCard, CardItem } from '../types'
 
-const CSV_URL = '/action_cards.csv'
+const ACTION_CSV_URL = '/action_cards.csv'
+const STRATEGY_CSV_URL = '/strategy_cards.csv'
+
+function parseCsv<T>(url: string, mapRow: (row: Record<string, string>) => T): Promise<T[]> {
+  return fetch(url)
+    .then((res) => {
+      if (!res.ok) throw new Error(`Failed to load CSV: ${url} — ${res.status}`)
+      return res.text()
+    })
+    .then((text) => {
+      const parsed = Papa.parse<Record<string, string>>(text, {
+        header: true,
+        skipEmptyLines: true,
+      })
+      if (parsed.errors.length > 0) console.warn('CSV parse warnings:', parsed.errors)
+      return parsed.data.map(mapRow)
+    })
+}
 
 /**
- * Fetches the static CSV and parses it into typed ActionCard objects.
- * PapaParse returns string keys; we map to our strict interface.
+ * Fetches and parses action cards CSV into typed ActionCard[].
  */
 export async function loadActionCards(): Promise<ActionCard[]> {
-  const res = await fetch(CSV_URL)
-  if (!res.ok) throw new Error(`Failed to load CSV: ${res.status}`)
-  const text = await res.text()
-
-  const parsed = Papa.parse<Record<string, string>>(text, {
-    header: true,
-    skipEmptyLines: true,
-  })
-
-  if (parsed.errors.length > 0) {
-    console.warn('CSV parse warnings:', parsed.errors)
-  }
-
-  return parsed.data.map((row) => ({
+  return parseCsv(ACTION_CSV_URL, (row) => ({
     name: row.name ?? '',
     quantity: row.quantity ?? '',
     timing: row.timing ?? '',
     effect: row.effect ?? '',
     version: row.version ?? '',
   }))
+}
+
+/**
+ * Fetches and parses strategy cards CSV into typed StrategyCard[].
+ * CSV column is "initative"; we map to initiative.
+ */
+export async function loadStrategyCards(): Promise<StrategyCard[]> {
+  return parseCsv(STRATEGY_CSV_URL, (row) => ({
+    name: row.name ?? '',
+    initiative: row.initative ?? row.initiative ?? '',
+    primary: row.primary ?? '',
+    secondary: row.secondary ?? '',
+    color: row.color ?? '',
+    version: row.version ?? '',
+  }))
+}
+
+/**
+ * Loads both action and strategy cards and returns a combined CardItem[] for search/display.
+ */
+export async function loadAllCards(): Promise<CardItem[]> {
+  const [actionCards, strategyCards] = await Promise.all([
+    loadActionCards(),
+    loadStrategyCards(),
+  ])
+  const actionItems: CardItem[] = actionCards.map((c) => ({
+    type: 'action',
+    ...c,
+    searchText: [c.name, c.effect, c.timing, c.version].filter(Boolean).join(' '),
+  }))
+  const strategyItems: CardItem[] = strategyCards.map((c) => ({
+    type: 'strategy',
+    ...c,
+    searchText: [c.name, c.primary, c.secondary, c.color, c.version].filter(Boolean).join(' '),
+  }))
+  return [...actionItems, ...strategyItems]
 }

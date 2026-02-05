@@ -1,10 +1,15 @@
-import type { ActionCard } from '../types'
+import type { CardItem } from '../types'
 import { ResultRow } from './ResultRow'
 
 interface ResultsListProps {
-  cards: ActionCard[]
+  cards: CardItem[]
   loading?: boolean
   error?: string | null
+}
+
+function cardKey(card: CardItem, index: number): string {
+  if (card.type === 'action') return `action-${card.name}-${card.version}-${index}`
+  return `strategy-${card.name}-${card.version}-${card.initiative}-${index}`
 }
 
 export function ResultsList({ cards, loading, error }: ResultsListProps) {
@@ -19,8 +24,8 @@ export function ResultsList({ cards, loading, error }: ResultsListProps) {
   }
   return (
     <ul className="results-list" role="list">
-      {cards.map((card) => (
-        <li key={card.name} className="results-list__item">
+      {cards.map((card, i) => (
+        <li key={cardKey(card, i)} className="results-list__item">
           <ResultRow card={card} />
         </li>
       ))}

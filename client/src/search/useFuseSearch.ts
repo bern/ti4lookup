@@ -1,21 +1,18 @@
 import { useMemo, useState, useEffect } from 'react'
 import Fuse from 'fuse.js'
-import type { ActionCard } from '../types'
+import type { CardItem } from '../types'
 
 const MAX_RESULTS = 50
 const DEBOUNCE_MS = 50
 
 /**
- * Fuse.js options: prioritize name, then effect/timing/version.
- * Sensible fuzzy defaults: threshold 0.4, ignoreLocation false so exact field matches rank better.
+ * Fuse.js over combined action + strategy cards. Searches name and searchText.
  */
-function createFuse(cards: ActionCard[]): Fuse<ActionCard> {
+function createFuse(cards: CardItem[]): Fuse<CardItem> {
   return new Fuse(cards, {
     keys: [
       { name: 'name', weight: 0.5 },
-      { name: 'effect', weight: 0.25 },
-      { name: 'timing', weight: 0.15 },
-      { name: 'version', weight: 0.1 },
+      { name: 'searchText', weight: 0.5 },
     ],
     threshold: 0.4,
     ignoreLocation: false,
@@ -23,11 +20,11 @@ function createFuse(cards: ActionCard[]): Fuse<ActionCard> {
 }
 
 /** Sort cards by name (A–Z). */
-function sortByName(cards: ActionCard[]): ActionCard[] {
+function sortByName(cards: CardItem[]): CardItem[] {
   return [...cards].sort((a, b) => a.name.localeCompare(b.name))
 }
 
-export function useFuseSearch(cards: ActionCard[]) {
+export function useFuseSearch(cards: CardItem[]) {
   const [query, setQuery] = useState('')
   const [debouncedQuery, setDebouncedQuery] = useState('')
 

@@ -94,9 +94,23 @@ body {
   font-size: 1rem;
 }
 
-.result-row__version {
+.result-row__version,
+.result-row__meta {
   font-size: 0.75rem;
   color: #888;
+}
+
+.result-row__label {
+  margin: 0.5rem 0 0.15rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.result-row__effect--secondary {
+  margin-top: 0.15rem;
 }
 
 .result-row__timing {
