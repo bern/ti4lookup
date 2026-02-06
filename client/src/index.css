@@ -169,6 +169,12 @@ body {
   letter-spacing: 0.03em;
 }
 
+.section-title--sub {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: #555;
+}
+
 .recent-searches {
   margin-bottom: 1.5rem;
 }

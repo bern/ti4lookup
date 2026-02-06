@@ -1,6 +1,7 @@
+import { useMemo } from 'react'
 import { SearchInput } from '../components/SearchInput'
 import { ResultsList } from '../components/ResultsList'
-import { useFuseSearch } from '../search/useFuseSearch'
+import { useFuseSearch, sortByName } from '../search/useFuseSearch'
 import type { CardItem } from '../types'
 import type { CardType } from '../search/useFuseSearch'
 
@@ -31,6 +32,13 @@ export function CategoryView({ cards, category, onBack }: CategoryViewProps) {
     typeFilter: category,
   })
 
+  const publicByStage = useMemo(() => {
+    if (category !== 'public_objective') return null
+    const stage1 = sortByName(results.filter((c) => c.type === 'public_objective' && c.stage === '1'))
+    const stage2 = sortByName(results.filter((c) => c.type === 'public_objective' && c.stage === '2'))
+    return { stage1, stage2 }
+  }, [category, results])
+
   return (
     <div className="category-view">
       <div className="view-bar">
@@ -51,8 +59,31 @@ export function CategoryView({ cards, category, onBack }: CategoryViewProps) {
         />
       </div>
       <main className="category-view__main">
-        <h2 className="section-title">{CATEGORY_LABELS[category]}</h2>
-        <ResultsList cards={results} />
+        {publicByStage ? (
+          <>
+            <h2 className="section-title">{CATEGORY_LABELS[category]}</h2>
+            {publicByStage.stage1.length > 0 && (
+              <section className="results-section" aria-label="Stage 1">
+                <h3 className="section-title section-title--sub">Stage 1</h3>
+                <ResultsList cards={publicByStage.stage1} />
+              </section>
+            )}
+            {publicByStage.stage2.length > 0 && (
+              <section className="results-section" aria-label="Stage 2">
+                <h3 className="section-title section-title--sub">Stage 2</h3>
+                <ResultsList cards={publicByStage.stage2} />
+              </section>
+            )}
+            {publicByStage.stage1.length === 0 && publicByStage.stage2.length === 0 && (
+              <p className="results-message">No objectives found.</p>
+            )}
+          </>
+        ) : (
+          <>
+            <h2 className="section-title">{CATEGORY_LABELS[category]}</h2>
+            <ResultsList cards={results} />
+          </>
+        )}
       </main>
     </div>
   )
