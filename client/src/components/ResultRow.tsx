@@ -18,13 +18,15 @@ function getCardBgStyle(card: CardItem): { backgroundColor?: string } {
   return bg ? { backgroundColor: bg } : {}
 }
 
-/** If effect contains "FOR:" and "AGAINST:", return { forText, againstText }; otherwise null. */
-function parseForAgainst(effect: string): { forText: string; againstText: string } | null {
-  const forMatch = /FOR:\s*(.*?)\s*AGAINST:\s*(.*)/is.exec(effect)
-  if (!forMatch) return null
+/** If effect contains "FOR:" and "AGAINST:", return intro (if any), forText, againstText; otherwise null. */
+function parseForAgainst(effect: string): { introText: string; forText: string; againstText: string } | null {
+  const match = /^(.*?)\s*FOR:\s*(.*?)\s*AGAINST:\s*(.*)/is.exec(effect)
+  if (!match) return null
+  const introText = match[1].trim()
   return {
-    forText: forMatch[1].trim(),
-    againstText: forMatch[2].trim(),
+    introText,
+    forText: match[2].trim(),
+    againstText: match[3].trim(),
   }
 }
 
@@ -66,6 +68,9 @@ export function ResultRow({ card }: ResultRowProps) {
         </header>
         {forAgainst ? (
           <>
+            {forAgainst.introText ? (
+              <p className="result-row__effect">{forAgainst.introText}</p>
+            ) : null}
             <p className="result-row__label">For</p>
             <p className="result-row__effect">{forAgainst.forText}</p>
             <p className="result-row__label">Against</p>
