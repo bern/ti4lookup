@@ -1,8 +1,8 @@
-export type View = 'home' | 'search' | 'action' | 'agenda' | 'strategy'
+export type View = 'home' | 'search' | 'action' | 'agenda' | 'strategy' | 'public_objective' | 'secret_objective'
 
 interface HomeViewProps {
   onOpenSearch: () => void
-  onOpenCategory: (view: 'action' | 'agenda' | 'strategy') => void
+  onOpenCategory: (view: Exclude<View, 'home' | 'search'>) => void
 }
 
 export function HomeView({ onOpenSearch, onOpenCategory }: HomeViewProps) {
@@ -37,6 +37,20 @@ export function HomeView({ onOpenSearch, onOpenCategory }: HomeViewProps) {
           onClick={() => onOpenCategory('strategy')}
         >
           Strategy Cards
+        </button>
+        <button
+          type="button"
+          className="home-category-btn"
+          onClick={() => onOpenCategory('public_objective')}
+        >
+          Public Objectives
+        </button>
+        <button
+          type="button"
+          className="home-category-btn"
+          onClick={() => onOpenCategory('secret_objective')}
+        >
+          Secret Objectives
         </button>
       </nav>
     </div>

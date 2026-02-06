@@ -90,6 +90,18 @@ export function SearchView({
                 <ResultsList cards={partitioned.strategy} />
               </section>
             )}
+            {partitioned.public_objective.length > 0 && (
+              <section className="results-section" aria-label="Public Objectives">
+                <h2 className="section-title">Public Objectives</h2>
+                <ResultsList cards={partitioned.public_objective} />
+              </section>
+            )}
+            {partitioned.secret_objective.length > 0 && (
+              <section className="results-section" aria-label="Secret Objectives">
+                <h2 className="section-title">Secret Objectives</h2>
+                <ResultsList cards={partitioned.secret_objective} />
+              </section>
+            )}
             {results.length === 0 && (
               <p className="results-message">No results found.</p>
             )}

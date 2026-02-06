@@ -79,7 +79,7 @@ export function App() {
           onBack={() => setView('home')}
         />
       )}
-      {(view === 'action' || view === 'agenda' || view === 'strategy') && (
+      {(view === 'action' || view === 'agenda' || view === 'strategy' || view === 'public_objective' || view === 'secret_objective') && (
         <CategoryView
           cards={cards}
           category={view}

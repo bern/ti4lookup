@@ -8,12 +8,16 @@ const CATEGORY_LABELS: Record<CardType, string> = {
   action: 'Action Cards',
   agenda: 'Agendas',
   strategy: 'Strategy Cards',
+  public_objective: 'Public Objectives',
+  secret_objective: 'Secret Objectives',
 }
 
 const CATEGORY_PLACEHOLDERS: Record<CardType, string> = {
   action: 'Search action cards…',
   agenda: 'Search agendas…',
   strategy: 'Search strategy cards…',
+  public_objective: 'Search public objectives…',
+  secret_objective: 'Search secret objectives…',
 }
 
 interface CategoryViewProps {

@@ -1,0 +1,84 @@
+name,condition,points,type,when to score,version
+Corner the Market,Control 4 planets that each have the same planet trait .,1,stage 1 public,status phase,base game
+Develop Weaponry,Own 2 unit upgrade technologies.,1,stage 1 public,status phase,base game
+Diversify Research,Own 2 technologies in each of 2 colors.,1,stage 1 public,status phase,base game
+Erect a Monument,Spend 8 resources .,1,stage 1 public,status phase,base game
+Expand Borders,Control 6 planets in non-home systems.,1,stage 1 public,status phase,base game
+Found Research Outposts,Control 3 planets that have technology specialties .,1,stage 1 public,status phase,base game
+Intimidate Council,Have 1 or more ships in 2 systems that are adjacent to Mecatol Rex's System.,1,stage 1 public,status phase,base game
+Lead from the Front,Spend a total of 3 tokens from your tactic and/or strategy pools .,1,stage 1 public,status phase,base game
+Negotiate Trade Routes,Spend 5 trade goods .,1,stage 1 public,status phase,base game
+Sway the Council,Spend 8 influence .,1,stage 1 public,status phase,base game
+Amass wealth,"Spend 3 influence , 3 resources , and 3 trade goods .",1,stage 1 public,status phase,pok
+Build Defenses,Have 4 or more structures .,1,stage 1 public,status phase,pok
+Discover Lost Outposts,Control 2 planets that have attachments .,1,stage 1 public,status phase,pok
+Engineer a Marvel,Have your flagship or a war sun on the game board.,1,stage 1 public,status phase,pok
+Explore Deep Space,Have units in 3 systems that do not contain planets.,1,stage 1 public,status phase,pok
+Improve Infrastructure,Have structures on 3 planets outside of your home system .,1,stage 1 public,status phase,pok
+Make History,"Have units in 2 systems that contain legendary planets , Mecatol Rex , or anomalies .",1,stage 1 public,status phase,pok
+Populate the Outer Rim,Have units in 3 systems on the edge of the game board other than your home system .,1,stage 1 public,status phase,pok
+Push Boundaries,Control more planets than each of 2 of your neighbors .,1,stage 1 public,status phase,pok
+Raise a Fleet,Have 5 or more non-fighter ships in 1 system.,1,stage 1 public,status phase,pok
+Centralize Galactic Trade,Spend 10 trade goods .,2,stage 2 public,status phase,base game
+Conquer the Weak,Control 1 planet that is in another player's home system .,2,stage 2 public,status phase,base game
+Form Galactic Brain Trust,Control 5 planets that have technology specialties .,2,stage 2 public,status phase,base game
+Found a Golden Age,Spend 16 resources .,2,stage 2 public,status phase,base game
+Galvanize the People,Spend a total of 6 tokens from your tactic and/or strategy pools .,2,stage 2 public,status phase,base game
+Manipulate Galactic Law,Spend 16 influence .,2,stage 2 public,status phase,base game
+Master the Sciences,Own 2 technologies in each of 4 colors.,2,stage 2 public,status phase,base game
+Revolutionize Warfare,Own 3 unit upgrade technologies.,2,stage 2 public,status phase,base game
+Subdue the Galaxy,Control 11 planets in non-home systems.,2,stage 2 public,status phase,base game
+Unify the Colonies,Control 6 planets that each have the same planet trait .,2,stage 2 public,status phase,base game
+Achieve Supremacy,Have your flagship or a war sun in another player's home system or the Mecatol Rex system.,2,stage 2 public,status phase,pok
+Become a Legend,"Have units in 4 systems that contain legendary planets , Mecatol Rex , or anomalies .",2,stage 2 public,status phase,pok
+Command an Armada,Have 8 or more non-fighter ships in 1 system.,2,stage 2 public,status phase,pok
+Construct Massive Cities,Have 7 or more structures .,2,stage 2 public,status phase,pok
+Control the Borderlands,Have units in 5 systems on the edge of the game board other than your home system .,2,stage 2 public,status phase,pok
+Hold Vast Reserves,"Spend 6 influence , 6 resources , and 6 trade goods .",2,stage 2 public,status phase,pok
+Patrol Vast Territories,Have units in 5 systems that do not contain planets.,2,stage 2 public,status phase,pok
+Protect the Border,Have structures on 5 planets outside of your home system .,2,stage 2 public,status phase,pok
+Reclaim Ancient Monuments,Control 3 planets that have attachments .,2,stage 2 public,status phase,pok
+Rule Distant Lands,"Control 2 planets that are each in or adjacent to a different, other player's home system .",2,stage 2 public,status phase,pok
+Destroy Their Greatest Ship,Destroy another player's war sun or flagship .,1,secret,action phase,base game
+Make an Example of Their World,Use BOMBARDMENT to destroy the last of a player's ground forces on a planet.,1,secret,action phase,base game
+Spark a Rebellion,Win a combat against a player who has the most victory points.,1,secret,action phase,base game
+Turn Their Fleets to Dust,Use SPACE CANNON to destroy the last of a player's ships in a system.,1,secret,action phase,base game
+Unveil Flagship,Win a space combat in a system that contains your flagship . You cannot score this objective if your flagship is destroyed in the combat.,1,secret,action phase,base game
+Become a Martyr,Lose control of a planet in a home system .,1,secret,action phase,pok
+Betray a Friend,Win a combat against a player whose promissory note you had in your play area at the start of your tactical action .,1,secret,action phase,pok
+Brave the Void,Win a combat in an anomaly .,1,secret,action phase,pok
+Darken the Skies,Win a combat in another player's home system .,1,secret,action phase,pok
+Demonstrate Your Power,Have 3 or more non-fighter ships in the active system at the end of a space combat .,1,secret,action phase,pok
+Fight With Precision,Use ANTI-FIGHTER BARRAGE to destroy the last of a player's fighters in a system.,1,secret,action phase,pok
+Prove Endurance,Be the last player to pass during a game round.,1,secret,action phase,pok
+Adapt New Strategies,Own 2 faction technologies . (Valefar Assimilator technologies do not count toward this objective.),1,secret,status phase,base game
+Become the Gatekeeper,Have 1 or more ships in a system that contains an alpha wormhole and 1 or more ships in a system that contains a beta wormhole .,1,secret,status phase,base game
+Control the Region,Have 1 or more ships in 6 systems .,1,secret,status phase,base game
+Cut Supply Lines,Have 1 or more ships in the same system as another player's space dock .,1,secret,status phase,base game
+Establish a Perimeter,Have 4 PDS units on the game board.,1,secret,status phase,base game
+Forge an Alliance,Control 4 cultural planets.,1,secret,status phase,base game
+Form a Spy Network,Discard 5 Action Cards .,1,secret,status phase,base game
+Fuel the War Machine,Have 3 space docks on the game board.,1,secret,status phase,base game
+Gather a Mighty Fleet,Have 5 dreadnoughts on the game board.,1,secret,status phase,base game
+Learn the Secrets of the Cosmos,Have 1 or more ships in 3 systems that are each adjacent to an anomaly .,1,secret,status phase,base game
+Master the Laws of Physics,Own 4 technologies of the same color.,1,secret,status phase,base game
+Mine Rare Metals,Control 4 hazardous planets.,1,secret,status phase,base game
+Monopolize Production,Control 4 industrial planets.,1,secret,status phase,base game
+Occupy the Seat of the Empire,Control Mecatol Rex and have 3 or more ships in its system.,1,secret,status phase,base game
+Threaten Enemies,Have 1 or more ships in a system that is adjacent to another player's home system .,1,secret,status phase,base game
+Defy Space and Time,Have units in the wormhole nexus .,1,secret,status phase,pok
+Destroy Heretical Works,Purge 2 of your relic fragments of any type.,1,secret,status phase,pok
+Establish Hegemony,Control planets that have a combined influence value of at least 12.,1,secret,status phase,pok
+Foster Cohesion,Be neighbors with all other players.,1,secret,status phase,pok
+Hoard Raw Materials,Control planets that have a combined resource value of at least 12.,1,secret,status phase,pok
+Mechanize The Military,Have 1 mech on each of 4 planets.,1,secret,status phase,pok
+Occupy The Fringe,Have 9 or more ground forces on a planet that does not contain 1 of your space docks .,1,secret,status phase,pok
+Produce En Masse,Have units with a combined PRODUCTION value of at least 8 in a single system.,1,secret,status phase,pok
+Seize An Icon,Control a legendary planet .,1,secret,status phase,pok
+Stake your Claim,Control a planet in a system that contains a planet controlled by another player.,1,secret,status phase,pok
+Strengthen Bonds,Have another player's promissory note in your play area.,1,secret,status phase,pok
+Dictate Policy,There are 3 or more laws in play.,1,secret,agenda phase,pok
+Drive the Debate,You or a planet you control are elected by an agenda .,1,secret,agenda phase,pok
+Make an Example of Their World Ω,Destroy the last of a player's ground forces on a planet during the bombardment step.,1,secret,action phase,codex 3
+Turn Their Fleets to Dust Ω,Destroy the last of a player's non-fighter ships in the active system during the space cannon offense step.,1,secret,action phase,codex 3
+Fight With Precision Ω,Destroy the last of a player's fighters in the active system during the anti-fighter barrage step.,1,secret,action phase,codex 3

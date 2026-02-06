@@ -34,8 +34,34 @@ export interface Agenda {
   removedInPok: string
 }
 
-/** Combined item for search/display: action, strategy, or agenda with searchText for Fuse. */
+/**
+ * Public objective (stage 1 or 2). From objectives CSV where type is "stage 1 public" or "stage 2 public".
+ * Columns: name, condition, points, type, when to score, version.
+ */
+export interface PublicObjective {
+  name: string
+  condition: string
+  points: string
+  stage: string
+  whenToScore: string
+  version: string
+}
+
+/**
+ * Secret objective. From objectives CSV where type is "secret".
+ */
+export interface SecretObjective {
+  name: string
+  condition: string
+  points: string
+  whenToScore: string
+  version: string
+}
+
+/** Combined item for search/display with searchText for Fuse. */
 export type CardItem =
   | (ActionCard & { type: 'action'; searchText: string })
   | (StrategyCard & { type: 'strategy'; searchText: string })
   | (Agenda & { type: 'agenda'; searchText: string })
+  | (PublicObjective & { type: 'public_objective'; searchText: string })
+  | (SecretObjective & { type: 'secret_objective'; searchText: string })

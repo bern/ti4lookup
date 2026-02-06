@@ -10,7 +10,9 @@ interface ResultsListProps {
 function cardKey(card: CardItem, index: number): string {
   if (card.type === 'action') return `action-${card.name}-${card.version}-${index}`
   if (card.type === 'strategy') return `strategy-${card.name}-${card.version}-${card.initiative}-${index}`
-  return `agenda-${card.name}-${card.version}-${index}`
+  if (card.type === 'agenda') return `agenda-${card.name}-${card.version}-${index}`
+  if (card.type === 'public_objective') return `public_objective-${card.name}-${card.version}-${index}`
+  return `secret_objective-${card.name}-${card.version}-${index}`
 }
 
 export function ResultsList({ cards, loading, error }: ResultsListProps) {

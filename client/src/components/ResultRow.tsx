@@ -83,6 +83,34 @@ export function ResultRow({ card }: ResultRowProps) {
     )
   }
 
+  if (card.type === 'public_objective') {
+    return (
+      <article className="result-row result-row--public-objective" style={bgStyle}>
+        <header className="result-row__header">
+          <span className="result-row__name">{card.name}</span>
+          <span className="result-row__meta">
+            Stage {card.stage} · {card.points} VP · {card.whenToScore} · {card.version}
+          </span>
+        </header>
+        <p className="result-row__effect">{card.condition}</p>
+      </article>
+    )
+  }
+
+  if (card.type === 'secret_objective') {
+    return (
+      <article className="result-row result-row--secret-objective" style={bgStyle}>
+        <header className="result-row__header">
+          <span className="result-row__name">{card.name}</span>
+          <span className="result-row__meta">
+            {card.points} VP · {card.whenToScore} · {card.version}
+          </span>
+        </header>
+        <p className="result-row__effect">{card.condition}</p>
+      </article>
+    )
+  }
+
   return (
     <article className="result-row result-row--strategy" style={bgStyle}>
       <header className="result-row__header">
