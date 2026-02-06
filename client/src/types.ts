@@ -21,7 +21,21 @@ export interface StrategyCard {
   version: string
 }
 
-/** Combined item for search/display: action or strategy card with searchText for Fuse. */
+/**
+ * Agenda row from CSV. Columns: name, type, elect, effect, version, removed in pok.
+ * We use agendaType for the CSV "type" (e.g. Law) so "type" can be the CardItem discriminator.
+ */
+export interface Agenda {
+  name: string
+  agendaType: string
+  elect: string
+  effect: string
+  version: string
+  removedInPok: string
+}
+
+/** Combined item for search/display: action, strategy, or agenda with searchText for Fuse. */
 export type CardItem =
   | (ActionCard & { type: 'action'; searchText: string })
   | (StrategyCard & { type: 'strategy'; searchText: string })
+  | (Agenda & { type: 'agenda'; searchText: string })

@@ -18,6 +18,16 @@ function getCardBgStyle(card: CardItem): { backgroundColor?: string } {
   return bg ? { backgroundColor: bg } : {}
 }
 
+/** If effect contains "FOR:" and "AGAINST:", return { forText, againstText }; otherwise null. */
+function parseForAgainst(effect: string): { forText: string; againstText: string } | null {
+  const forMatch = /FOR:\s*(.*?)\s*AGAINST:\s*(.*)/is.exec(effect)
+  if (!forMatch) return null
+  return {
+    forText: forMatch[1].trim(),
+    againstText: forMatch[2].trim(),
+  }
+}
+
 interface ResultRowProps {
   card: CardItem
 }
@@ -39,6 +49,35 @@ export function ResultRow({ card }: ResultRowProps) {
       </article>
     )
   }
+
+  if (card.type === 'agenda') {
+    const forAgainst = parseForAgainst(card.effect)
+    return (
+      <article className="result-row result-row--agenda" style={bgStyle}>
+        <header className="result-row__header">
+          <span className="result-row__name">{card.name}</span>
+          <span className="result-row__meta">
+            {card.agendaType}
+            {card.elect && card.elect !== '-' ? ` · Elect: ${card.elect}` : ''} · {card.version}
+            {card.removedInPok === 'true' ? (
+              <span className="result-row__removed" title="Removed in Prophecy of Kings"> · 🚫 Removed in PoK</span>
+            ) : null}
+          </span>
+        </header>
+        {forAgainst ? (
+          <>
+            <p className="result-row__label">For</p>
+            <p className="result-row__effect">{forAgainst.forText}</p>
+            <p className="result-row__label">Against</p>
+            <p className="result-row__effect result-row__effect--secondary">{forAgainst.againstText}</p>
+          </>
+        ) : (
+          <p className="result-row__effect">{card.effect}</p>
+        )}
+      </article>
+    )
+  }
+
   return (
     <article className="result-row result-row--strategy" style={bgStyle}>
       <header className="result-row__header">

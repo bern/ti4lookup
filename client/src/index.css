@@ -100,6 +100,10 @@ body {
   color: #888;
 }
 
+.result-row__removed {
+  opacity: 0.85;
+}
+
 .result-row__label {
   margin: 0.5rem 0 0.15rem;
   font-size: 0.75rem;

@@ -1,8 +1,9 @@
 import Papa from 'papaparse'
-import type { ActionCard, StrategyCard, CardItem } from '../types'
+import type { ActionCard, StrategyCard, Agenda, CardItem } from '../types'
 
 const ACTION_CSV_URL = '/action_cards.csv'
 const STRATEGY_CSV_URL = '/strategy_cards.csv'
+const AGENDAS_CSV_URL = '/agendas.csv'
 
 function parseCsv<T>(url: string, mapRow: (row: Record<string, string>) => T): Promise<T[]> {
   return fetch(url)
@@ -49,12 +50,28 @@ export async function loadStrategyCards(): Promise<StrategyCard[]> {
 }
 
 /**
- * Loads both action and strategy cards and returns a combined CardItem[] for search/display.
+ * Fetches and parses agendas CSV into typed Agenda[].
+ * CSV column "removed in pok" is mapped to removedInPok.
+ */
+export async function loadAgendas(): Promise<Agenda[]> {
+  return parseCsv(AGENDAS_CSV_URL, (row) => ({
+    name: row.name ?? '',
+    agendaType: row.type ?? '',
+    elect: row.elect ?? '',
+    effect: row.effect ?? '',
+    version: row.version ?? '',
+    removedInPok: row['removed in pok'] ?? '',
+  }))
+}
+
+/**
+ * Loads action cards, strategy cards, and agendas; returns a combined CardItem[] for search/display.
  */
 export async function loadAllCards(): Promise<CardItem[]> {
-  const [actionCards, strategyCards] = await Promise.all([
+  const [actionCards, strategyCards, agendas] = await Promise.all([
     loadActionCards(),
     loadStrategyCards(),
+    loadAgendas(),
   ])
   const actionItems: CardItem[] = actionCards.map((c) => ({
     type: 'action',
@@ -66,5 +83,10 @@ export async function loadAllCards(): Promise<CardItem[]> {
     ...c,
     searchText: [c.name, c.primary, c.secondary, c.color, c.version].filter(Boolean).join(' '),
   }))
-  return [...actionItems, ...strategyItems]
+  const agendaItems: CardItem[] = agendas.map((c) => ({
+    ...c,
+    type: 'agenda',
+    searchText: [c.name, c.agendaType, c.elect, c.effect, c.version].filter(Boolean).join(' '),
+  }))
+  return [...actionItems, ...strategyItems, ...agendaItems]
 }
