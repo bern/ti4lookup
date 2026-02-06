@@ -5,8 +5,10 @@ import type { CardItem } from '../types'
 const MAX_RESULTS = 50
 const DEBOUNCE_MS = 50
 
+export type CardType = 'action' | 'agenda' | 'strategy'
+
 /**
- * Fuse.js over combined action + strategy cards. Searches name and searchText.
+ * Fuse.js over cards. Searches name and searchText.
  */
 function createFuse(cards: CardItem[]): Fuse<CardItem> {
   return new Fuse(cards, {
@@ -20,28 +22,57 @@ function createFuse(cards: CardItem[]): Fuse<CardItem> {
 }
 
 /** Sort cards by name (A–Z). */
-function sortByName(cards: CardItem[]): CardItem[] {
+export function sortByName(cards: CardItem[]): CardItem[] {
   return [...cards].sort((a, b) => a.name.localeCompare(b.name))
 }
 
-export function useFuseSearch(cards: CardItem[]) {
+/** Partition cards by type and sort each by name. */
+export function partitionByType(cards: CardItem[]): {
+  action: CardItem[]
+  agenda: CardItem[]
+  strategy: CardItem[]
+} {
+  const action = sortByName(cards.filter((c) => c.type === 'action'))
+  const agenda = sortByName(cards.filter((c) => c.type === 'agenda'))
+  const strategy = sortByName(cards.filter((c) => c.type === 'strategy'))
+  return { action, agenda, strategy }
+}
+
+function filterByType(cards: CardItem[], type: CardType): CardItem[] {
+  return cards.filter((c) => c.type === type)
+}
+
+export interface UseFuseSearchOptions {
+  /** When set, only search within this category. */
+  typeFilter?: CardType
+  /** Max results (default 50; use higher for global search). */
+  limit?: number
+}
+
+export function useFuseSearch(cards: CardItem[], options: UseFuseSearchOptions = {}) {
+  const { typeFilter, limit = MAX_RESULTS } = options
   const [query, setQuery] = useState('')
   const [debouncedQuery, setDebouncedQuery] = useState('')
+
+  const filteredCards = useMemo(
+    () => (typeFilter ? filterByType(cards, typeFilter) : cards),
+    [cards, typeFilter]
+  )
 
   useEffect(() => {
     const id = window.setTimeout(() => setDebouncedQuery(query), DEBOUNCE_MS)
     return () => window.clearTimeout(id)
   }, [query])
 
-  const fuse = useMemo(() => createFuse(cards), [cards])
-  const allSorted = useMemo(() => sortByName(cards), [cards])
+  const fuse = useMemo(() => createFuse(filteredCards), [filteredCards])
+  const allSorted = useMemo(() => sortByName(filteredCards), [filteredCards])
 
   const results = useMemo(() => {
     const q = debouncedQuery.trim()
     if (q === '') return allSorted
-    const hits = fuse.search(q, { limit: MAX_RESULTS })
+    const hits = fuse.search(q, { limit })
     return hits.map((h) => h.item)
-  }, [debouncedQuery, fuse, allSorted])
+  }, [debouncedQuery, fuse, allSorted, limit])
 
-  return { query, setQuery, results }
+  return { query, setQuery, results, debouncedQuery }
 }

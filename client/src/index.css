@@ -31,7 +31,7 @@ body {
 }
 
 .app-title {
-  margin: 0 0 0.75rem;
+  margin: 0;
   font-size: 1.25rem;
   font-weight: 600;
 }
@@ -54,6 +54,156 @@ body {
   flex: 1;
   padding: 1rem;
   overflow: auto;
+}
+
+.app--full-bleed .app-main {
+  padding: 0;
+}
+
+/* Home */
+.home-main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.home-view {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.home-search-trigger {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  font-size: 1rem;
+  text-align: left;
+  color: #666;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.home-search-trigger:hover {
+  border-color: #999;
+  color: #333;
+}
+
+.home-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.home-category-btn {
+  padding: 0.85rem 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: left;
+  color: #1a1a1a;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.home-category-btn:hover {
+  border-color: #999;
+  background: #fafafa;
+}
+
+/* Search / Category view bar (back + search) */
+.view-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem 0.75rem;
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.view-bar .search-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.back-btn {
+  flex-shrink: 0;
+  padding: 0.35rem 0;
+  font-size: 0.9rem;
+  color: #555;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.back-btn:hover {
+  color: #1a1a1a;
+}
+
+.search-view,
+.category-view {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.search-view__main,
+.category-view__main {
+  flex: 1;
+  padding: 1rem;
+  overflow: auto;
+}
+
+.section-title {
+  margin: 0 0 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.recent-searches {
+  margin-bottom: 1.5rem;
+}
+
+.recent-searches__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.recent-searches__item {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0;
+  font-size: 0.95rem;
+  text-align: left;
+  color: #555;
+  background: none;
+  border: none;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.recent-searches__item:hover {
+  color: #1a1a1a;
+}
+
+.search-results-partitioned {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.results-section {
+  margin-bottom: 0.5rem;
 }
 
 .results-message {
