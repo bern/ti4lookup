@@ -102,6 +102,12 @@ export function SearchView({
                 <ResultsList cards={partitioned.secret_objective} />
               </section>
             )}
+            {partitioned.legendary_planet.length > 0 && (
+              <section className="results-section" aria-label="Legendary Planets">
+                <h2 className="section-title">Legendary Planets</h2>
+                <ResultsList cards={partitioned.legendary_planet} />
+              </section>
+            )}
             {results.length === 0 && (
               <p className="results-message">No results found.</p>
             )}

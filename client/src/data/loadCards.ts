@@ -1,10 +1,11 @@
 import Papa from 'papaparse'
-import type { ActionCard, StrategyCard, Agenda, PublicObjective, SecretObjective, CardItem } from '../types'
+import type { ActionCard, StrategyCard, Agenda, PublicObjective, SecretObjective, LegendaryPlanet, CardItem } from '../types'
 
 const ACTION_CSV_URL = '/action_cards.csv'
 const STRATEGY_CSV_URL = '/strategy_cards.csv'
 const AGENDAS_CSV_URL = '/agendas.csv'
 const OBJECTIVES_CSV_URL = '/objectives.csv'
+const LEGENDARY_PLANETS_CSV_URL = '/legendary_planets.csv'
 
 function parseCsv<T>(url: string, mapRow: (row: Record<string, string>) => T): Promise<T[]> {
   return fetch(url)
@@ -113,14 +114,32 @@ export async function loadObjectives(): Promise<{ public: PublicObjective[]; sec
 }
 
 /**
- * Loads action cards, strategy cards, agendas, and objectives; returns a combined CardItem[] for search/display.
+ * Fetches and parses legendary planets CSV into typed LegendaryPlanet[].
+ * CSV column "how to acquire" is mapped to howToAcquire.
+ */
+export async function loadLegendaryPlanets(): Promise<LegendaryPlanet[]> {
+  return parseCsv(LEGENDARY_PLANETS_CSV_URL, (row) => ({
+    name: row.name ?? '',
+    trait: row.trait ?? '',
+    technology: row.technology ?? '',
+    resources: row.resources ?? '',
+    influence: row.influence ?? '',
+    ability: row.ability ?? '',
+    howToAcquire: row['how to acquire'] ?? '',
+    version: row.version ?? '',
+  }))
+}
+
+/**
+ * Loads action cards, strategy cards, agendas, objectives, and legendary planets; returns a combined CardItem[] for search/display.
  */
 export async function loadAllCards(): Promise<CardItem[]> {
-  const [actionCards, strategyCards, agendas, objectives] = await Promise.all([
+  const [actionCards, strategyCards, agendas, objectives, legendaryPlanets] = await Promise.all([
     loadActionCards(),
     loadStrategyCards(),
     loadAgendas(),
     loadObjectives(),
+    loadLegendaryPlanets(),
   ])
   const actionItems: CardItem[] = actionCards.map((c) => ({
     type: 'action',
@@ -147,11 +166,17 @@ export async function loadAllCards(): Promise<CardItem[]> {
     type: 'secret_objective',
     searchText: [c.name, c.condition, c.points, c.whenToScore, c.version].filter(Boolean).join(' '),
   }))
+  const legendaryPlanetItems: CardItem[] = legendaryPlanets.map((c) => ({
+    ...c,
+    type: 'legendary_planet',
+    searchText: [c.name, c.trait, c.technology, c.ability, c.howToAcquire, c.version].filter(Boolean).join(' '),
+  }))
   return [
     ...actionItems,
     ...strategyItems,
     ...agendaItems,
     ...publicObjectiveItems,
     ...secretObjectiveItems,
+    ...legendaryPlanetItems,
   ]
 }

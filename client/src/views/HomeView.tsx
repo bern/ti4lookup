@@ -1,4 +1,4 @@
-export type View = 'home' | 'search' | 'action' | 'agenda' | 'strategy' | 'public_objective' | 'secret_objective'
+export type View = 'home' | 'search' | 'action' | 'agenda' | 'strategy' | 'public_objective' | 'secret_objective' | 'legendary_planet'
 
 interface HomeViewProps {
   onOpenSearch: () => void
@@ -51,6 +51,13 @@ export function HomeView({ onOpenSearch, onOpenCategory }: HomeViewProps) {
           onClick={() => onOpenCategory('secret_objective')}
         >
           Secret Objectives
+        </button>
+        <button
+          type="button"
+          className="home-category-btn"
+          onClick={() => onOpenCategory('legendary_planet')}
+        >
+          Legendary Planets
         </button>
       </nav>
     </div>

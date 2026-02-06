@@ -1,5 +1,15 @@
 import type { CardItem } from '../types'
 
+/** Category label for each card type (shown at bottom of card when out-of-context). */
+const CATEGORY_LABELS: Record<CardItem['type'], string> = {
+  action: 'Action Cards',
+  agenda: 'Agendas',
+  strategy: 'Strategy Cards',
+  public_objective: 'Public Objectives',
+  secret_objective: 'Secret Objectives',
+  legendary_planet: 'Legendary Planets',
+}
+
 /** Strategy card color name → rgba with low opacity for readable bg. */
 const CARD_COLOR_BG: Record<string, string> = {
   red: 'rgba(180, 50, 50, 0.1)',
@@ -48,6 +58,7 @@ export function ResultRow({ card }: ResultRowProps) {
           <p className="result-row__timing">{card.timing}</p>
         ) : null}
         <p className="result-row__effect">{card.effect}</p>
+        <footer className="result-row__category">{CATEGORY_LABELS[card.type]}</footer>
       </article>
     )
   }
@@ -79,6 +90,7 @@ export function ResultRow({ card }: ResultRowProps) {
         ) : (
           <p className="result-row__effect">{card.effect}</p>
         )}
+        <footer className="result-row__category">{CATEGORY_LABELS[card.type]}</footer>
       </article>
     )
   }
@@ -93,6 +105,7 @@ export function ResultRow({ card }: ResultRowProps) {
           </span>
         </header>
         <p className="result-row__effect">{card.condition}</p>
+        <footer className="result-row__category">{CATEGORY_LABELS[card.type]}</footer>
       </article>
     )
   }
@@ -107,6 +120,29 @@ export function ResultRow({ card }: ResultRowProps) {
           </span>
         </header>
         <p className="result-row__effect">{card.condition}</p>
+        <footer className="result-row__category">{CATEGORY_LABELS[card.type]}</footer>
+      </article>
+    )
+  }
+
+  if (card.type === 'legendary_planet') {
+    const meta = [card.trait, card.resources && card.influence ? `${card.resources}/${card.influence}` : card.resources || card.influence, card.technology ? `${card.technology} tech skip` : null].filter(Boolean).join(' · ')
+    return (
+      <article className="result-row result-row--legendary-planet" style={bgStyle}>
+        <header className="result-row__header">
+          <span className="result-row__name">{card.name}</span>
+          <span className="result-row__meta">
+            {meta} · {card.version}
+          </span>
+        </header>
+        <p className="result-row__effect">{card.ability}</p>
+        {card.howToAcquire ? (
+          <>
+            <p className="result-row__label">How to acquire</p>
+            <p className="result-row__effect result-row__effect--secondary">{card.howToAcquire}</p>
+          </>
+        ) : null}
+        <footer className="result-row__category">{CATEGORY_LABELS[card.type]}</footer>
       </article>
     )
   }
@@ -123,6 +159,7 @@ export function ResultRow({ card }: ResultRowProps) {
       <p className="result-row__effect">{card.primary}</p>
       <p className="result-row__label">Secondary</p>
       <p className="result-row__effect result-row__effect--secondary">{card.secondary}</p>
+      <footer className="result-row__category">{CATEGORY_LABELS[card.type]}</footer>
     </article>
   )
 }

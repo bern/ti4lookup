@@ -58,6 +58,20 @@ export interface SecretObjective {
   version: string
 }
 
+/**
+ * Legendary planet from CSV. Columns: name, trait, technology, resources, influence, ability, how to acquire, version.
+ */
+export interface LegendaryPlanet {
+  name: string
+  trait: string
+  technology: string
+  resources: string
+  influence: string
+  ability: string
+  howToAcquire: string
+  version: string
+}
+
 /** Combined item for search/display with searchText for Fuse. */
 export type CardItem =
   | (ActionCard & { type: 'action'; searchText: string })
@@ -65,3 +79,4 @@ export type CardItem =
   | (Agenda & { type: 'agenda'; searchText: string })
   | (PublicObjective & { type: 'public_objective'; searchText: string })
   | (SecretObjective & { type: 'secret_objective'; searchText: string })
+  | (LegendaryPlanet & { type: 'legendary_planet'; searchText: string })

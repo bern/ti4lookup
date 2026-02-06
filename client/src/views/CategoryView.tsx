@@ -11,6 +11,7 @@ const CATEGORY_LABELS: Record<CardType, string> = {
   strategy: 'Strategy Cards',
   public_objective: 'Public Objectives',
   secret_objective: 'Secret Objectives',
+  legendary_planet: 'Legendary Planets',
 }
 
 const CATEGORY_PLACEHOLDERS: Record<CardType, string> = {
@@ -19,6 +20,7 @@ const CATEGORY_PLACEHOLDERS: Record<CardType, string> = {
   strategy: 'Search strategy cards…',
   public_objective: 'Search public objectives…',
   secret_objective: 'Search secret objectives…',
+  legendary_planet: 'Search legendary planets…',
 }
 
 interface CategoryViewProps {

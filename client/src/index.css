@@ -285,3 +285,13 @@ body {
   font-size: 0.9rem;
   color: #333;
 }
+
+.result-row__category {
+  margin: 0.75rem 0 0;
+  padding-top: 0.5rem;
+  font-size: 0.7rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-top: 1px solid #eee;
+}
