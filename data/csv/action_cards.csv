@@ -1,116 +1,116 @@
 name,quantity,timing,effect,version
-Ancient Burial Sites,1,At the start of the agenda phase :,Choose 1 player. Exhaust each cultural planet owned by that player.,base game
-Assassinate Representative,1,After an agenda is revealed:,Choose 1 player. That player cannot vote on this agenda.,base game
-Bribery,1,After the speaker votes on an agenda :,"Spend any number of trade goods . For each trade good spent, cast 1 additional vote for the outcome on which you voted .",base game
-Bunker,1,At the start of an invasion :,"During this invasion, apply -4 to the result of each Bombardment roll against planets you control.",base game
-Confusing Legal Text,1,When you are elected as the outcome of an agenda :,Choose 1 player. That player is the elected player instead.,base game
-Construction Rider,1,After an agenda is revealed:,"You cannot vote on this agenda. Predict aloud an outcome of this agenda. If your prediction is correct, place 1 space dock from your reinforcements on a planet you control.",base game
-Courageous to the End,1,After 1 of your ships is destroyed during a space combat :,"Roll 2 dice. For each result equal to or greater than that ship's combat value, your opponent must choose and destroy 1 of their ships.",base game
+Ancient Burial Sites,1,At the start of the agenda phase,Choose 1 player. Exhaust each cultural planet owned by that player.,base game
+Assassinate Representative,1,After an agenda is revealed,Choose 1 player. That player cannot vote on this agenda.,base game
+Bribery,1,After the speaker votes on an agenda,"Spend any number of trade goods . For each trade good spent, cast 1 additional vote for the outcome on which you voted .",base game
+Bunker,1,At the start of an invasion,"During this invasion, apply -4 to the result of each Bombardment roll against planets you control.",base game
+Confusing Legal Text,1,When you are elected as the outcome of an agenda,Choose 1 player. That player is the elected player instead.,base game
+Construction Rider,1,After an agenda is revealed,"You cannot vote on this agenda. Predict aloud an outcome of this agenda. If your prediction is correct, place 1 space dock from your reinforcements on a planet you control.",base game
+Courageous to the End,1,After 1 of your ships is destroyed during a space combat,"Roll 2 dice. For each result equal to or greater than that ship's combat value, your opponent must choose and destroy 1 of their ships.",base game
 Cripple Defenses,1,Action: Choose 1 planet.,Destroy each PDS on that planet.,base game
-Diplomacy Rider,1,After an agenda is revealed:,"You cannot vote on this agenda. Predict aloud an outcome of this agenda. If your prediction is correct, choose 1 system that contains a planet you control. Each other player places a command token from their reinforcements in that system.",base game
+Diplomacy Rider,1,After an agenda is revealed,"You cannot vote on this agenda. Predict aloud an outcome of this agenda. If your prediction is correct, choose 1 system that contains a planet you control. Each other player places a command token from their reinforcements in that system.",base game
 Direct Hit,4,After another player's ship uses Sustain Damage to cancel a hit produced by your units or abilities,Destroy that ship.,base game
-Disable,1,At the start of an invasion in a system that contains 1 or more of your opponents' PDS units:,Your opponents' PDS units lose Planetary Shield and Space Cannon during this invasion.,base game
-Distinguished Councilor,1,After you cast votes on an outcome of an agenda:,Cast 5 additional votes for that outcome.,base game
-Economic Initiative,1,As an Action :,Ready each cultural planet you control.,base game
-Emergency Repairs,1,At the start or end of a combat round:,Repair all of your units that have Sustain Damage in the active system.,base game
-Experimental Battlestation,1,After another player moves ships into a system during a tactical action :,Choose 1 of your space docks that is either in or adjacent to that system. That space dock uses Space Cannon 5 (x3) against ships in the active system.,base game
-Fighter Prototype,1,At the start of the first round of a space combat :,Apply +2 to the result of each of your fighters ' combat rolls during this combat round.,base game
-Fire Team,1,After your ground forces make combat rolls during a round of ground combat :,Reroll any number of your dice.,base game
-Flank Speed,4,After you activate a system:,Apply +1 to the move value of each of your ships during this tactical action .,base game
-Focused Research,1,As an Action:,Spend 4 trade goods to research 1 technology .,base game
-Frontline Deployment,1,As an Action :,Place 3 infantry from your reinforcements on 1 planet you control.,base game
-Ghost Ship,1,As an Action :,Place 1 destroyer from your reinforcements in a non-home system that contains a wormhole and does not contain other players' ships.,base game
-Imperial Rider,1,After an agenda is revealed:,"You cannot vote on this agenda . Predict aloud an outcome of this agenda. If your prediction is correct, gain 1 victory point.",base game
-In The Silence Of Space,1,After you activate a system:,"Choose 1 system. During this tactical action , your ships in the chosen system can move through systems that contain other players' ships.",base game
-Industrial Initiative,1,As an Action:,Gain 1 trade good for each industrial planet you control.,base game
-Infiltrate,1,When you gain control of a planet:,Replace each PDS and space dock that is on that planet with a matching unit from your reinforcements .,base game
-Insubordination,1,As an Action:,Remove 1 token from another player's tactic pool and return it to their reinforcements .,base game
-Intercept,1,After your opponent declares a retreat during a space combat :,Your opponent cannot retreat during this round of space combat.,base game
-Leadership Rider,1,After an agenda is revealed:,"You cannot vote on this agenda. Predict aloud an outcome of this agenda. If your prediction is correct, gain 3 command tokens .",base game
-Lost Star Chart,1,After you activate a system:,"During this tactical action , systems that contain alpha and beta wormholes are adjacent to each other.",base game
-Lucky Shot,1,As an Action:,"Destroy 1 dreadnought , cruiser , or destroyer in a system that contains a planet you control.",base game
-Maneuvering Jets,4,Before you assign hits produced by another player's Space Cannon roll:,Cancel 1 hit.,base game
-Mining Initiative,1,As an Action:,Gain trade goods equal to the resource value of 1 planet you control.,base game
-Morale Boost,4,At the start of a combat round:,Apply +1 to the result of each of your unit's combat rolls during this combat round.,base game
-Parley,1,After another player commits units to land on a planet you control:,Return the committed units to the space area .,base game
+Disable,1,At the start of an invasion in a system that contains 1 or more of your opponents' PDS units,Your opponents' PDS units lose Planetary Shield and Space Cannon during this invasion.,base game
+Distinguished Councilor,1,After you cast votes on an outcome of an agenda,Cast 5 additional votes for that outcome.,base game
+Economic Initiative,1,As an Action,Ready each cultural planet you control.,base game
+Emergency Repairs,1,At the start or end of a combat round,Repair all of your units that have Sustain Damage in the active system.,base game
+Experimental Battlestation,1,After another player moves ships into a system during a tactical action,Choose 1 of your space docks that is either in or adjacent to that system. That space dock uses Space Cannon 5 (x3) against ships in the active system.,base game
+Fighter Prototype,1,At the start of the first round of a space combat,Apply +2 to the result of each of your fighters ' combat rolls during this combat round.,base game
+Fire Team,1,After your ground forces make combat rolls during a round of ground combat,Reroll any number of your dice.,base game
+Flank Speed,4,After you activate a system,Apply +1 to the move value of each of your ships during this tactical action .,base game
+Focused Research,1,As an Action,Spend 4 trade goods to research 1 technology .,base game
+Frontline Deployment,1,As an Action,Place 3 infantry from your reinforcements on 1 planet you control.,base game
+Ghost Ship,1,As an Action,Place 1 destroyer from your reinforcements in a non-home system that contains a wormhole and does not contain other players' ships.,base game
+Imperial Rider,1,After an agenda is revealed,"You cannot vote on this agenda . Predict aloud an outcome of this agenda. If your prediction is correct, gain 1 victory point.",base game
+In The Silence Of Space,1,After you activate a system,"Choose 1 system. During this tactical action , your ships in the chosen system can move through systems that contain other players' ships.",base game
+Industrial Initiative,1,As an Action,Gain 1 trade good for each industrial planet you control.,base game
+Infiltrate,1,When you gain control of a planet,Replace each PDS and space dock that is on that planet with a matching unit from your reinforcements .,base game
+Insubordination,1,As an Action,Remove 1 token from another player's tactic pool and return it to their reinforcements .,base game
+Intercept,1,After your opponent declares a retreat during a space combat,Your opponent cannot retreat during this round of space combat.,base game
+Leadership Rider,1,After an agenda is revealed,"You cannot vote on this agenda. Predict aloud an outcome of this agenda. If your prediction is correct, gain 3 command tokens .",base game
+Lost Star Chart,1,After you activate a system,"During this tactical action , systems that contain alpha and beta wormholes are adjacent to each other.",base game
+Lucky Shot,1,As an Action,"Destroy 1 dreadnought , cruiser , or destroyer in a system that contains a planet you control.",base game
+Maneuvering Jets,4,Before you assign hits produced by another player's Space Cannon roll,Cancel 1 hit.,base game
+Mining Initiative,1,As an Action,Gain trade goods equal to the resource value of 1 planet you control.,base game
+Morale Boost,4,At the start of a combat round,Apply +1 to the result of each of your unit's combat rolls during this combat round.,base game
+Parley,1,After another player commits units to land on a planet you control,Return the committed units to the space area .,base game
 Plague,1,Action: Choose 1 planet that is controlled by another player.,"Roll 1 die for each infantry on that planet. For each result of 6 or greater, destroy 1 of those units.",base game
-Political Stability,1,When you would return your strategy card (s) during the status phase :,Do not return your strategy card(s). You do not choose strategy cards during the next strategy phase.,base game
-Politics Rider,1,After an agenda is revealed:,"You cannot vote on this agenda. Predict aloud an outcome of this agenda. If your prediction is correct, draw 3 action cards and gain the speaker token.",base game
-Public Disgrace,1,When another player chooses a strategy card during the strategy phase:,"That player must choose a different strategy card instead, if able.",base game
-Reactor Meltdown,1,As an Action:,Destroy 1 space dock in a non-home system.,base game
-Reparations,1,After another player gains control of a planet you control:,Exhaust 1 planet that player controls and ready 1 planet you control.,base game
-Repeal Law,1,As an Action:,Discard 1 law from play.,base game
-Rise of a Messiah,1,As an Action:,Place 1 infantry from your reinforcements on each planet you control.,base game
+Political Stability,1,When you would return your strategy card (s) during the status phase,Do not return your strategy card(s). You do not choose strategy cards during the next strategy phase.,base game
+Politics Rider,1,After an agenda is revealed,"You cannot vote on this agenda. Predict aloud an outcome of this agenda. If your prediction is correct, draw 3 action cards and gain the speaker token.",base game
+Public Disgrace,1,When another player chooses a strategy card during the strategy phase,"That player must choose a different strategy card instead, if able.",base game
+Reactor Meltdown,1,As an Action,Destroy 1 space dock in a non-home system.,base game
+Reparations,1,After another player gains control of a planet you control,Exhaust 1 planet that player controls and ready 1 planet you control.,base game
+Repeal Law,1,As an Action,Discard 1 law from play.,base game
+Rise of a Messiah,1,As an Action,Place 1 infantry from your reinforcements on each planet you control.,base game
 Sabotage,4,"When another player plays an action card other than ""Sabotage"":",Cancel that action card.,base game
-Salvage,1,After you win a space combat :,Your opponent gives you all of their commodities .,base game
-Shields Holding,4,Before you assign hits to your ships during a space combat :,Cancel up to 2 hits.,base game
-Signal Jamming,1,As an Action:,Chose 1 non-home system that contains or is adjacent to 1 of your ships. Place a command token from another player's reinforcements in that system.,base game
-Skilled Retreat,4,At the start of a combat round:,"Move all of your ships from the active system into an adjacent system that does not contain another player's ships; the space combat ends in a draw. Then, place a command token from your reinforcements in that system.",base game
-Spy,1,As an Action:,Choose 1 player. That player gives you 1 random action card from their hand.,base game
-Summit,1,At the start of the strategy phase:,Gain 2 command tokens .,base game
-Tactical Bombardment,1,As an Action:,Choose 1 system that contains 1 or more of your units that have Bombardment . Exhaust each planet controlled by other players in that system.,base game
-Technology Rider,1,After an agenda is revealed:,"You cannot vote on this agenda. Predict aloud an outcome of this agenda. If your prediction is correct, research 1 technology.",base game
-Trade Rider,1,After an agenda is revealed:,"You cannot vote on this agenda. Predict aloud an outcome of this agenda. If your prediction is correct, gain 5 trade goods .",base game
-Unexpected Action,1,As an Action:,Remove 1 of your command tokens from the game board and return it to your reinforcements .,base game
-Unstable Planet,1,As an Action :,Choose 1 hazardous planet. Exhaust that planet and destroy up to 3 infantry on it.,base game
-Upgrade,1,After you activate a system that contains 1 or more of your ships:,Replace one of your cruisers in that system with one of your dreadnoughts from your reinforcements .,base game
-Uprising,1,As an Action:,Exhaust 1 non-home planet controlled by another player. Then gain trade goods equal to its resource value.,base game
-Veto,1,When an agenda is revealed:,Discard that agenda and reveal 1 agenda from the top of the deck. Players vote on this agenda instead.,base game
-War Effort,1,As an Action :,Place 1 cruiser from your reinforcements in a system that contains 1 or more of your ships.,base game
-Warfare Rider,1,After an agenda is revealed:,"You cannot vote on this agenda. Predict aloud an outcome of this agenda. If your prediction is correct, place 1 dreadnought from your reinforcements in a system that contains 1 or more of your ships.",base game
-Blitz,1,At the start of an invasion :,Each of your non-fighter ships in the active system that do not have BOMBARDMENT gain BOMBARDMENT 6 until the end of the invasion.,codex 1
-Counterstroke,1,After a player activates a system that contains 1 of your command tokens :,Return that command token to your tactic pool .,codex 1
-Fighter Conscription,1,As an Action:,Place 1 fighter from your reinforcements in each system that contains 1 or more of your space docks or units that have capacity ; they cannot be placed in systems that contain other players' ships.,codex 1
-Forward Supply Base,1,After another player activates a system that contains your units:,"Gain 3 trade goods . Then, choose another player to gain 1 trade good.",codex 1
-Ghost Squad,1,After a player commits units to land on a planet you control:,Move any number of ground forces from any planet you control in the active system to any other planet you control in the active system.,codex 1
-Hack Election,1,After an agenda is revealed:,"During this agenda, voting begins with the player to the right of the speaker and continues counterclockwise.",codex 1
-Harness Energy,1,After you activate an anomaly :,Replenish your commodities .,codex 1
-Impersonation,1,As an Action:,Spend 3 influence to draw 1 secret objective .,codex 1
-Insider Information,1,After an agenda is revealed:,Look at the top card of the agenda deck.,codex 1
-Master Plan,1,After you perform an action :,You may perform an additional action this turn.,codex 1
-Plagiarize,1,As an Action :,Spend 5 influence and choose a non-faction technology owned by 1 of your neighbors; gain that technology.,codex 1
-Rally,1,After you activate a system that contains another player's ships:,Place 2 command tokens from your reinforcements in your fleet pool .,codex 1
-Reflective Shielding,1,When one of your ships uses SUSTAIN DAMAGE during combat:,Produce 2 hits against your opponent's ships in the active system.,codex 1
-Sanction,1,After an agenda is revealed:,"You cannot vote on this agenda. Predict aloud an outcome of this agenda. If your prediction is correct, each player that voted for that outcome returns 1 command token from their fleet supply to their reinforcements .",codex 1
+Salvage,1,After you win a space combat,Your opponent gives you all of their commodities .,base game
+Shields Holding,4,Before you assign hits to your ships during a space combat,Cancel up to 2 hits.,base game
+Signal Jamming,1,As an Action,Chose 1 non-home system that contains or is adjacent to 1 of your ships. Place a command token from another player's reinforcements in that system.,base game
+Skilled Retreat,4,At the start of a combat round,"Move all of your ships from the active system into an adjacent system that does not contain another player's ships; the space combat ends in a draw. Then, place a command token from your reinforcements in that system.",base game
+Spy,1,As an Action,Choose 1 player. That player gives you 1 random action card from their hand.,base game
+Summit,1,At the start of the strategy phase,Gain 2 command tokens .,base game
+Tactical Bombardment,1,As an Action,Choose 1 system that contains 1 or more of your units that have Bombardment . Exhaust each planet controlled by other players in that system.,base game
+Technology Rider,1,After an agenda is revealed,"You cannot vote on this agenda. Predict aloud an outcome of this agenda. If your prediction is correct, research 1 technology.",base game
+Trade Rider,1,After an agenda is revealed,"You cannot vote on this agenda. Predict aloud an outcome of this agenda. If your prediction is correct, gain 5 trade goods .",base game
+Unexpected Action,1,As an Action,Remove 1 of your command tokens from the game board and return it to your reinforcements .,base game
+Unstable Planet,1,As an Action,Choose 1 hazardous planet. Exhaust that planet and destroy up to 3 infantry on it.,base game
+Upgrade,1,After you activate a system that contains 1 or more of your ships,Replace one of your cruisers in that system with one of your dreadnoughts from your reinforcements .,base game
+Uprising,1,As an Action,Exhaust 1 non-home planet controlled by another player. Then gain trade goods equal to its resource value.,base game
+Veto,1,When an agenda is revealed,Discard that agenda and reveal 1 agenda from the top of the deck. Players vote on this agenda instead.,base game
+War Effort,1,As an Action,Place 1 cruiser from your reinforcements in a system that contains 1 or more of your ships.,base game
+Warfare Rider,1,After an agenda is revealed,"You cannot vote on this agenda. Predict aloud an outcome of this agenda. If your prediction is correct, place 1 dreadnought from your reinforcements in a system that contains 1 or more of your ships.",base game
+Blitz,1,At the start of an invasion,Each of your non-fighter ships in the active system that do not have BOMBARDMENT gain BOMBARDMENT 6 until the end of the invasion.,codex 1
+Counterstroke,1,After a player activates a system that contains 1 of your command tokens,Return that command token to your tactic pool .,codex 1
+Fighter Conscription,1,As an Action,Place 1 fighter from your reinforcements in each system that contains 1 or more of your space docks or units that have capacity ; they cannot be placed in systems that contain other players' ships.,codex 1
+Forward Supply Base,1,After another player activates a system that contains your units,"Gain 3 trade goods . Then, choose another player to gain 1 trade good.",codex 1
+Ghost Squad,1,After a player commits units to land on a planet you control,Move any number of ground forces from any planet you control in the active system to any other planet you control in the active system.,codex 1
+Hack Election,1,After an agenda is revealed,"During this agenda, voting begins with the player to the right of the speaker and continues counterclockwise.",codex 1
+Harness Energy,1,After you activate an anomaly,Replenish your commodities .,codex 1
+Impersonation,1,As an Action,Spend 3 influence to draw 1 secret objective .,codex 1
+Insider Information,1,After an agenda is revealed,Look at the top card of the agenda deck.,codex 1
+Master Plan,1,After you perform an action,You may perform an additional action this turn.,codex 1
+Plagiarize,1,As an Action,Spend 5 influence and choose a non-faction technology owned by 1 of your neighbors; gain that technology.,codex 1
+Rally,1,After you activate a system that contains another player's ships,Place 2 command tokens from your reinforcements in your fleet pool .,codex 1
+Reflective Shielding,1,When one of your ships uses SUSTAIN DAMAGE during combat,Produce 2 hits against your opponent's ships in the active system.,codex 1
+Sanction,1,After an agenda is revealed,"You cannot vote on this agenda. Predict aloud an outcome of this agenda. If your prediction is correct, each player that voted for that outcome returns 1 command token from their fleet supply to their reinforcements .",codex 1
 Scramble Frequency,1,"After another player makes a BOMBARDMENT , SPACE CANNON , or ANTI-FIGHTER BARRAGE roll:",That player rerolls all of their dice.,codex 1
-Solar Flare,1,After you activate a system:,"During this movement , other players cannot use SPACE CANNON against your ships.",codex 1
-War Machine,4,When 1 or more of your units use PRODUCTION :,Apply +4 to the total PRODUCTION value of your units and reduce the combined cost of the produced units by 1.,codex 1
-Archaeological Expedition,1,As an Action :,Reveal the top 3 cards of an exploration deck that matches a planet you control; gain any relic fragments that you reveal and discard the rest.,pok
-Confounding Legal Text,1,When another player is elected as the outcome of an agenda :,You are the elected player instead.,pok
-Coup d'Etat,1,When another player would perform a strategic action :,End that player's turn; the strategic action is not resolved and the strategy card is not exhausted .,pok
+Solar Flare,1,After you activate a system,"During this movement , other players cannot use SPACE CANNON against your ships.",codex 1
+War Machine,4,When 1 or more of your units use PRODUCTION,Apply +4 to the total PRODUCTION value of your units and reduce the combined cost of the produced units by 1.,codex 1
+Archaeological Expedition,1,As an Action,Reveal the top 3 cards of an exploration deck that matches a planet you control; gain any relic fragments that you reveal and discard the rest.,pok
+Confounding Legal Text,1,When another player is elected as the outcome of an agenda,You are the elected player instead.,pok
+Coup d'Etat,1,When another player would perform a strategic action,End that player's turn; the strategic action is not resolved and the strategy card is not exhausted .,pok
 Deadly Plot,1,"During the agenda phase , when an outcome would be resolved:","If you voted for or predicted another outcome, discard the agenda instead; the agenda is resolved with no effect and it is not replaced. Then, exhaust all of your planets.",pok
-Decoy Operation,1,After another player activates a system that contains 1 or more of your structures :,Remove up to 2 of your ground forces from the game board and place them on a planet you control in the active system.,pok
-Diplomatic Pressure,4,When an agenda is revealed:,Choose another player; that player must give you 1 promissory note from their hand.,pok
-Divert Funding,1,As an Action :,"Return a non- unit upgrade , non- faction technology that you own to your technology deck. Then, research another technology.",pok
-Exploration Probe,1,As an Action :,Explore a frontier token that is in or adjacent to a system that contains 1 or more of your ships.,pok
-Manipulate Investments,1,At the start of the Strategy Phase :,Place a total of 5 trade goods from the supply on strategy cards of your choice; you must place these tokens on at least 3 different cards.,pok
-Nav Suite,1,After you activate a system:,"During the "" Movement "" step of this tactical action , ignore the effects of anomalies .",pok
-Refit Troops,1,As an Action :,Choose 1 or 2 of your infantry on the game board; replace each of those infantry with mechs .,pok
-Reveal Prototype,1,At the start of a combat :,Spend 4 resources to research a unit upgrade technology of the same type as 1 of your units that is participating in this combat.,pok
-Reverse Engineer,1,When another player discards an action card that has a component action :,Take that action card from the discard pile.,pok
+Decoy Operation,1,After another player activates a system that contains 1 or more of your structures,Remove up to 2 of your ground forces from the game board and place them on a planet you control in the active system.,pok
+Diplomatic Pressure,4,When an agenda is revealed,Choose another player; that player must give you 1 promissory note from their hand.,pok
+Divert Funding,1,As an Action,"Return a non- unit upgrade , non- faction technology that you own to your technology deck. Then, research another technology.",pok
+Exploration Probe,1,As an Action,Explore a frontier token that is in or adjacent to a system that contains 1 or more of your ships.,pok
+Manipulate Investments,1,At the start of the Strategy Phase,Place a total of 5 trade goods from the supply on strategy cards of your choice; you must place these tokens on at least 3 different cards.,pok
+Nav Suite,1,After you activate a system,"During the "" Movement "" step of this tactical action , ignore the effects of anomalies .",pok
+Refit Troops,1,As an Action,Choose 1 or 2 of your infantry on the game board; replace each of those infantry with mechs .,pok
+Reveal Prototype,1,At the start of a combat,Spend 4 resources to research a unit upgrade technology of the same type as 1 of your units that is participating in this combat.,pok
+Reverse Engineer,1,When another player discards an action card that has a component action,Take that action card from the discard pile.,pok
 Rout,1,"At the start of the ""Announce Retreats"" step of space combat , if you are the defender:","Your opponent must announce a retreat, if able.",pok
-Scuttle,1,As an Action:,Choose 1 or 2 of your non-fighter ships on the game board and return them to your reinforcements ; gain trade goods equal to the combined cost of those ships.,pok
-Seize Artifact,1,As an Action:,Choose 1 of your neighbors that has 1 or more relic fragments . That player must give you 1 relic fragment of your choice.,pok
-Waylay,1,Before you roll dice for ANTI-FIGHTER BARRAGE :,Hits from this roll are produced against all ships (not just fighters).,pok
-Black Market Dealings,1,When you are negotiating a transaction:,"You and the other player can include relics, action cards, and unscored secret objectives as part of the transaction. This card cannot be cancelled.",thunders edge
-Brillance,1,As an Action :,Ready 1 of your planets that has a technology speciality or choose 1 player to gain their breakthrough.,thunders edge
-Crash Landing,1,When your last ship in the active system is destroyed:,"Place 1 of your ground forces from the space area of the active system onto a planet in that system other than Mecatol Rex; if the planet contains other players' units, place your ground force into coexistence.",thunders edge
+Scuttle,1,As an Action,Choose 1 or 2 of your non-fighter ships on the game board and return them to your reinforcements ; gain trade goods equal to the combined cost of those ships.,pok
+Seize Artifact,1,As an Action,Choose 1 of your neighbors that has 1 or more relic fragments . That player must give you 1 relic fragment of your choice.,pok
+Waylay,1,Before you roll dice for ANTI-FIGHTER BARRAGE,Hits from this roll are produced against all ships (not just fighters).,pok
+Black Market Dealings,1,When you are negotiating a transaction,"You and the other player can include relics, action cards, and unscored secret objectives as part of the transaction. This card cannot be cancelled.",thunders edge
+Brillance,1,As an Action,Ready 1 of your planets that has a technology speciality or choose 1 player to gain their breakthrough.,thunders edge
+Crash Landing,1,When your last ship in the active system is destroyed,"Place 1 of your ground forces from the space area of the active system onto a planet in that system other than Mecatol Rex; if the planet contains other players' units, place your ground force into coexistence.",thunders edge
 Crisis,1,"At the end of any player's turn, if there are at least 2 players who have not passed :",Skip the next player's turn.,thunders edge
-Exchange Program,1,As an Action :,"Choose another player. You and the player may agree to place 1 infantry from each of your reinforcements into coexistence on a planet the other player controls that contains their ground forces; if no agreement is reached, you each discard 1 token from your fleet pool.",thunders edge
+Exchange Program,1,As an Action,"Choose another player. You and the player may agree to place 1 infantry from each of your reinforcements into coexistence on a planet the other player controls that contains their ground forces; if no agreement is reached, you each discard 1 token from your fleet pool.",thunders edge
 Extreme Duress,1,"At the start of another player's turn, if they have a readied strategy card :","If that player's next action is not a strategic action, they discard all of their action cards, gives you all of their trade goods, and shows you all of their secret objectives.",thunders edge
-Lie in Wait,1,After 2 of your neighbours resolve a transaction :,"Look at each of those player's hands of action cards, then choose and take 1 action card from each.",thunders edge
-Mercenary Contract,1,As an Action :,"Spend 2 trade goods to place 2 neutral infantry on any non-home planet that contains no units; if that planet was owned by another player, they return its planet card to the planet card deck.",thunders edge
-Pirate Contract,4,As an Action :,Place 1 neutral destroyer in a non-home system that contains no non-neutral ships.,thunders edge
-Pirate Fleet,1,As an Action :,"Spend 3 resources to place 1 neutral carrier, 1 neutral cruiser, 1 neutral destroyer, and 2 neutral fighters in a non-home system that contains no non-neutral ships.",thunders edge
+Lie in Wait,1,After 2 of your neighbours resolve a transaction,"Look at each of those player's hands of action cards, then choose and take 1 action card from each.",thunders edge
+Mercenary Contract,1,As an Action,"Spend 2 trade goods to place 2 neutral infantry on any non-home planet that contains no units; if that planet was owned by another player, they return its planet card to the planet card deck.",thunders edge
+Pirate Contract,4,As an Action,Place 1 neutral destroyer in a non-home system that contains no non-neutral ships.,thunders edge
+Pirate Fleet,1,As an Action,"Spend 3 resources to place 1 neutral carrier, 1 neutral cruiser, 1 neutral destroyer, and 2 neutral fighters in a non-home system that contains no non-neutral ships.",thunders edge
 Puppets on a String,1,"At the end of any player's turn, if you have passed :",Perform 1 action.,thunders edge
-Rescue,1,After another player moves ships into a system that contains your ships:,You may move 1 of your ships into the active system from any system that does not contain one of your command tokens.,thunders edge
-Strategize,4,As an Action :,Perform the secondary ability of any readied or unchosen strategy card,thunders edge
-Overrule,1,As an Action :,Perform the primary ability of any readied or unchosen strategy card,thunders edge
-Master PlanΩ,1,After you perform an action :,Perform an additional action.,thunders edge
-Fighter ConscriptionΩ,1,As an Action:,Place 1 fighter from your reinforcements in each system that contains 1 or more of your space docks or ships that have a capacity value; they cannot be placed in systems that contain other players' ships.,thunders edge
-BlitzΩ,1,At the start of an invasion :,Each of your non-fighter ships in the active system that does not have BOMBARDMENT gains BOMBARDMENT 6 until the end of the invasion.,thunders edge
-Hack ElectionΩ,1,After an agenda is revealed:,"During this agenda, you vote last.",thunders edge
-Solar FlareΩ,1,After you activate a system:,"During the ""Movement "" step of this tactical action, other players cannot use SPACE CANNON against your ships.",thunders edge
-CounterstrokeΩ,1,After another player activates a system that contains 1 of your command tokens :,Return that command token to your tactic pool .,thunders edge
-Ghost SquadΩ,1,After another player commits units to land on a planet you control:,Move any number of ground forces from any planet you control in the active system to any other planet you control in the active system.,thunders edge
-War MachineΩ,4,When 1 or more of your units use PRODUCTION :,Apply +4 to the total PRODUCTION value of those units and reduce the combined cost of the produced units by 1.,thunders edge
+Rescue,1,After another player moves ships into a system that contains your ships,You may move 1 of your ships into the active system from any system that does not contain one of your command tokens.,thunders edge
+Strategize,4,As an Action,Perform the secondary ability of any readied or unchosen strategy card,thunders edge
+Overrule,1,As an Action,Perform the primary ability of any readied or unchosen strategy card,thunders edge
+Master Plan Ω,1,After you perform an action,Perform an additional action.,thunders edge
+Fighter Conscription Ω,1,As an Action,Place 1 fighter from your reinforcements in each system that contains 1 or more of your space docks or ships that have a capacity value; they cannot be placed in systems that contain other players' ships.,thunders edge
+Blitz Ω,1,At the start of an invasion,Each of your non-fighter ships in the active system that does not have BOMBARDMENT gains BOMBARDMENT 6 until the end of the invasion.,thunders edge
+Hack Election Ω,1,After an agenda is revealed,"During this agenda, you vote last.",thunders edge
+Solar Flare Ω,1,After you activate a system,"During the ""Movement "" step of this tactical action, other players cannot use SPACE CANNON against your ships.",thunders edge
+Counterstroke Ω,1,After another player activates a system that contains 1 of your command tokens,Return that command token to your tactic pool .,thunders edge
+Ghost Squad Ω,1,After another player commits units to land on a planet you control,Move any number of ground forces from any planet you control in the active system to any other planet you control in the active system.,thunders edge
+War Machine Ω,4,When 1 or more of your units use PRODUCTION,Apply +4 to the total PRODUCTION value of those units and reduce the combined cost of the produced units by 1.,thunders edge
