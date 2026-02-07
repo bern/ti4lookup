@@ -144,17 +144,26 @@ export async function loadAllCards(): Promise<CardItem[]> {
   const actionItems: CardItem[] = actionCards.map((c) => ({
     type: 'action',
     ...c,
-    searchText: [c.name, c.effect, c.timing, c.version].filter(Boolean).join(' '),
+    searchText: [c.name, c.quantity, c.timing, c.effect, c.version].filter(Boolean).join(' '),
   }))
   const strategyItems: CardItem[] = strategyCards.map((c) => ({
     type: 'strategy',
     ...c,
-    searchText: [c.name, c.primary, c.secondary, c.color, c.version].filter(Boolean).join(' '),
+    searchText: [c.name, c.initiative, c.primary, c.secondary, c.color, c.version].filter(Boolean).join(' '),
   }))
   const agendaItems: CardItem[] = agendas.map((c) => ({
     ...c,
     type: 'agenda',
-    searchText: [c.name, c.agendaType, c.elect, c.effect, c.version].filter(Boolean).join(' '),
+    searchText: [
+      c.name,
+      c.agendaType,
+      c.elect,
+      c.effect,
+      c.version,
+      c.removedInPok === 'true' ? 'removed prophecy kings pok' : '',
+    ]
+      .filter(Boolean)
+      .join(' '),
   }))
   const publicObjectiveItems: CardItem[] = objectives.public.map((c) => ({
     ...c,
@@ -169,7 +178,16 @@ export async function loadAllCards(): Promise<CardItem[]> {
   const legendaryPlanetItems: CardItem[] = legendaryPlanets.map((c) => ({
     ...c,
     type: 'legendary_planet',
-    searchText: [c.name, c.trait, c.technology, c.ability, c.howToAcquire, c.version].filter(Boolean).join(' '),
+    searchText: [
+      c.name,
+      c.trait,
+      c.technology,
+      c.resources,
+      c.influence,
+      c.ability,
+      c.howToAcquire,
+      c.version,
+    ].filter(Boolean).join(' '),
   }))
   return [
     ...actionItems,

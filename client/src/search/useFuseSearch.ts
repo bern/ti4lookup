@@ -9,6 +9,8 @@ export type CardType = 'action' | 'agenda' | 'strategy' | 'public_objective' | '
 
 /**
  * Fuse.js over cards. Searches name and searchText.
+ * ignoreLocation: true so multi-word queries (e.g. "victory point") match when words appear anywhere in the text.
+ * threshold: 0.5 so slight variants (e.g. "victory points") still match "victory point".
  */
 function createFuse(cards: CardItem[]): Fuse<CardItem> {
   return new Fuse(cards, {
@@ -16,8 +18,8 @@ function createFuse(cards: CardItem[]): Fuse<CardItem> {
       { name: 'name', weight: 0.5 },
       { name: 'searchText', weight: 0.5 },
     ],
-    threshold: 0.4,
-    ignoreLocation: false,
+    threshold: 0.5,
+    ignoreLocation: true,
   })
 }
 
