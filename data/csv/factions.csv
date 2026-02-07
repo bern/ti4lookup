@@ -1,32 +1,32 @@
-name,id
-The Arborec,arborec
-The Barony of Letnev,barony
-The Clan of Saar,saar
-The Embers of Muaat,muaat
-The Emirates of Hacan,hacan
-The Federation of Sol,sol
-The Ghosts of Creuss,ghosts
-The L1Z1X Mindnet,lizix
-The Mentak Coalition,mentak
-The Naalu Collective,naalu
-The Nekro Virus,nekro
-Sardakk N'orr,sardakk
-The Universities of Jol-nar,jolnar
-The Winnu,winnu
-The Xxcha Kingdom,xxcha
-The Yin Brotherhood,yin
-The Yssaril Tribes,yssaril
-The Argent Flight,argent
-The Empyrean,empyrean
-The Mahact Gene-Sorcerers,mahact
-The Naaz-Rokha Alliance,nra
-The Nomad,nomad
-The Titans of Ul,titans
-The Vuil'Raith Cabal,cabal
-The Council Keleres,keleres
-The Crimson Rebellion,crimson
-The Deepwrought Scholorate,deepwrought
-The Firmament,firmament
-The Obsidian,obsidian
-Last Bastion,bastion
-The Ral Nel Consortium,lizards
+name,id,version
+The Arborec,arborec,base game
+The Barony of Letnev,barony,base game
+The Clan of Saar,saar,base game
+The Embers of Muaat,muaat,base game
+The Emirates of Hacan,hacan,base game
+The Federation of Sol,sol,base game
+The Ghosts of Creuss,ghosts,base game
+The L1Z1X Mindnet,lizix,base game
+The Mentak Coalition,mentak,base game
+The Naalu Collective,naalu,base game
+The Nekro Virus,nekro,base game
+Sardakk N'orr,sardakk,base game
+The Universities of Jol-nar,jolnar,base game
+The Winnu,winnu,base game
+The Xxcha Kingdom,xxcha,base game
+The Yin Brotherhood,yin,base game
+The Yssaril Tribes,yssaril,base game
+The Argent Flight,argent,pok
+The Empyrean,empyrean,pok
+The Mahact Gene-Sorcerers,mahact,pok
+The Naaz-Rokha Alliance,nra,pok
+The Nomad,nomad,pok
+The Titans of Ul,titans,pok
+The Vuil'Raith Cabal,cabal,pok
+The Council Keleres,keleres,codex 3
+The Crimson Rebellion,crimson,thunders edge
+The Deepwrought Scholorate,deepwrought,thunders edge
+The Firmament,firmament,thunders edge
+The Obsidian,obsidian,thunders edge
+Last Bastion,bastion,thunders edge
+The Ral Nel Consortium,lizards,thunders edge
