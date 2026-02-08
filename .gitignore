@@ -35,3 +35,6 @@ venv/
 .venv/
 .pytest_cache/
 .mypy_cache/
+
+# async_ti4
+async_ti4/
