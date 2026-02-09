@@ -28,24 +28,24 @@ At the start of ground combat on a planet that contains 1 or more of your struct
 Plasma Scoring,,red,,[],"When 1 or more of your units use BOMBARDMENT or SPACE CANNON, 1 of those units may roll 1 additional die.",base game
 Self-Assembly Routines,,red,,[red],"After 1 or more of your units use PRODUCTION, you may exhaust this card to place 1 mech from your reinforcements on a planet you control in that system.
 After 1 of your mechs is destroyed, gain 1 trade good.",pok
-Carrier II,,unit upgrade,,"[blue,blue]","Cost 3, Combat 9, Move 2, Capacity 6",base game
-Cruiser II,,unit upgrade,,"[green,yellow,red]","Cost 2, Combat 6, Move 3, Capacity 1",base game
-Destroyer II,,unit upgrade,,"[red,red]","Cost 1, Combat 8, Move 2
+Carrier II,,unit upgrade,carrier,"[blue,blue]","Cost 3, Combat 9, Move 2, Capacity 6",base game
+Cruiser II,,unit upgrade,cruiser,"[green,yellow,red]","Cost 2, Combat 6, Move 3, Capacity 1",base game
+Destroyer II,,unit upgrade,destroyer,"[red,red]","Cost 1, Combat 8, Move 2
 ANTI-FIGHTER BARRAGE 6(x3)",base game
-Dreadnought II,,unit upgrade,,"[blue,blue,yellow]","Cost 4, Combat 5, Move 2, Capacity 1
+Dreadnought II,,unit upgrade,dreadnought,"[blue,blue,yellow]","Cost 4, Combat 5, Move 2, Capacity 1
 SUSTAIN DAMAGE, BOMBARDMENT 5
 This unit cannot be destroyed by ""Direct Hit"" action cards.",base game
-Fighter II,,unit upgrade,,"[green,blue]","Cost 1(x2), Combat 8, Move 2
+Fighter II,,unit upgrade,fighter,"[green,blue]","Cost 1(x2), Combat 8, Move 2
 This unit may move without being transported.
 Fighters in excess of your ships' capacity count against your fleet pool.",base game
-Infantry II,,unit upgrade,,"[green,green]","Cost 1(x2), Combat 7
+Infantry II,,unit upgrade,infantry,"[green,green]","Cost 1(x2), Combat 7
 After this unit is destroyed, roll 1 die. If the result is 6 or greater, place the unit on this card. At the start of your next turn, place each unit that is on this card on a planet you control in your home system.",base game
-PDS II,,unit upgrade,,"[red,yellow]","PLANETARY SHIELD, SPACE CANNON 5
+PDS II,,unit upgrade,pds,"[red,yellow]","PLANETARY SHIELD, SPACE CANNON 5
 You may use this unit's SPACE CANNON against ships that are adjacent to this unit's system.",base game
-Space Dock II,,unit upgrade,,"[yellow,yellow]","PRODUCTION X
+Space Dock II,,unit upgrade,space dock,"[yellow,yellow]","PRODUCTION X
 This unit's PRODUCTION value is equal to 4 more than the resource value of this planet.
 Up to 3 fighters in this system do not count against your ships' capacity.",base game
-War Sun,,unit upgrade,,"[red,red,red,yellow]","Cost 12, Combat 3(x3), Move 2, Capacity 6
+War Sun,,unit upgrade,war sun,"[red,red,red,yellow]","Cost 12, Combat 3(x3), Move 2, Capacity 6
 SUSTAIN DAMAGE, BOMBARDMENT 3(x3)
  Other players' units in this system lose PLANETARY SHIELD.",base game
 Graviton Laser System,,yellow,,[yellow],You may exhaust this card before 1 or more of your units uses SPACE CANNON; hits produced by those units must be assigned to non-fighter ships if able.,base game
@@ -56,10 +56,10 @@ Sarween Tools,,yellow,,[],"When 1 or more of your units use PRODUCTION, reduce t
 Scanlink Drone Network,,yellow,,[],"When you activate a system, you may explore 1 planet in that system which contains 1 or more of your units.",pok
 Transit Diodes,,yellow,,"[yellow,yellow]",You may exhaust this card at the start of your turn during the action phase; remove up to 4 of your ground forces from the game board and place them on 1 or more planets you control.,base game
 Bioplasmosis,arborec,green,,"[green,green]","At the end of the status phase, you may remove any number of infantry from planets you control and place them on 1 or more planets you control in the same or adjacent systems.",base game
-Letani Warrior II,arborec,unit upgrade,,"[green,green]","Cost 1(x2), Combat 7
+Letani Warrior II,arborec,unit upgrade,infantry,"[green,green]","Cost 1(x2), Combat 7
 PRODUCTION 2
 After this unit is destroyed, roll 1 die. If the result is 6 or greater, place the unit on this card. At the start of your next turn, place each unit that is on this card on a planet you control in your home system.",base game
-Strike Wing Alpha II,argent,unit upgrade,,"[red,red]","Cost 1, Combat 7, Move 2, Capacity 1
+Strike Wing Alpha II,argent,unit upgrade,destroyer,"[red,red]","Cost 1, Combat 7, Move 2, Capacity 1
 ANTI-FIGHTER BARRAGE 6(x3)
 When this unit uses ANTI-FIGHTER BARRAGE, each result of 9 or 10 also destroys 1 of your opponents infantry in the space area of the active system.",pok
 Aerie Hololattice,argent,yellow,,[yellow],"Other players cannot move ships through systems that contain your structures.
@@ -68,14 +68,14 @@ Non-Euclidean Shielding,barony,red,,"[red,red]","When 1 of your units uses SUSTA
 L4 Disruptors,barony,yellow,,[yellow],"During an invasion, units cannot use SPACE CANNON against your units.",base game
 Proxima Targeting VI,bastion,red,,[red],"Cancel 1 hit produced by BOMBARDMENT rolls made against your ground forces for each of your galvanized units present. 
 At the start of a round of ground combat, you may resolve BOMBARDMENT 8 (x3) against your opponent's ground forces; if you do, make an identical roll against your ground forces.",thunders edge
-"4X41C ""Helios"" V2",bastion,unit upgrade,,"[yellow,yellow]","This unit's PRODUCTION value is equal to 4 more than the resource value of this planet.
+"4X41C ""Helios"" V2",bastion,unit upgrade,space dock,"[yellow,yellow]","This unit's PRODUCTION value is equal to 4 more than the resource value of this planet.
 The resource value of this planet is increased by 2. 
 Up to 3 fighters in this system do not count against your ships' capacity.",thunders edge
 Vortex,cabal,red,,[red],ACTION: Exhaust this card to choose another player's non-structure unit in a system that is adjacent to 1 or more of your space docks. Capture 1 unit of that type from that player's reinforcements.,pok
-Dimensional Tear II,cabal,unit upgrade,,"[yellow,yellow]","PRODUCTION 7
+Dimensional Tear II,cabal,unit upgrade,space dock,"[yellow,yellow]","PRODUCTION 7
 This system is a gravity rift; your ships do not roll for this gravity rift. Place a dimensional tear token beneath this unit as a reminder.
 Up to 12 fighters in this system do not count against your ships' capacity.",pok
-Exile II,crimson,unit upgrade,,"[red,red]","Cost 1, Combat 7, Move 2, ANTI-FIGHTER BARRAGE 6 (x3). At the end of any players' combat in this unit's system or up to 2 systems away, you may place 1 active or inactive breach in that system.",thunders edge
+Exile II,crimson,unit upgrade,destroyer,"[red,red]","Cost 1, Combat 7, Move 2, ANTI-FIGHTER BARRAGE 6 (x3). At the end of any players' combat in this unit's system or up to 2 systems away, you may place 1 active or inactive breach in that system.",thunders edge
 Subatomic Splicer,crimson,yellow,,[yellow],"When one of your ships is destroyed, you may produce a ship of the same type at a space dock in your home system.",thunders edge
 Hydrothermal Mining,deepwrought,green,,[green],"At the start of the status phase, gain 1 trade good for each ocean card in play.",thunders edge
 Radical Advancement,deepwrought,green,,[green],"At the start of the status phase, you may replace one of your non-unit upgrade technologies with a technology of the same color that has exactly 1 more prerequisite.",thunders edge
@@ -98,36 +98,32 @@ Gain the Custodia Vigilia planet card and its legendary planet ability card. You
 Nanomachines,lizards,red,,[red],"ACTION: Exhaust this card to place 1 PDS on a planet you control.
 ACTION: Exhaust this card to repair all of your damaged units.
 ACTION: Exhaust this card and discard 1 action card to draw 1 action card.",thunders edge
-Linkship II,lizards,unit upgrade,,"[red,red]","Cost 1, Combat 8, Move 4, ANTI-FIGHTER BARRAGE 6 (x3). This unit can use the SPACE CANNON ability of one of your structures in its space area; each linkship can trigger the same structure.",thunders edge
-Super Dreadnought II,lizix,unit upgrade,,"[blue,blue,yellow]","Cost 4, Combat 4, Move 2, Capacity 2
+Linkship II,lizards,unit upgrade,destroyer,"[red,red]","Cost 1, Combat 8, Move 4, ANTI-FIGHTER BARRAGE 6 (x3). This unit can use the SPACE CANNON ability of one of your structures in its space area; each linkship can trigger the same structure.",thunders edge
+Super Dreadnought II,lizix,unit upgrade,dreadnought,"[blue,blue,yellow]","Cost 4, Combat 4, Move 2, Capacity 2
 SUSTAIN DAMAGE, BOMBARDMENT 4
 This unit cannot be destroyed by ""Direct Hit"" action cards.",base game
 Inheritance Systems,lizix,yellow,,"[yellow,yellow]",You may exhaust this card and spend 2 resources when you research a technology; ignore all of that technology's prerequisites.,base game
 Genetic Recombination,mahact,green,,[green],You may exhaust this card before a player casts votes; that player must cast at least 1 vote for an outcome of your choice or remove 1 token from their fleet pool and return it to their reinforcements.,pok
-Crimson Legionnaire II,mahact,unit upgrade,,"[green,green]","Cost 1(x2), Combat 7
+Crimson Legionnaire II,mahact,unit upgrade,infantry,"[green,green]","Cost 1(x2), Combat 7
 After this unit is destroyed, gain 1 commodity or convert 1 of your commodities to a trade good. Then, place the unit on this card. At the start of your next turn, place each unit that is on this card on a planet you control in your home system.",pok
 Mirror Computing,mentak,yellow,,"[yellow,yellow,yellow]","When you spend trade goods, each trade good is worth 2 resources or influence instead of 1.",base game
 Salvage Operations,mentak,yellow,,"[yellow,yellow]","After you win or lose a space combat, gain 1 trade good; if you won the combat, you may also produce 1 ship in that system of any ship type that was destroyed during the combat.",base game
 Magmus Reactor,muaat,red,,"[red,red]","Your ships can move into supernovas.
 Each supernova that contains 1 or more of your units gains the PRODUCTION 5 ability as if it were 1 of your units.",base game
-Prototype War Sun II,muaat,unit upgrade,,"[red,red,red,yellow]","Cost 10, Combat 3(x3), Move 3, Capacity 6
+Prototype War Sun II,muaat,unit upgrade,war sun,"[red,red,red,yellow]","Cost 10, Combat 3(x3), Move 3, Capacity 6
 SUSTAIN DAMAGE, BOMBARDMENT 3(x3)
 Other players' units in this system lose PLANETARY SHIELD.",base game
 Neuroglaive,naalu,green,,"[green,green,green]","After another player activates a system that contains 1 or more of your ships, that player removes 1 token from their fleet pool and returns it to their reinforcements.",base game
-Hybrid Crystal Fighter II,naalu,unit upgrade,,"[green,blue]","Cost 1(x2), Combat 7, Move 2
+Hybrid Crystal Fighter II,naalu,unit upgrade,fighter,"[green,blue]","Cost 1(x2), Combat 7, Move 2
 This unit may move without being transported.
 Fighters in excess of your ships' capacity count as 1/2 of a ship against your fleet pool.",base game
-???\_ERROR\_ERROR\_???,nekro,red,,[red],"ACTION: Exhaust this card to place 1 PDS on a planet you control. 
-ACTION: Exhaust this card to repair all of your damaged units. 
-ACTION: Exhaust this card and discard 1 action card to draw 1 action card.",pok
 Valefar Assimilator X,nekro,unit upgrade,,[],"When you would gain another player's technology using 1 of your faction abilities, you may place the ""X"" assimilator token on a faction technology owned by that player instead.
 While that token is on a technology, this card gains that technology's text.
 You cannot place an assimilator token on technology that already has an assimilator token.",base game
 Valefar Assimilator Y,nekro,unit upgrade,,[],"When you would gain another player's technology using 1 of your faction abilities, you may place the ""Y"" assimilator token on a faction technology owned by that player instead.
 While that token is on a technology, this card gains that technology's text.
 You cannot place an assimilator token on technology that already has an assimilator token.",base game
-???\_NULL\_REFERENCE\_???,nekro,yellow,,[yellow],"When one of your ships is destroyed, you may produce a ship of the same type at a space dock in your home system.",pok
-Memoria II,nomad,unit upgrade,,"[green,blue,yellow]","Cost 8, Combat 5(x2), Move 2, Capacity 6
+Memoria II,nomad,unit upgrade,flagship,"[green,blue,yellow]","Cost 8, Combat 5(x2), Move 2, Capacity 6
 SUSTAIN DAMAGE, ANTI-FIGHTER BARRAGE 5(x3)
 You may treat this unit as if it were adjacent to systems that contain one or more of your mechs.",pok
 Temporal Command Suite,nomad,yellow,,[yellow],"After any player's agent becomes exhausted, you may exhaust this card to ready that agent; if you ready another player's agent, you may perform a transaction with that player.",pok
@@ -139,25 +135,25 @@ Planesplitter (Obsidian),obsidian,yellow,,[],"When you perform a strategic actio
 This technology cannot be researched.",thunders edge
 Chaos Mapping,saar,blue,,[blue],"Other players cannot activate asteroid fields that contain 1 or more of your ships.
 At the start of your turn during the action phase, you may produce 1 unit in a system that contains at least 1 of your units that has PRODUCTION.",base game
-Floating Factory II,saar,unit upgrade,,"[yellow,yellow]","Move 2, Capacity 5
+Floating Factory II,saar,unit upgrade,space dock,"[yellow,yellow]","Move 2, Capacity 5
 PRODUCTION 7.
 This unit is placed in the space area instead of on a planet.
 This unit can move and retreat as if it were a ship.
 If this unit is blockaded, it is destroyed.",base game
 Valkyrie Particle Weave,sardakk,red,,"[red,red]","After making combat rolls during a round of ground combat, if your opponent produced 1 or more hits, you produce 1 additional hit.",base game
-Exotrireme II,sardakk,unit upgrade,,"[blue,blue,yellow]","Cost 4, Combat 5, Move 2, Capacity 1
+Exotrireme II,sardakk,unit upgrade,dreadnought,"[blue,blue,yellow]","Cost 4, Combat 5, Move 2, Capacity 1
 SUSTAIN DAMAGE, BOMBARDMENT 4(x2)
 This unit cannot be destroyed by ""Direct Hit"" action cards.
 After a round of space combat, you may destroy this unit to destroy up to 2 ships in this system.",base game
-Advanced Carrier II,sol,unit upgrade,,"[blue,blue]","Cost 3, Combat 9, Move 2, Capacity 8
+Advanced Carrier II,sol,unit upgrade,carrier,"[blue,blue]","Cost 3, Combat 9, Move 2, Capacity 8
 SUSTAIN DAMAGE",base game
-Spec Ops II,sol,unit upgrade,,"[green,green]","Cost 1(x2), Combat 6
+Spec Ops II,sol,unit upgrade,infantry,"[green,green]","Cost 1(x2), Combat 6
 After this unit is destroyed, roll 1 die. If the result is 5 or greater, place the unit on this card. At the start of your next turn, place each unit that is on this card on a planet you control in your home system.",base game
-Hel-Titan II,titans,unit upgrade,,"[yellow,red]","Combat 6
+Hel-Titan II,titans,unit upgrade,pds,"[yellow,red]","Combat 6
 PLANETARY SHIELD, SPACE CANNON 5, SUSTAIN DAMAGE, PRODUCTION 1
 This unit is treated as both a structure and a ground force. It cannot be transported.
 You may use this unit's SPACE CANNON against ships that are adjacent to this unit's systems.",pok
-Saturn Engine II,titans,unit upgrade,,"[green,yellow,red]","Cost 2, Combat 6, Move 3, Capacity 2
+Saturn Engine II,titans,unit upgrade,cruiser,"[green,yellow,red]","Cost 2, Combat 6, Move 3, Capacity 2
 SUSTAIN DAMAGE",pok
 Lazax Gate Folding,winnu,blue,,"[blue,blue]","During your tactical actions, if you do not control Mecatol Rex, treat its system as if it has both an α and β wormhole.
 ACTION: If you control Mecatol Rex, exhaust this card to place 1 infantry from your reinforcements on Mecatol Rex.",base game
