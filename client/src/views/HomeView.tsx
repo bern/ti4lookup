@@ -1,4 +1,4 @@
-export type View = 'home' | 'search' | 'action' | 'agenda' | 'strategy' | 'public_objective' | 'secret_objective' | 'legendary_planet' | 'exploration' | 'faction_ability' | 'faction_leader' | 'promissory_note' | 'breakthrough'
+export type View = 'home' | 'search' | 'action' | 'agenda' | 'strategy' | 'public_objective' | 'secret_objective' | 'legendary_planet' | 'exploration' | 'faction_ability' | 'faction_leader' | 'promissory_note' | 'breakthrough' | 'technology'
 
 interface HomeViewProps {
   onOpenSearch: () => void
@@ -93,6 +93,13 @@ export function HomeView({ onOpenSearch, onOpenCategory }: HomeViewProps) {
           onClick={() => onOpenCategory('breakthrough')}
         >
           Breakthroughs
+        </button>
+        <button
+          type="button"
+          className="home-category-btn"
+          onClick={() => onOpenCategory('technology')}
+        >
+          Technologies
         </button>
       </nav>
     </div>

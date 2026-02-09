@@ -21,6 +21,16 @@ const CATEGORY_LABELS: Record<CardItem['type'], string> = {
   faction_leader: 'Faction Leaders',
   promissory_note: 'Promissory Notes',
   breakthrough: 'Breakthroughs',
+  technology: 'Technologies',
+}
+
+/** Parse prerequisites string e.g. "[blue,blue,yellow]" into color ids for icons. */
+function parsePrerequisiteIds(prereq: string): string[] {
+  const s = (prereq ?? '').trim()
+  if (!s || s === '[]') return []
+  const inner = s.replace(/^\[|\]$/g, '').trim()
+  if (!inner) return []
+  return inner.split(',').map((c) => c.trim().toLowerCase()).filter((c) => TECH_TYPE_IDS.has(c))
 }
 
 /** Image ids to show in card footer (faction/tech/trait). */
@@ -30,6 +40,12 @@ function getCardImages(card: CardItem): string[] {
   if (card.type === 'faction_leader' && card.factionId) ids.push(card.factionId)
   if (card.type === 'promissory_note' && card.factionId) ids.push(card.factionId)
   if (card.type === 'breakthrough' && card.factionId) ids.push(card.factionId)
+  if (card.type === 'technology') {
+    if (card.factionId) ids.push(card.factionId)
+    const t = card.techType?.toLowerCase()
+    if (t && TECH_TYPE_IDS.has(t)) ids.push(t)
+    /* unit upgrades: no type icon */
+  }
   if (card.type === 'exploration') {
     const t = card.explorationType?.toLowerCase()
     if (t && EXPLORATION_TYPE_IDS.has(t)) ids.push(t)
@@ -44,7 +60,9 @@ function getCardImages(card: CardItem): string[] {
 }
 
 function CardFooter({ card }: { card: CardItem }) {
-  const label = CATEGORY_LABELS[card.type]
+  const baseLabel = CATEGORY_LABELS[card.type]
+  const factionName = 'factionName' in card ? card.factionName : undefined
+  const label = factionName ? `${baseLabel} • ${factionName}` : baseLabel
   const imageIds = getCardImages(card)
   return (
     <footer className="result-row__footer">
@@ -248,9 +266,7 @@ export function ResultRow({ card }: ResultRowProps) {
       <article className="result-row result-row--promissory-note" style={bgStyle}>
         <header className="result-row__header">
           <span className="result-row__name">{card.name}</span>
-          <span className="result-row__meta">
-            {card.factionId ? `${card.factionId} · ` : ''}{card.version}
-          </span>
+          <span className="result-row__meta">{card.version}</span>
         </header>
         <p className="result-row__effect">{card.effect}</p>
         <CardFooter card={card} />
@@ -263,11 +279,34 @@ export function ResultRow({ card }: ResultRowProps) {
       <article className="result-row result-row--breakthrough" style={bgStyle}>
         <header className="result-row__header">
           <span className="result-row__name">{card.name}</span>
-          <span className="result-row__meta">
-            {card.factionId ? `${card.factionId} · ` : ''}{card.synergy || ''}
-          </span>
+          <span className="result-row__meta">{card.synergy || ''}</span>
         </header>
         <p className="result-row__effect">{card.effect}</p>
+        <CardFooter card={card} />
+      </article>
+    )
+  }
+
+  if (card.type === 'technology') {
+    const prereqIds = parsePrerequisiteIds(card.prerequisites)
+    const meta = [card.techType, card.unit, card.version].filter(Boolean).join(' · ')
+    return (
+      <article className="result-row result-row--technology" style={bgStyle}>
+        <header className="result-row__header">
+          <span className="result-row__name">{card.name}</span>
+          <span className="result-row__meta">{meta}</span>
+        </header>
+        <p className="result-row__effect">{card.effect}</p>
+        {prereqIds.length > 0 && (
+          <>
+            <p className="result-row__label">Prerequisites:</p>
+            <span className="result-row__prerequisites">
+              {prereqIds.map((id, i) => (
+                <img key={`${id}-${i}`} src={`${IMAGES_BASE}/${id}.png`} alt="" className="result-row__icon" />
+              ))}
+            </span>
+          </>
+        )}
         <CardFooter card={card} />
       </article>
     )

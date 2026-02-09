@@ -85,18 +85,22 @@ export interface Exploration {
 
 /**
  * Faction ability from CSV. Columns: faction id, name, text.
+ * factionName is set at load from factions.csv for display (category footer).
  */
 export interface FactionAbility {
   factionId: string
+  factionName?: string
   name: string
   text: string
 }
 
 /**
  * Faction leader from CSV. Columns: faction id, type, name, unlock condition, ability name, ability, version.
+ * factionName is set at load from factions.csv for display (category footer).
  */
 export interface FactionLeader {
   factionId: string
+  factionName?: string
   leaderType: string
   name: string
   unlockCondition: string
@@ -107,22 +111,42 @@ export interface FactionLeader {
 
 /**
  * Promissory note from CSV. Columns: name, faction id, effect, version.
+ * factionName is set at load from factions.csv for display (category footer).
  */
 export interface PromissoryNote {
   name: string
   factionId: string
+  factionName?: string
   effect: string
   version: string
 }
 
 /**
  * Breakthrough from CSV. Columns: faction id, name, synergy, effect.
+ * factionName is set at load from factions.csv for display (category footer).
  */
 export interface Breakthrough {
   factionId: string
+  factionName?: string
   name: string
   synergy: string
   effect: string
+}
+
+/**
+ * Technology from CSV. Columns: name, faction id, type, unit, prerequisites, effect, version.
+ * type: blue, green, red, yellow, or unit upgrade. prerequisites: e.g. "[blue,blue,yellow]".
+ * factionName is set at load from factions.csv for display (category footer).
+ */
+export interface Technology {
+  name: string
+  factionId: string
+  techType: string
+  unit: string
+  prerequisites: string
+  effect: string
+  version: string
+  factionName?: string
 }
 
 /** Combined item for search/display with searchText for Fuse. */
@@ -138,3 +162,4 @@ export type CardItem =
   | (FactionLeader & { type: 'faction_leader'; searchText: string })
   | (PromissoryNote & { type: 'promissory_note'; searchText: string })
   | (Breakthrough & { type: 'breakthrough'; searchText: string })
+  | (Technology & { type: 'technology'; searchText: string })

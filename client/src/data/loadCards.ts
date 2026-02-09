@@ -1,5 +1,5 @@
 import Papa from 'papaparse'
-import type { ActionCard, StrategyCard, Agenda, PublicObjective, SecretObjective, LegendaryPlanet, Exploration, FactionAbility, FactionLeader, PromissoryNote, Breakthrough, CardItem } from '../types'
+import type { ActionCard, StrategyCard, Agenda, PublicObjective, SecretObjective, LegendaryPlanet, Exploration, FactionAbility, FactionLeader, PromissoryNote, Breakthrough, Technology, CardItem } from '../types'
 
 const ACTION_CSV_URL = '/action_cards.csv'
 const STRATEGY_CSV_URL = '/strategy_cards.csv'
@@ -11,6 +11,7 @@ const FACTION_ABILITIES_CSV_URL = '/faction_abilities.csv'
 const FACTION_LEADERS_CSV_URL = '/faction_leaders.csv'
 const PROMISSORY_NOTES_CSV_URL = '/promissory_notes.csv'
 const BREAKTHROUGHS_CSV_URL = '/breakthroughs.csv'
+const TECHNOLOGIES_CSV_URL = '/technologies.csv'
 const FACTIONS_CSV_URL = '/factions.csv'
 
 function parseCsv<T>(url: string, mapRow: (row: Record<string, string>) => T): Promise<T[]> {
@@ -215,10 +216,25 @@ export async function loadBreakthroughs(): Promise<Breakthrough[]> {
 }
 
 /**
- * Loads action cards, strategy cards, agendas, objectives, legendary planets, exploration, faction abilities, faction leaders, promissory notes, breakthroughs; returns a combined CardItem[] for search/display.
+ * Fetches and parses technologies CSV. Columns: name, faction id, type, unit, prerequisites, effect, version.
+ */
+export async function loadTechnologies(): Promise<Technology[]> {
+  return parseCsv(TECHNOLOGIES_CSV_URL, (row) => ({
+    name: row.name ?? '',
+    factionId: (row['faction id'] ?? '').trim(),
+    techType: (row.type ?? '').trim(),
+    unit: (row.unit ?? '').trim(),
+    prerequisites: (row.prerequisites ?? '').trim(),
+    effect: row.effect ?? '',
+    version: row.version ?? '',
+  }))
+}
+
+/**
+ * Loads action cards, strategy cards, agendas, objectives, legendary planets, exploration, faction abilities, faction leaders, promissory notes, breakthroughs, technologies; returns a combined CardItem[] for search/display.
  */
 export async function loadAllCards(): Promise<CardItem[]> {
-  const [actionCards, strategyCards, agendas, objectives, legendaryPlanets, exploration, factionAbilities, factionLeaders, promissoryNotes, breakthroughs, factionNames] = await Promise.all([
+  const [actionCards, strategyCards, agendas, objectives, legendaryPlanets, exploration, factionAbilities, factionLeaders, promissoryNotes, breakthroughs, technologies, factionNames] = await Promise.all([
     loadActionCards(),
     loadStrategyCards(),
     loadAgendas(),
@@ -229,6 +245,7 @@ export async function loadAllCards(): Promise<CardItem[]> {
     loadFactionLeaders(),
     loadPromissoryNotes(),
     loadBreakthroughs(),
+    loadTechnologies(),
     loadFactionNames(),
   ])
   const actionItems: CardItem[] = actionCards.map((c) => ({
@@ -286,23 +303,33 @@ export async function loadAllCards(): Promise<CardItem[]> {
   }))
   const factionAbilityItems: CardItem[] = factionAbilities.map((c) => ({
     ...c,
+    factionName: factionNames.get(c.factionId) ?? undefined,
     type: 'faction_ability',
     searchText: [c.factionId, factionNames.get(c.factionId), c.name, c.text].filter(Boolean).join(' '),
   }))
   const factionLeaderItems: CardItem[] = factionLeaders.map((c) => ({
     ...c,
+    factionName: factionNames.get(c.factionId) ?? undefined,
     type: 'faction_leader',
     searchText: [c.factionId, factionNames.get(c.factionId), c.leaderType, c.name, c.unlockCondition, c.abilityName, c.ability, c.version].filter(Boolean).join(' '),
   }))
   const promissoryNoteItems: CardItem[] = promissoryNotes.map((c) => ({
     ...c,
+    factionName: c.factionId ? (factionNames.get(c.factionId) ?? undefined) : undefined,
     type: 'promissory_note',
     searchText: [c.name, c.factionId, factionNames.get(c.factionId), c.effect, c.version].filter(Boolean).join(' '),
   }))
   const breakthroughItems: CardItem[] = breakthroughs.map((c) => ({
     ...c,
+    factionName: factionNames.get(c.factionId) ?? undefined,
     type: 'breakthrough',
     searchText: [c.factionId, factionNames.get(c.factionId), c.name, c.synergy, c.effect].filter(Boolean).join(' '),
+  }))
+  const technologyItems: CardItem[] = technologies.map((c) => ({
+    ...c,
+    factionName: c.factionId ? (factionNames.get(c.factionId) ?? undefined) : undefined,
+    type: 'technology',
+    searchText: [c.name, c.factionId, factionNames.get(c.factionId), c.techType, c.unit, c.prerequisites, c.effect, c.version].filter(Boolean).join(' '),
   }))
   return [
     ...actionItems,
@@ -316,5 +343,6 @@ export async function loadAllCards(): Promise<CardItem[]> {
     ...factionLeaderItems,
     ...promissoryNoteItems,
     ...breakthroughItems,
+    ...technologyItems,
   ]
 }

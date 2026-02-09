@@ -315,3 +315,10 @@ body {
   height: 1.25rem;
   object-fit: contain;
 }
+
+.result-row__prerequisites {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+}

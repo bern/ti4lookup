@@ -138,6 +138,12 @@ export function SearchView({
                 <ResultsList cards={partitioned.breakthrough} />
               </section>
             )}
+            {partitioned.technology.length > 0 && (
+              <section className="results-section" aria-label="Technologies">
+                <h2 className="section-title">Technologies</h2>
+                <ResultsList cards={partitioned.technology} />
+              </section>
+            )}
             {results.length === 0 && (
               <p className="results-message">No results found.</p>
             )}
