@@ -4,9 +4,10 @@ Build data/csv/technologies.csv from async_ti4/resources/data/technologies.
 
 Sources: pok.json, te_techs.json only.
 
-Output columns: name, faction id, type, prerequisites, effect, version
+Output columns: name, faction id, type, unit, prerequisites, effect, version
 - type: unit upgrade, green, red, blue, or yellow (from types: UNITUPGRADE, BIOTIC, WARFARE, PROPULSION, CYBERNETIC)
-- prerequisites: stringified JSON array, e.g. ["blue","blue","yellow"] for requirements "BBY"
+- unit: empty by default (reserved for unit upgrade techs)
+- prerequisites: array string, e.g. [blue,blue,yellow] for requirements "BBY"
 - effect: text
 - version: from source (base->base game, pok->pok, codex1->codex 1, thunders_edge->thunders edge, etc.)
 """
@@ -93,7 +94,7 @@ def source_to_version(source: str) -> str:
 
 
 def main() -> None:
-    rows: list[tuple[str, str, str, str, str, str]] = []
+    rows: list[tuple[str, str, str, str, str, str, str]] = []
 
     for filename in TECH_SOURCES:
         jpath = TECH_DIR / filename
@@ -108,18 +109,19 @@ def main() -> None:
             faction_id = faction_to_csv_id(faction_key) if faction_key else ""
             types_list = tech.get("types") or []
             t = tech_type(types_list)
+            unit = ""  # default empty
             requirements = tech.get("requirements") or ""
             prerequisites = requirements_to_prereq_array(requirements)
             effect = (tech.get("text") or "").strip()
             version = source_to_version(tech.get("source") or "")
-            rows.append((name, faction_id, t, prerequisites, effect, version))
+            rows.append((name, faction_id, t, unit, prerequisites, effect, version))
 
     rows.sort(key=lambda r: (r[1].lower(), r[2].lower(), r[0].lower()))
 
     OUT_CSV.parent.mkdir(parents=True, exist_ok=True)
     with open(OUT_CSV, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
-        writer.writerow(["name", "faction id", "type", "prerequisites", "effect", "version"])
+        writer.writerow(["name", "faction id", "type", "unit", "prerequisites", "effect", "version"])
         writer.writerows(rows)
 
     print(f"Wrote {len(rows)} rows to {OUT_CSV}")
