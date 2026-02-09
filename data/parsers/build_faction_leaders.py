@@ -4,9 +4,10 @@ Build data/csv/faction_leaders.csv from async_ti4/resources/data/leaders.
 
 Sources: pok.json, te_leaders.json only.
 
-Output columns: faction id, type, name, unlock condition, effect, version
+Output columns: faction id, type, name, unlock condition, ability name, ability, version
 - type: agent, commander, or hero
-- effect: abilityWindow concatenated with abilityText
+- ability name: hero abilities only (abilityName from JSON); empty for agent/commander
+- ability: abilityWindow concatenated with abilityText
 - version: pok, codex 1/2/3, or thunders edge (from source: pok -> pok, thunders_edge -> thunders edge)
 """
 import csv
@@ -63,7 +64,7 @@ def source_to_version(source: str) -> str:
 
 
 def main() -> None:
-    rows: list[tuple[str, str, str, str, str, str]] = []
+    rows: list[tuple[str, str, str, str, str, str, str]] = []
 
     for filename in LEADER_SOURCES:
         jpath = LEADERS_DIR / filename
@@ -82,16 +83,17 @@ def main() -> None:
                 continue
             name = (leader.get("name") or "").strip()
             unlock = (leader.get("unlockCondition") or "").strip()
-            effect = leader_effect(leader)
+            ability_name = (leader.get("abilityName") or "").strip() if leader_type == "hero" else ""
+            ability = leader_effect(leader)
             version = source_to_version(leader.get("source") or "")
-            rows.append((faction_id, leader_type, name, unlock, effect, version))
+            rows.append((faction_id, leader_type, name, unlock, ability_name, ability, version))
 
     rows.sort(key=lambda r: (r[0].lower(), r[1], r[2].lower()))
 
     OUT_CSV.parent.mkdir(parents=True, exist_ok=True)
     with open(OUT_CSV, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
-        writer.writerow(["faction id", "type", "name", "unlock condition", "effect", "version"])
+        writer.writerow(["faction id", "type", "name", "unlock condition", "ability name", "ability", "version"])
         writer.writerows(rows)
 
     print(f"Wrote {len(rows)} rows to {OUT_CSV}")
