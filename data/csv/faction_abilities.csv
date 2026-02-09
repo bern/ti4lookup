@@ -1,0 +1,75 @@
+faction id,name,text
+arborec,Mitosis,Your space docks cannot produce infantry At the start of the status phase. Place 1 infantry from your reinforcements on any planet you control.
+argent,Raid Formation,"When 1 or more of your units uses ANTI-FIGHTER BARRAGE. for each hit produced in excess of your opponent's fighters, choose 1 of your opponent's ships that has SUSTAIN DAMAGE to become damaged."
+argent,Zeal,You always vote first during the agenda phase When you cast at least 1 vote. cast 1 additional vote for each player in the game including you.
+barony,Armada,The maximum number of non-fighter ships you can have in each system is equal to 2 more than the number of tokens in your fleet pool
+barony,Munitions Reserves,At the start of each round of space combat. You may spend 2 trade goods to re-roll any number of your dice during that combat round.
+bastion,Galvanize,Galvanized units roll 1 additional die for combat rolls and unit abilities. When a game effect instructs a player to galvanize a unit. they place a galvanize token beneath it if it does not have one.
+bastion,Liberate,"When you gain control of a planet. ready that planet if it contains a number of your infantry equal to or greater than that planet's resource value; otherwise, place 1 infantry on that planet."
+bastion,Phoenix Standard,At the end of combat. you may galvanize 1 of your units that participated.
+cabal,Amalgamation,When you produce a unit. You may return 1 captured unit of that type to produce that unit without spending resources.
+cabal,Devour,Capture your opponent's non-structure units that are destroyed during combat.
+cabal,Riftmeld,When you research a unit upgrade technology. You may return 1 captured unit of that type to ignore all of the technology's prerequisites.
+crimson,Incursion,"When you activate a system that contains a breach, you may flip that breach; systems that contain active breaches are adjacent. at the end of the status phase, any player with ships in a system that contain an active breach may remove that breach."
+crimson,Sorrow,"When you create the game board, place the Sorrow (tile 94) where your home system would normally be placed, then place a inactive breach there. The Sorrow is not a home system. Then, place your home system (tile 118) in your play area."
+crimson,Sundered,You cannot use wormholes other than epsilon wormholes. Other players' units that move or are placed into your home system are destroyed.
+deepwrought,Oceanbound,"Any time you have more ocean cards than there are planets that contain your coexisting units, discard ocean cards until you do not. When your units begin coexisting on a planet. gain an ocean card and ready it."
+deepwrought,Research Team,"When ground forces are committed. if your units on that planet are not already coexisting, you may choose for your units to coexist."
+empyrean,Aetherpassage,After a player activates a system. You may allow that player to move their ships through systems that contain your ships.
+empyrean,Dark Whispers,"During setup, take the additional Empyrean faction promissory note; you have 2 faction promissory notes"
+empyrean,Voidborn,Nebulae do not affect your ships' movement
+firmament,Plots Within Plots,"You can score secret objectives already scored by other players if you fulfill their requirements; this does not count against your secret objective limit or the number you can score in a round. When you score another player's secret objective. do not gain a victory point; instead, place a facedown plot card into your play area with that player's control token on it."
+firmament,Puppets of the Blade,"If you have at least 1 plot card in your play area, gain the following ability:. ACTION: Purge The Firmament's faction sheet, leaders, planet cards, and promissory note. Then, gain all of the faction components for The Obsidian."
+ghosts,Creuss Gate,"When you create the game board, place the Creuss Gate (tile 17) where your home system would normally be placed. The Creuss Gate system is not a home system. Then, place your home system (tile 51) in your play area."
+ghosts,Quantum Entanglement,You treat all systems that contain either an alpha or beta wormhole as adjacent to each other. Game effects cannot prevent you from using this ability.
+ghosts,Slipstream,During your tactical actions. Apply +1 to the move value of each of your ships that starts its movement in your home system or in a system that contains either an alpha or beta wormhole.
+hacan,Arbiters,"When you are negotiating a transaction, action cards can be exchanged as part of that transaction."
+hacan,Guild Ships,You can negotiate transactions with players who are not your neighbor.
+hacan,Masters of Trade,"You do not have to spend a command token to resolve the secondary ability of the ""Trade"" strategy card."
+jolnar,Analytical,When you research a technology that is not a unit upgrade technology. You may ignore 1 prerequisite.
+jolnar,Brilliant,"When you spend a command token to resolve the secondary ability of the ""Technology"" strategy card. You may resolve the primary ability instead."
+jolnar,Fragile,Apply -1 to the result of each of your unit's combat rolls.
+keleres,Council Patronage,"At the start of the strategy phase. Replenish your commodities, then gain 1 trade good."
+keleres,Law's Order,At the start of any player's turn. You may spend 1 trade good or 1 commodity to treat all laws as blank until the end of that turn.
+keleres,The Tribuni,"During setup, choose an unplayed faction from among the Mentak, the Xxcha and The Argent Flight; take that faction's home system, command tokens and control markers. Additionally, take the Keleres Hero that corresponds to that faction"
+lizards,Miniaturization,"Your structures can be transported by any ship; this does not require or count against capacity. While your structures are in the space area, they cannot use their unit abilities. At the end of your tactical actions. you may place your structures that are in space areas onto planets you control in their respective systems."
+lizards,Survival Instinct,After a player activates a system that contains your ships. you may move up to 2 of your ships into the active system from adjacent systems that do not contain your command tokens.
+lizix,Assimilate,When you gain control of a planet. Replace each PDS and space dock that is on that planet with a matching unit from your reinforcements.
+lizix,Harrow,At the end of each round of ground combat. Your ships in the active system may use their BOMBARDMENT abilities against your opponent's ground forces on the planet.
+mahact,Edict,Other player's tokens in your fleet pool increase your fleet limit but cannot be redistributed. When you win a combat. Place 1 command token from your opponent's reinforcements in your fleet pool if it does not already contain 1 of that player's tokens.
+mahact,Hubris,"During setup, purge your ""Alliance"" promissory note. Other players cannot give you their 'Alliance"" promissory note."
+mahact,Imperia,"While another player's command token is in your fleet pool, you can use the ability of that player's commander, if it is unlocked."
+mentak,Ambush,"At the start of a space combat. You may roll 1 die for each of up to 2 of your cruisers or destroyers in the system. For each result equal to or greater than that ship's combat value, produce 1 hit; your opponent must assign it to 1 of their ships."
+mentak,Pillage,"After 1 of your neighbors gains trade goods or resolves a transaction. If they have 3 or more trade goods, you may take 1 of their trade goods or commodities."
+muaat,Gashlai Physiology,Your ships can move through supernovas
+muaat,Star Forge,ACTION. Spend 1 token from your strategy pool to place either 2 fighters or 1 destroyer from your reinforcements in a system that contains 1 or more of your war suns.
+naalu,Foresight,After another player moves ships into a system that contains 1 or more of your ships. You may place 1 token from your strategy pool in an adjacent system that does not contain another player's ships; move your ships from the active system into that system.
+naalu,Telepathic,"At the end of the strategy phase. Place the Naalu ""0"" token on your strategy card; you are first in initiative order."
+nekro,Galactic Threat,"You cannot vote on agendas Once per agenda phase, after an agenda is revealed. You may predict aloud the outcome of that agenda. If your prediction is correct, gain 1 technology that is owned by a player who voted how you predicted."
+nekro,Propagation,You cannot research technology When you would research a technology. Gain 3 command tokens instead.
+nekro,Technological Singularity,"Once per combat, after 1 of your opponent's units is destroyed. You may gain 1 technology that is owned by that player."
+nomad,Future Sight,"During the Agenda phase, after an outcome that you voted for or predicted is resolved. Gain 1 trade good"
+nomad,The Company,"During setup, take the 2 additional Nomad faction agents and place them next to your faction sheet; you have 3 agents"
+nra,Distant Suns,When you explore a planet that contains 1 of your mechs. You may draw 1 additional card; choose 1 to resolve and discard the rest.
+nra,Fabrication,ACTION. Either purge 2 of your relic fragments of the same type to gain 1 relic; or purge 1 of your relic fragments to gain 1 command token.
+obsidian,Marionettes,The player or players whose control tokens are on each plot card are the puppeted players for that plot.
+obsidian,Nocturne,This faction cannot be chosen during setup.
+obsidian,The Blade's Orchestra,"When this faction comes into play. flip your home system, double-sided faction components, and all of your in-play plot cards. Then, ready Cronos Hollow and Tallin Hollow if you control them."
+saar,Nomadic,You can score objectives even if you do not control the planets in your home system.
+saar,Scavenge,After you gain control of a planet. Gain 1 trade good.
+sardakk,Unrelenting,Apply +1 to the result of each of your unit's combat rolls.
+sol,Orbital Drop,ACTION. Spend 1 token from your strategy pool to place 2 infantry from your reinforcements on 1 planet you control.
+sol,Versatile,When you gain command tokens during the status phase. Gain 1 additional command token.
+titans,Awaken,After you activate a system that contains 1 or more of your sleeper tokens. You may replace each of those tokens with 1 PDS from your reinforcements.
+titans,Coalescence,"If your flagship or your AWAKEN faction ability places your units into the same space area or onto the same planet as another player's units, your units must participate in combat during ""Space Combat"" or ""Ground Combat"" steps."
+titans,Terragenesis,After you explore a planet that does not have a sleeper token. You may place or move 1 sleeper token onto that planet.
+winnu,Blood Ties,You do not have to spend influence to remove the custodians token from Mecatol Rex.
+winnu,Reclamation,After you resolve a tactical action during which you gained control of Mecatol Rex. You may place 1 PDS and 1 space dock from your reinforcements on Mecatol Rex.
+xxcha,Peace Accords,"After you resolve the primary or secondary ability of the ""Diplomacy"" strategy card. You may gain control of 1 planet other than Mecatol Rex that does not contain any units and is in a system that is adjacent to a planet you control."
+xxcha,Quash,When an agenda is revealed. You may spend 1 token from your strategy pool to discard that agenda and reveal 1 agenda from the top of the deck. Players vote on this agenda instead.
+yin,Devotion,After each space combat round. You may destroy 1 of your cruisers or destroyers in the active system to produce 1 hit and assign it to 1 of your opponent's ships in that system.
+yin,Indoctrination,At the start of a ground combat. You may spend 2 influence to replace 1 of your opponent's participating infantry with 1 infantry from your reinforcements.
+yin,Yin Breakthrough,"When you gain this card or score a public objective, gain the alliance ability of a random, unused faction."
+yssaril,Crafty,You can have any number of action cards in your hand. Game effects cannot prevent you from using this ability.
+yssaril,Scheming,"When you draw 1 or more action cards. Draw 1 additional action card. Then, choose and discard 1 action card from your hand."
+yssaril,Stall Tactics,ACTION. Discard 1 action card from your hand
