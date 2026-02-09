@@ -8,11 +8,15 @@ interface ResultsListProps {
 }
 
 function cardKey(card: CardItem, index: number): string {
-  if (card.type === 'action') return `action-${card.name}-${card.version}-${index}`
-  if (card.type === 'strategy') return `strategy-${card.name}-${card.version}-${card.initiative}-${index}`
-  if (card.type === 'agenda') return `agenda-${card.name}-${card.version}-${index}`
-  if (card.type === 'public_objective') return `public_objective-${card.name}-${card.version}-${index}`
-  return `secret_objective-${card.name}-${card.version}-${index}`
+  const version = 'version' in card ? card.version : ''
+  if (card.type === 'action') return `action-${card.name}-${version}-${index}`
+  if (card.type === 'strategy') return `strategy-${card.name}-${version}-${card.initiative}-${index}`
+  if (card.type === 'agenda') return `agenda-${card.name}-${version}-${index}`
+  if (card.type === 'public_objective') return `public_objective-${card.name}-${version}-${index}`
+  if (card.type === 'secret_objective') return `secret_objective-${card.name}-${version}-${index}`
+  if (card.type === 'legendary_planet') return `legendary_planet-${card.name}-${version}-${index}`
+  if (card.type === 'exploration') return `exploration-${card.name}-${card.explorationType}-${version}-${index}`
+  return `${card.type}-${card.name}-${index}`
 }
 
 export function ResultsList({ cards, loading, error }: ResultsListProps) {

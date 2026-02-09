@@ -1,11 +1,12 @@
 import Papa from 'papaparse'
-import type { ActionCard, StrategyCard, Agenda, PublicObjective, SecretObjective, LegendaryPlanet, CardItem } from '../types'
+import type { ActionCard, StrategyCard, Agenda, PublicObjective, SecretObjective, LegendaryPlanet, Exploration, CardItem } from '../types'
 
 const ACTION_CSV_URL = '/action_cards.csv'
 const STRATEGY_CSV_URL = '/strategy_cards.csv'
 const AGENDAS_CSV_URL = '/agendas.csv'
 const OBJECTIVES_CSV_URL = '/objectives.csv'
 const LEGENDARY_PLANETS_CSV_URL = '/legendary_planets.csv'
+const EXPLORATION_CSV_URL = '/exploration.csv'
 
 function parseCsv<T>(url: string, mapRow: (row: Record<string, string>) => T): Promise<T[]> {
   return fetch(url)
@@ -131,15 +132,29 @@ export async function loadLegendaryPlanets(): Promise<LegendaryPlanet[]> {
 }
 
 /**
- * Loads action cards, strategy cards, agendas, objectives, and legendary planets; returns a combined CardItem[] for search/display.
+ * Fetches and parses exploration CSV. Columns: name, type, quantity, effect, version.
+ */
+export async function loadExploration(): Promise<Exploration[]> {
+  return parseCsv(EXPLORATION_CSV_URL, (row) => ({
+    name: row.name ?? '',
+    explorationType: row.type ?? '',
+    quantity: row.quantity ?? '',
+    effect: row.effect ?? '',
+    version: row.version ?? '',
+  }))
+}
+
+/**
+ * Loads action cards, strategy cards, agendas, objectives, legendary planets, and exploration; returns a combined CardItem[] for search/display.
  */
 export async function loadAllCards(): Promise<CardItem[]> {
-  const [actionCards, strategyCards, agendas, objectives, legendaryPlanets] = await Promise.all([
+  const [actionCards, strategyCards, agendas, objectives, legendaryPlanets, exploration] = await Promise.all([
     loadActionCards(),
     loadStrategyCards(),
     loadAgendas(),
     loadObjectives(),
     loadLegendaryPlanets(),
+    loadExploration(),
   ])
   const actionItems: CardItem[] = actionCards.map((c) => ({
     type: 'action',
@@ -189,6 +204,11 @@ export async function loadAllCards(): Promise<CardItem[]> {
       c.version,
     ].filter(Boolean).join(' '),
   }))
+  const explorationItems: CardItem[] = exploration.map((c) => ({
+    ...c,
+    type: 'exploration',
+    searchText: [c.name, c.explorationType, c.quantity, c.effect, c.version].filter(Boolean).join(' '),
+  }))
   return [
     ...actionItems,
     ...strategyItems,
@@ -196,5 +216,6 @@ export async function loadAllCards(): Promise<CardItem[]> {
     ...publicObjectiveItems,
     ...secretObjectiveItems,
     ...legendaryPlanetItems,
+    ...explorationItems,
   ]
 }

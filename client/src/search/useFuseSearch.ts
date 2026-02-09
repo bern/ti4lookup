@@ -5,7 +5,7 @@ import type { CardItem } from '../types'
 const MAX_RESULTS = 50
 const DEBOUNCE_MS = 50
 
-export type CardType = 'action' | 'agenda' | 'strategy' | 'public_objective' | 'secret_objective' | 'legendary_planet'
+export type CardType = 'action' | 'agenda' | 'strategy' | 'public_objective' | 'secret_objective' | 'legendary_planet' | 'exploration'
 
 /**
  * Fuse.js over cards. Searches name and searchText.
@@ -36,6 +36,7 @@ export function partitionByType(cards: CardItem[]): {
   public_objective: CardItem[]
   secret_objective: CardItem[]
   legendary_planet: CardItem[]
+  exploration: CardItem[]
 } {
   const action = sortByName(cards.filter((c) => c.type === 'action'))
   const agenda = sortByName(cards.filter((c) => c.type === 'agenda'))
@@ -43,7 +44,8 @@ export function partitionByType(cards: CardItem[]): {
   const public_objective = sortByName(cards.filter((c) => c.type === 'public_objective'))
   const secret_objective = sortByName(cards.filter((c) => c.type === 'secret_objective'))
   const legendary_planet = sortByName(cards.filter((c) => c.type === 'legendary_planet'))
-  return { action, agenda, strategy, public_objective, secret_objective, legendary_planet }
+  const exploration = sortByName(cards.filter((c) => c.type === 'exploration'))
+  return { action, agenda, strategy, public_objective, secret_objective, legendary_planet, exploration }
 }
 
 function filterByType(cards: CardItem[], type: CardType): CardItem[] {

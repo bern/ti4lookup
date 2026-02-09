@@ -1,27 +1,27 @@
 name,type,quantity,effect,version
-Demilitarized Zone,blue,1,"Return all structures on this planet to your reinforcements . Then, return all ground forces on this planet to the space area . ATTACH : Units cannot be committed to, produced on or placed on this planet. During the agenda phase , this planet's planet card can be traded as part of a transaction .",pok
-Dyson Sphere,blue,1,ATTACH: This planet's resource value is increased by 2 and its influence value is increased by 1.,pok
-Freelancers,blue,3,You may produce 1 unit in this system; you may spend influence as if it were resources to produce this unit.,pok
-Gamma Wormhole,blue,1,"Place a gamma wormhole token in this system. Then, purge this card.",pok
-Mercenary Outfit,blue,3,You may place 1 infantry from your reinforcements on this planet.,pok
-Paradise World,blue,1,ATTACH: This planet's influence value is increased by 2.,pok
-Tomb of Emphidia,blue,1,"ATTACH : This planet's influence value is increased by 1. : If the player who has the ""Crown of Emphidia"" Relic has control of this planet, they can use that relic to gain 1 Victory Point.",pok
-Cultural Relic Fragment,blue,9,ACTION: Purge 3 of your cultural relic fragments to gain 1 Relic.,pok
-Abandoned Warehouses,green,4,"You may gain 2 commodities , or you may convert up to 2 of your commodities to trade goods.",pok
-Biotic Research Facility,green,1,"ATTACH: This planet has a green technology specialty ; if this planet already has a technology specialty, this planet's resource and influence values are each increased by 1 instead.",pok
-Cybernetic Research Facility,green,1,"ATTACH : This planet has a yellow technology specialty ; if this planet already has a technology specialty, this planet's resource and influence values are each increased by 1 instead.",pok
-Functioning Base,green,4,"You may gain 1 commodity , or you may spend 1 trade good or 1 commodity to draw 1 action card .",pok
-Local Fabricators,green,4,"You may gain 1 commodity , or you may spend 1 trade good or 1 commodity to place 1 mech from your reinforcements on this planet.",pok
-Propulsion Research Facility,green,1,"ATTACH : This planet has a blue technology specialty ; if this planet already has a technology specialty, this planet's resource and influence values are each increased by 1 instead.",pok
-Industrial Relic Fragment,green,5,ACTION: Purge 3 of your industrial relic fragments to gain 1 Relic.,pok
-Core Mine,red,3,"If you have at least 1 mech on this planet, or if you remove 1 infantry from this planet, gain 1 trade good .",pok
-Expedition,red,3,"If you have at least 1 mech on this planet or if you remove 1 infantry from this planet, ready this planet.",pok
-Lazax Survivors,red,1,ATTACH : This planet's resource value is increased by 1 and its influence value is increased by 2.,pok
-Mining World,red,1,ATTACH: This planet's resource value is increased by 2.,pok
-Rich World,red,1,ATTACH : This planet's resource value is increased by 1.,pok
-Volatile Fuel Source,red,3,"If you have at least 1 mech on this planet, or if you remove 1 infantry from this planet, gain 1 command token .",pok
-Warfare Research Facility,red,1,"ATTACH : This planet has a red technology specialty ; if this planet already has a technology specialty, this planet's resource and influence values are each increased by 1 instead.",pok
-Hazardous Relic Fragment,red,7,ACTION: Purge 3 of your hazardous relic fragments to gain 1 Relic.,pok
+Demilitarized Zone,cultural,1,"Return all structures on this planet to your reinforcements . Then, return all ground forces on this planet to the space area . ATTACH : Units cannot be committed to, produced on or placed on this planet. During the agenda phase , this planet's planet card can be traded as part of a transaction .",pok
+Dyson Sphere,cultural,1,ATTACH: This planet's resource value is increased by 2 and its influence value is increased by 1.,pok
+Freelancers,cultural,3,You may produce 1 unit in this system; you may spend influence as if it were resources to produce this unit.,pok
+Gamma Wormhole,cultural,1,"Place a gamma wormhole token in this system. Then, purge this card.",pok
+Mercenary Outfit,cultural,3,You may place 1 infantry from your reinforcements on this planet.,pok
+Paradise World,cultural,1,ATTACH: This planet's influence value is increased by 2.,pok
+Tomb of Emphidia,cultural,1,"ATTACH : This planet's influence value is increased by 1. : If the player who has the ""Crown of Emphidia"" Relic has control of this planet, they can use that relic to gain 1 Victory Point.",pok
+Cultural Relic Fragment,cultural,9,ACTION: Purge 3 of your cultural relic fragments to gain 1 Relic.,pok
+Abandoned Warehouses,industrial,4,"You may gain 2 commodities , or you may convert up to 2 of your commodities to trade goods.",pok
+Biotic Research Facility,industrial,1,"ATTACH: This planet has a green technology specialty ; if this planet already has a technology specialty, this planet's resource and influence values are each increased by 1 instead.",pok
+Cybernetic Research Facility,industrial,1,"ATTACH : This planet has a yellow technology specialty ; if this planet already has a technology specialty, this planet's resource and influence values are each increased by 1 instead.",pok
+Functioning Base,industrial,4,"You may gain 1 commodity , or you may spend 1 trade good or 1 commodity to draw 1 action card .",pok
+Local Fabricators,industrial,4,"You may gain 1 commodity , or you may spend 1 trade good or 1 commodity to place 1 mech from your reinforcements on this planet.",pok
+Propulsion Research Facility,industrial,1,"ATTACH : This planet has a blue technology specialty ; if this planet already has a technology specialty, this planet's resource and influence values are each increased by 1 instead.",pok
+Industrial Relic Fragment,industrial,5,ACTION: Purge 3 of your industrial relic fragments to gain 1 Relic.,pok
+Core Mine,hazardous,3,"If you have at least 1 mech on this planet, or if you remove 1 infantry from this planet, gain 1 trade good .",pok
+Expedition,hazardous,3,"If you have at least 1 mech on this planet or if you remove 1 infantry from this planet, ready this planet.",pok
+Lazax Survivors,hazardous,1,ATTACH : This planet's resource value is increased by 1 and its influence value is increased by 2.,pok
+Mining World,hazardous,1,ATTACH: This planet's resource value is increased by 2.,pok
+Rich World,hazardous,1,ATTACH : This planet's resource value is increased by 1.,pok
+Volatile Fuel Source,hazardous,3,"If you have at least 1 mech on this planet, or if you remove 1 infantry from this planet, gain 1 command token .",pok
+Warfare Research Facility,hazardous,1,"ATTACH : This planet has a red technology specialty ; if this planet already has a technology specialty, this planet's resource and influence values are each increased by 1 instead.",pok
+Hazardous Relic Fragment,hazardous,7,ACTION: Purge 3 of your hazardous relic fragments to gain 1 Relic.,pok
 Derelict Vessel,frontier,2,Draw 1 secret objective .,pok
 Enigmatic Device,frontier,2,Place this card face up in your play area. ACTION: You may spend 6 resources and purge this card to research 1 technology .,pok
 Gamma Relay,frontier,1,"Place a gamma wormhole token in this system. Then, purge this card.",pok

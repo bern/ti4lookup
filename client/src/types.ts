@@ -72,6 +72,17 @@ export interface LegendaryPlanet {
   version: string
 }
 
+/**
+ * Exploration card from CSV. Columns: name, type, quantity, effect, version.
+ */
+export interface Exploration {
+  name: string
+  explorationType: string
+  quantity: string
+  effect: string
+  version: string
+}
+
 /** Combined item for search/display with searchText for Fuse. */
 export type CardItem =
   | (ActionCard & { type: 'action'; searchText: string })
@@ -80,3 +91,4 @@ export type CardItem =
   | (PublicObjective & { type: 'public_objective'; searchText: string })
   | (SecretObjective & { type: 'secret_objective'; searchText: string })
   | (LegendaryPlanet & { type: 'legendary_planet'; searchText: string })
+  | (Exploration & { type: 'exploration'; searchText: string })

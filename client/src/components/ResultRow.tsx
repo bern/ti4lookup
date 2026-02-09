@@ -1,5 +1,13 @@
 import type { CardItem } from '../types'
 
+const IMAGES_BASE = '/images'
+
+/** Planet traits with icons (including frontier). */
+const PLANET_TRAIT_IDS = new Set(['hazardous', 'cultural', 'industrial', 'relic', 'legendary', 'station', 'frontier'])
+/** Exploration deck icons: relic, hazardous, cultural, industrial, frontier only. */
+const EXPLORATION_TYPE_IDS = new Set(['relic', 'hazardous', 'cultural', 'industrial', 'frontier'])
+const TECH_TYPE_IDS = new Set(['green', 'red', 'blue', 'yellow'])
+
 /** Category label for each card type (shown at bottom of card when out-of-context). */
 const CATEGORY_LABELS: Record<CardItem['type'], string> = {
   action: 'Action Cards',
@@ -8,6 +16,40 @@ const CATEGORY_LABELS: Record<CardItem['type'], string> = {
   public_objective: 'Public Objectives',
   secret_objective: 'Secret Objectives',
   legendary_planet: 'Legendary Planets',
+  exploration: 'Exploration',
+}
+
+/** Image ids to show in card footer (faction/tech/trait). */
+function getCardImages(card: CardItem): string[] {
+  const ids: string[] = []
+  if (card.type === 'exploration') {
+    const t = card.explorationType?.toLowerCase()
+    if (t && EXPLORATION_TYPE_IDS.has(t)) ids.push(t)
+  }
+  if (card.type === 'legendary_planet') {
+    const trait = card.trait?.toLowerCase()
+    if (trait && PLANET_TRAIT_IDS.has(trait)) ids.push(trait)
+    const tech = card.technology?.toLowerCase()
+    if (tech && TECH_TYPE_IDS.has(tech)) ids.push(tech)
+  }
+  return [...new Set(ids)]
+}
+
+function CardFooter({ card }: { card: CardItem }) {
+  const label = CATEGORY_LABELS[card.type]
+  const imageIds = getCardImages(card)
+  return (
+    <footer className="result-row__footer">
+      <span className="result-row__category">{label}</span>
+      {imageIds.length > 0 && (
+        <span className="result-row__images">
+          {imageIds.map((id) => (
+            <img key={id} src={`${IMAGES_BASE}/${id}.png`} alt="" className="result-row__icon" />
+          ))}
+        </span>
+      )}
+    </footer>
+  )
 }
 
 /** Strategy card color name → rgba with low opacity for readable bg. */
@@ -58,7 +100,7 @@ export function ResultRow({ card }: ResultRowProps) {
           <p className="result-row__timing">{card.timing}</p>
         ) : null}
         <p className="result-row__effect">{card.effect}</p>
-        <footer className="result-row__category">{CATEGORY_LABELS[card.type]}</footer>
+        <CardFooter card={card} />
       </article>
     )
   }
@@ -90,7 +132,7 @@ export function ResultRow({ card }: ResultRowProps) {
         ) : (
           <p className="result-row__effect">{card.effect}</p>
         )}
-        <footer className="result-row__category">{CATEGORY_LABELS[card.type]}</footer>
+        <CardFooter card={card} />
       </article>
     )
   }
@@ -105,7 +147,7 @@ export function ResultRow({ card }: ResultRowProps) {
           </span>
         </header>
         <p className="result-row__effect">{card.condition}</p>
-        <footer className="result-row__category">{CATEGORY_LABELS[card.type]}</footer>
+        <CardFooter card={card} />
       </article>
     )
   }
@@ -120,7 +162,7 @@ export function ResultRow({ card }: ResultRowProps) {
           </span>
         </header>
         <p className="result-row__effect">{card.condition}</p>
-        <footer className="result-row__category">{CATEGORY_LABELS[card.type]}</footer>
+        <CardFooter card={card} />
       </article>
     )
   }
@@ -142,7 +184,23 @@ export function ResultRow({ card }: ResultRowProps) {
             <p className="result-row__effect result-row__effect--secondary">{card.howToAcquire}</p>
           </>
         ) : null}
-        <footer className="result-row__category">{CATEGORY_LABELS[card.type]}</footer>
+        <CardFooter card={card} />
+      </article>
+    )
+  }
+
+  if (card.type === 'exploration') {
+    return (
+      <article className="result-row result-row--exploration" style={bgStyle}>
+        <header className="result-row__header">
+          <span className="result-row__name">{card.name}</span>
+          <span className="result-row__meta">
+            {card.explorationType}
+            {card.quantity ? ` · Qty ${card.quantity}` : ''} · {card.version}
+          </span>
+        </header>
+        <p className="result-row__effect">{card.effect}</p>
+        <CardFooter card={card} />
       </article>
     )
   }
@@ -159,7 +217,7 @@ export function ResultRow({ card }: ResultRowProps) {
       <p className="result-row__effect">{card.primary}</p>
       <p className="result-row__label">Secondary</p>
       <p className="result-row__effect result-row__effect--secondary">{card.secondary}</p>
-      <footer className="result-row__category">{CATEGORY_LABELS[card.type]}</footer>
+      <CardFooter card={card} />
     </article>
   )
 }
