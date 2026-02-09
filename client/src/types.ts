@@ -105,6 +105,26 @@ export interface FactionLeader {
   version: string
 }
 
+/**
+ * Promissory note from CSV. Columns: name, faction id, effect, version.
+ */
+export interface PromissoryNote {
+  name: string
+  factionId: string
+  effect: string
+  version: string
+}
+
+/**
+ * Breakthrough from CSV. Columns: faction id, name, synergy, effect.
+ */
+export interface Breakthrough {
+  factionId: string
+  name: string
+  synergy: string
+  effect: string
+}
+
 /** Combined item for search/display with searchText for Fuse. */
 export type CardItem =
   | (ActionCard & { type: 'action'; searchText: string })
@@ -116,3 +136,5 @@ export type CardItem =
   | (Exploration & { type: 'exploration'; searchText: string })
   | (FactionAbility & { type: 'faction_ability'; searchText: string })
   | (FactionLeader & { type: 'faction_leader'; searchText: string })
+  | (PromissoryNote & { type: 'promissory_note'; searchText: string })
+  | (Breakthrough & { type: 'breakthrough'; searchText: string })

@@ -19,6 +19,8 @@ const CATEGORY_LABELS: Record<CardItem['type'], string> = {
   exploration: 'Exploration',
   faction_ability: 'Faction Abilities',
   faction_leader: 'Faction Leaders',
+  promissory_note: 'Promissory Notes',
+  breakthrough: 'Breakthroughs',
 }
 
 /** Image ids to show in card footer (faction/tech/trait). */
@@ -26,6 +28,8 @@ function getCardImages(card: CardItem): string[] {
   const ids: string[] = []
   if (card.type === 'faction_ability' && card.factionId) ids.push(card.factionId)
   if (card.type === 'faction_leader' && card.factionId) ids.push(card.factionId)
+  if (card.type === 'promissory_note' && card.factionId) ids.push(card.factionId)
+  if (card.type === 'breakthrough' && card.factionId) ids.push(card.factionId)
   if (card.type === 'exploration') {
     const t = card.explorationType?.toLowerCase()
     if (t && EXPLORATION_TYPE_IDS.has(t)) ids.push(t)
@@ -234,6 +238,36 @@ export function ResultRow({ card }: ResultRowProps) {
           <p className="result-row__label">{card.abilityName}</p>
         ) : null}
         <p className="result-row__effect">{card.ability}</p>
+        <CardFooter card={card} />
+      </article>
+    )
+  }
+
+  if (card.type === 'promissory_note') {
+    return (
+      <article className="result-row result-row--promissory-note" style={bgStyle}>
+        <header className="result-row__header">
+          <span className="result-row__name">{card.name}</span>
+          <span className="result-row__meta">
+            {card.factionId ? `${card.factionId} · ` : ''}{card.version}
+          </span>
+        </header>
+        <p className="result-row__effect">{card.effect}</p>
+        <CardFooter card={card} />
+      </article>
+    )
+  }
+
+  if (card.type === 'breakthrough') {
+    return (
+      <article className="result-row result-row--breakthrough" style={bgStyle}>
+        <header className="result-row__header">
+          <span className="result-row__name">{card.name}</span>
+          <span className="result-row__meta">
+            {card.factionId ? `${card.factionId} · ` : ''}{card.synergy || ''}
+          </span>
+        </header>
+        <p className="result-row__effect">{card.effect}</p>
         <CardFooter card={card} />
       </article>
     )

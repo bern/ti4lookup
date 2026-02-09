@@ -126,6 +126,18 @@ export function SearchView({
                 <ResultsList cards={partitioned.faction_leader} />
               </section>
             )}
+            {partitioned.promissory_note.length > 0 && (
+              <section className="results-section" aria-label="Promissory Notes">
+                <h2 className="section-title">Promissory Notes</h2>
+                <ResultsList cards={partitioned.promissory_note} />
+              </section>
+            )}
+            {partitioned.breakthrough.length > 0 && (
+              <section className="results-section" aria-label="Breakthroughs">
+                <h2 className="section-title">Breakthroughs</h2>
+                <ResultsList cards={partitioned.breakthrough} />
+              </section>
+            )}
             {results.length === 0 && (
               <p className="results-message">No results found.</p>
             )}

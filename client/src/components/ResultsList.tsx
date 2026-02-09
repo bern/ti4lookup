@@ -18,6 +18,8 @@ function cardKey(card: CardItem, index: number): string {
   if (card.type === 'exploration') return `exploration-${card.name}-${card.explorationType}-${version}-${index}`
   if (card.type === 'faction_ability') return `faction_ability-${card.factionId}-${card.name}-${index}`
   if (card.type === 'faction_leader') return `faction_leader-${card.factionId}-${card.name}-${card.leaderType}-${version}-${index}`
+  if (card.type === 'promissory_note') return `promissory_note-${card.factionId}-${card.name}-${version}-${index}`
+  if (card.type === 'breakthrough') return `breakthrough-${card.factionId}-${card.name}-${index}`
   return `fallback-${index}`
 }
 

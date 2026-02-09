@@ -1,5 +1,5 @@
 import Papa from 'papaparse'
-import type { ActionCard, StrategyCard, Agenda, PublicObjective, SecretObjective, LegendaryPlanet, Exploration, FactionAbility, FactionLeader, CardItem } from '../types'
+import type { ActionCard, StrategyCard, Agenda, PublicObjective, SecretObjective, LegendaryPlanet, Exploration, FactionAbility, FactionLeader, PromissoryNote, Breakthrough, CardItem } from '../types'
 
 const ACTION_CSV_URL = '/action_cards.csv'
 const STRATEGY_CSV_URL = '/strategy_cards.csv'
@@ -9,6 +9,8 @@ const LEGENDARY_PLANETS_CSV_URL = '/legendary_planets.csv'
 const EXPLORATION_CSV_URL = '/exploration.csv'
 const FACTION_ABILITIES_CSV_URL = '/faction_abilities.csv'
 const FACTION_LEADERS_CSV_URL = '/faction_leaders.csv'
+const PROMISSORY_NOTES_CSV_URL = '/promissory_notes.csv'
+const BREAKTHROUGHS_CSV_URL = '/breakthroughs.csv'
 const FACTIONS_CSV_URL = '/factions.csv'
 
 function parseCsv<T>(url: string, mapRow: (row: Record<string, string>) => T): Promise<T[]> {
@@ -189,10 +191,34 @@ export async function loadFactionLeaders(): Promise<FactionLeader[]> {
 }
 
 /**
- * Loads action cards, strategy cards, agendas, objectives, legendary planets, and exploration; returns a combined CardItem[] for search/display.
+ * Fetches and parses promissory notes CSV. Columns: name, faction id, effect, version.
+ */
+export async function loadPromissoryNotes(): Promise<PromissoryNote[]> {
+  return parseCsv(PROMISSORY_NOTES_CSV_URL, (row) => ({
+    name: row.name ?? '',
+    factionId: (row['faction id'] ?? '').trim(),
+    effect: row.effect ?? '',
+    version: row.version ?? '',
+  }))
+}
+
+/**
+ * Fetches and parses breakthroughs CSV. Columns: faction id, name, synergy, effect.
+ */
+export async function loadBreakthroughs(): Promise<Breakthrough[]> {
+  return parseCsv(BREAKTHROUGHS_CSV_URL, (row) => ({
+    factionId: (row['faction id'] ?? '').trim(),
+    name: row.name ?? '',
+    synergy: row.synergy ?? '',
+    effect: row.effect ?? '',
+  }))
+}
+
+/**
+ * Loads action cards, strategy cards, agendas, objectives, legendary planets, exploration, faction abilities, faction leaders, promissory notes, breakthroughs; returns a combined CardItem[] for search/display.
  */
 export async function loadAllCards(): Promise<CardItem[]> {
-  const [actionCards, strategyCards, agendas, objectives, legendaryPlanets, exploration, factionAbilities, factionLeaders, factionNames] = await Promise.all([
+  const [actionCards, strategyCards, agendas, objectives, legendaryPlanets, exploration, factionAbilities, factionLeaders, promissoryNotes, breakthroughs, factionNames] = await Promise.all([
     loadActionCards(),
     loadStrategyCards(),
     loadAgendas(),
@@ -201,6 +227,8 @@ export async function loadAllCards(): Promise<CardItem[]> {
     loadExploration(),
     loadFactionAbilities(),
     loadFactionLeaders(),
+    loadPromissoryNotes(),
+    loadBreakthroughs(),
     loadFactionNames(),
   ])
   const actionItems: CardItem[] = actionCards.map((c) => ({
@@ -266,6 +294,16 @@ export async function loadAllCards(): Promise<CardItem[]> {
     type: 'faction_leader',
     searchText: [c.factionId, factionNames.get(c.factionId), c.leaderType, c.name, c.unlockCondition, c.abilityName, c.ability, c.version].filter(Boolean).join(' '),
   }))
+  const promissoryNoteItems: CardItem[] = promissoryNotes.map((c) => ({
+    ...c,
+    type: 'promissory_note',
+    searchText: [c.name, c.factionId, factionNames.get(c.factionId), c.effect, c.version].filter(Boolean).join(' '),
+  }))
+  const breakthroughItems: CardItem[] = breakthroughs.map((c) => ({
+    ...c,
+    type: 'breakthrough',
+    searchText: [c.factionId, factionNames.get(c.factionId), c.name, c.synergy, c.effect].filter(Boolean).join(' '),
+  }))
   return [
     ...actionItems,
     ...strategyItems,
@@ -276,5 +314,7 @@ export async function loadAllCards(): Promise<CardItem[]> {
     ...explorationItems,
     ...factionAbilityItems,
     ...factionLeaderItems,
+    ...promissoryNoteItems,
+    ...breakthroughItems,
   ]
 }
