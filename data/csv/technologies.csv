@@ -117,10 +117,10 @@ Neuroglaive,naalu,green,,"[green,green,green]","After another player activates a
 Hybrid Crystal Fighter II,naalu,unit upgrade,fighter,"[green,blue]","Cost 1(x2), Combat 7, Move 2
 This unit may move without being transported.
 Fighters in excess of your ships' capacity count as 1/2 of a ship against your fleet pool.",base game
-Valefar Assimilator X,nekro,unit upgrade,,[],"When you would gain another player's technology using 1 of your faction abilities, you may place the ""X"" assimilator token on a faction technology owned by that player instead.
+Valefar Assimilator X,nekro,,,[],"When you would gain another player's technology using 1 of your faction abilities, you may place the ""X"" assimilator token on a faction technology owned by that player instead.
 While that token is on a technology, this card gains that technology's text.
 You cannot place an assimilator token on technology that already has an assimilator token.",base game
-Valefar Assimilator Y,nekro,unit upgrade,,[],"When you would gain another player's technology using 1 of your faction abilities, you may place the ""Y"" assimilator token on a faction technology owned by that player instead.
+Valefar Assimilator Y,nekro,,,[],"When you would gain another player's technology using 1 of your faction abilities, you may place the ""Y"" assimilator token on a faction technology owned by that player instead.
 While that token is on a technology, this card gains that technology's text.
 You cannot place an assimilator token on technology that already has an assimilator token.",base game
 Memoria II,nomad,unit upgrade,flagship,"[green,blue,yellow]","Cost 8, Combat 5(x2), Move 2, Capacity 6
