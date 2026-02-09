@@ -83,6 +83,28 @@ export interface Exploration {
   version: string
 }
 
+/**
+ * Faction ability from CSV. Columns: faction id, name, text.
+ */
+export interface FactionAbility {
+  factionId: string
+  name: string
+  text: string
+}
+
+/**
+ * Faction leader from CSV. Columns: faction id, type, name, unlock condition, ability name, ability, version.
+ */
+export interface FactionLeader {
+  factionId: string
+  leaderType: string
+  name: string
+  unlockCondition: string
+  abilityName: string
+  ability: string
+  version: string
+}
+
 /** Combined item for search/display with searchText for Fuse. */
 export type CardItem =
   | (ActionCard & { type: 'action'; searchText: string })
@@ -92,3 +114,5 @@ export type CardItem =
   | (SecretObjective & { type: 'secret_objective'; searchText: string })
   | (LegendaryPlanet & { type: 'legendary_planet'; searchText: string })
   | (Exploration & { type: 'exploration'; searchText: string })
+  | (FactionAbility & { type: 'faction_ability'; searchText: string })
+  | (FactionLeader & { type: 'faction_leader'; searchText: string })

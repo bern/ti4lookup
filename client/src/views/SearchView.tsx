@@ -114,6 +114,18 @@ export function SearchView({
                 <ResultsList cards={partitioned.exploration} />
               </section>
             )}
+            {partitioned.faction_ability.length > 0 && (
+              <section className="results-section" aria-label="Faction Abilities">
+                <h2 className="section-title">Faction Abilities</h2>
+                <ResultsList cards={partitioned.faction_ability} />
+              </section>
+            )}
+            {partitioned.faction_leader.length > 0 && (
+              <section className="results-section" aria-label="Faction Leaders">
+                <h2 className="section-title">Faction Leaders</h2>
+                <ResultsList cards={partitioned.faction_leader} />
+              </section>
+            )}
             {results.length === 0 && (
               <p className="results-message">No results found.</p>
             )}

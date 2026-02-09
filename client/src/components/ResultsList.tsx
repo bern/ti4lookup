@@ -16,7 +16,9 @@ function cardKey(card: CardItem, index: number): string {
   if (card.type === 'secret_objective') return `secret_objective-${card.name}-${version}-${index}`
   if (card.type === 'legendary_planet') return `legendary_planet-${card.name}-${version}-${index}`
   if (card.type === 'exploration') return `exploration-${card.name}-${card.explorationType}-${version}-${index}`
-  return `${card.type}-${card.name}-${index}`
+  if (card.type === 'faction_ability') return `faction_ability-${card.factionId}-${card.name}-${index}`
+  if (card.type === 'faction_leader') return `faction_leader-${card.factionId}-${card.name}-${card.leaderType}-${version}-${index}`
+  return `fallback-${index}`
 }
 
 export function ResultsList({ cards, loading, error }: ResultsListProps) {

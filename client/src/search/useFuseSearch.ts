@@ -5,12 +5,13 @@ import type { CardItem } from '../types'
 const MAX_RESULTS = 50
 const DEBOUNCE_MS = 50
 
-export type CardType = 'action' | 'agenda' | 'strategy' | 'public_objective' | 'secret_objective' | 'legendary_planet' | 'exploration'
+export type CardType = 'action' | 'agenda' | 'strategy' | 'public_objective' | 'secret_objective' | 'legendary_planet' | 'exploration' | 'faction_ability' | 'faction_leader'
 
 /**
  * Fuse.js over cards. Searches name and searchText.
  * ignoreLocation: true so multi-word queries (e.g. "victory point") match when words appear anywhere in the text.
- * threshold: 0.5 so slight variants (e.g. "victory points") still match "victory point".
+ * threshold: 0.2 — stricter than default; only closer matches pass (0 = exact, 1 = anything).
+ * useExtendedSearch: true so whitespace acts as AND (e.g. "jolnar hero" only returns cards matching both terms, with the best match on top).
  */
 function createFuse(cards: CardItem[]): Fuse<CardItem> {
   return new Fuse(cards, {
@@ -18,8 +19,9 @@ function createFuse(cards: CardItem[]): Fuse<CardItem> {
       { name: 'name', weight: 0.5 },
       { name: 'searchText', weight: 0.5 },
     ],
-    threshold: 0.5,
+    threshold: 0.2,
     ignoreLocation: true,
+    useExtendedSearch: true,
   })
 }
 
@@ -37,6 +39,8 @@ export function partitionByType(cards: CardItem[]): {
   secret_objective: CardItem[]
   legendary_planet: CardItem[]
   exploration: CardItem[]
+  faction_ability: CardItem[]
+  faction_leader: CardItem[]
 } {
   const action = sortByName(cards.filter((c) => c.type === 'action'))
   const agenda = sortByName(cards.filter((c) => c.type === 'agenda'))
@@ -45,7 +49,9 @@ export function partitionByType(cards: CardItem[]): {
   const secret_objective = sortByName(cards.filter((c) => c.type === 'secret_objective'))
   const legendary_planet = sortByName(cards.filter((c) => c.type === 'legendary_planet'))
   const exploration = sortByName(cards.filter((c) => c.type === 'exploration'))
-  return { action, agenda, strategy, public_objective, secret_objective, legendary_planet, exploration }
+  const faction_ability = sortByName(cards.filter((c) => c.type === 'faction_ability'))
+  const faction_leader = sortByName(cards.filter((c) => c.type === 'faction_leader'))
+  return { action, agenda, strategy, public_objective, secret_objective, legendary_planet, exploration, faction_ability, faction_leader }
 }
 
 function filterByType(cards: CardItem[], type: CardType): CardItem[] {

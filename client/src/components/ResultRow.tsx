@@ -17,11 +17,15 @@ const CATEGORY_LABELS: Record<CardItem['type'], string> = {
   secret_objective: 'Secret Objectives',
   legendary_planet: 'Legendary Planets',
   exploration: 'Exploration',
+  faction_ability: 'Faction Abilities',
+  faction_leader: 'Faction Leaders',
 }
 
 /** Image ids to show in card footer (faction/tech/trait). */
 function getCardImages(card: CardItem): string[] {
   const ids: string[] = []
+  if (card.type === 'faction_ability' && card.factionId) ids.push(card.factionId)
+  if (card.type === 'faction_leader' && card.factionId) ids.push(card.factionId)
   if (card.type === 'exploration') {
     const t = card.explorationType?.toLowerCase()
     if (t && EXPLORATION_TYPE_IDS.has(t)) ids.push(t)
@@ -200,6 +204,36 @@ export function ResultRow({ card }: ResultRowProps) {
           </span>
         </header>
         <p className="result-row__effect">{card.effect}</p>
+        <CardFooter card={card} />
+      </article>
+    )
+  }
+
+  if (card.type === 'faction_ability') {
+    return (
+      <article className="result-row result-row--faction-ability" style={bgStyle}>
+        <header className="result-row__header">
+          <span className="result-row__name">{card.name}</span>
+        </header>
+        <p className="result-row__effect">{card.text}</p>
+        <CardFooter card={card} />
+      </article>
+    )
+  }
+
+  if (card.type === 'faction_leader') {
+    return (
+      <article className="result-row result-row--faction-leader" style={bgStyle}>
+        <header className="result-row__header">
+          <span className="result-row__name">{card.name}</span>
+          <span className="result-row__meta">
+            {card.leaderType} · {card.unlockCondition} · {card.version}
+          </span>
+        </header>
+        {card.abilityName ? (
+          <p className="result-row__label">{card.abilityName}</p>
+        ) : null}
+        <p className="result-row__effect">{card.ability}</p>
         <CardFooter card={card} />
       </article>
     )

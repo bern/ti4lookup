@@ -13,6 +13,8 @@ const CATEGORY_LABELS: Record<CardType, string> = {
   secret_objective: 'Secret Objectives',
   legendary_planet: 'Legendary Planets',
   exploration: 'Exploration',
+  faction_ability: 'Faction Abilities',
+  faction_leader: 'Faction Leaders',
 }
 
 const CATEGORY_PLACEHOLDERS: Record<CardType, string> = {
@@ -23,6 +25,8 @@ const CATEGORY_PLACEHOLDERS: Record<CardType, string> = {
   secret_objective: 'Search secret objectives…',
   legendary_planet: 'Search legendary planets…',
   exploration: 'Search exploration…',
+  faction_ability: 'Search faction abilities…',
+  faction_leader: 'Search faction leaders…',
 }
 
 interface CategoryViewProps {

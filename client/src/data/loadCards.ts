@@ -1,5 +1,5 @@
 import Papa from 'papaparse'
-import type { ActionCard, StrategyCard, Agenda, PublicObjective, SecretObjective, LegendaryPlanet, Exploration, CardItem } from '../types'
+import type { ActionCard, StrategyCard, Agenda, PublicObjective, SecretObjective, LegendaryPlanet, Exploration, FactionAbility, FactionLeader, CardItem } from '../types'
 
 const ACTION_CSV_URL = '/action_cards.csv'
 const STRATEGY_CSV_URL = '/strategy_cards.csv'
@@ -7,6 +7,9 @@ const AGENDAS_CSV_URL = '/agendas.csv'
 const OBJECTIVES_CSV_URL = '/objectives.csv'
 const LEGENDARY_PLANETS_CSV_URL = '/legendary_planets.csv'
 const EXPLORATION_CSV_URL = '/exploration.csv'
+const FACTION_ABILITIES_CSV_URL = '/faction_abilities.csv'
+const FACTION_LEADERS_CSV_URL = '/faction_leaders.csv'
+const FACTIONS_CSV_URL = '/factions.csv'
 
 function parseCsv<T>(url: string, mapRow: (row: Record<string, string>) => T): Promise<T[]> {
   return fetch(url)
@@ -145,16 +148,60 @@ export async function loadExploration(): Promise<Exploration[]> {
 }
 
 /**
+ * Fetches factions CSV and returns a map of faction id -> full name for search.
+ */
+export async function loadFactionNames(): Promise<Map<string, string>> {
+  const rows = await parseCsv(FACTIONS_CSV_URL, (row) => ({
+    id: (row.id ?? '').trim(),
+    name: (row.name ?? '').trim(),
+  }))
+  const map = new Map<string, string>()
+  for (const r of rows) {
+    if (r.id) map.set(r.id, r.name)
+  }
+  return map
+}
+
+/**
+ * Fetches and parses faction abilities CSV. Columns: faction id, name, text.
+ */
+export async function loadFactionAbilities(): Promise<FactionAbility[]> {
+  return parseCsv(FACTION_ABILITIES_CSV_URL, (row) => ({
+    factionId: (row['faction id'] ?? '').trim(),
+    name: row.name ?? '',
+    text: row.text ?? '',
+  }))
+}
+
+/**
+ * Fetches and parses faction leaders CSV. Columns: faction id, type, name, unlock condition, ability name, ability, version.
+ */
+export async function loadFactionLeaders(): Promise<FactionLeader[]> {
+  return parseCsv(FACTION_LEADERS_CSV_URL, (row) => ({
+    factionId: (row['faction id'] ?? '').trim(),
+    leaderType: row.type ?? '',
+    name: row.name ?? '',
+    unlockCondition: row['unlock condition'] ?? '',
+    abilityName: row['ability name'] ?? '',
+    ability: row.ability ?? '',
+    version: row.version ?? '',
+  }))
+}
+
+/**
  * Loads action cards, strategy cards, agendas, objectives, legendary planets, and exploration; returns a combined CardItem[] for search/display.
  */
 export async function loadAllCards(): Promise<CardItem[]> {
-  const [actionCards, strategyCards, agendas, objectives, legendaryPlanets, exploration] = await Promise.all([
+  const [actionCards, strategyCards, agendas, objectives, legendaryPlanets, exploration, factionAbilities, factionLeaders, factionNames] = await Promise.all([
     loadActionCards(),
     loadStrategyCards(),
     loadAgendas(),
     loadObjectives(),
     loadLegendaryPlanets(),
     loadExploration(),
+    loadFactionAbilities(),
+    loadFactionLeaders(),
+    loadFactionNames(),
   ])
   const actionItems: CardItem[] = actionCards.map((c) => ({
     type: 'action',
@@ -209,6 +256,16 @@ export async function loadAllCards(): Promise<CardItem[]> {
     type: 'exploration',
     searchText: [c.name, c.explorationType, c.quantity, c.effect, c.version].filter(Boolean).join(' '),
   }))
+  const factionAbilityItems: CardItem[] = factionAbilities.map((c) => ({
+    ...c,
+    type: 'faction_ability',
+    searchText: [c.factionId, factionNames.get(c.factionId), c.name, c.text].filter(Boolean).join(' '),
+  }))
+  const factionLeaderItems: CardItem[] = factionLeaders.map((c) => ({
+    ...c,
+    type: 'faction_leader',
+    searchText: [c.factionId, factionNames.get(c.factionId), c.leaderType, c.name, c.unlockCondition, c.abilityName, c.ability, c.version].filter(Boolean).join(' '),
+  }))
   return [
     ...actionItems,
     ...strategyItems,
@@ -217,5 +274,7 @@ export async function loadAllCards(): Promise<CardItem[]> {
     ...secretObjectiveItems,
     ...legendaryPlanetItems,
     ...explorationItems,
+    ...factionAbilityItems,
+    ...factionLeaderItems,
   ]
 }
