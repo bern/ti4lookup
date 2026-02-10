@@ -8,6 +8,10 @@ TI4 Lookup is a lightweight, fast component lookup for **Twilight Imperium 4th E
 
 I wanted to make this because all of the existing solutions for component lookup are too slow. Googling "lightwave ti4" brings up a host of fan content and low-resolution pictures. My girlfriend keeps asking what the primary of Warfare is and it takes way too long for me to find something to show her. I wanted something built for speed: minimal dependencies, fast fuzzy search, and instant filtering by expansion and faction.
 
+## Offline
+
+A service worker precaches the app shell (HTML, JS, CSS), all CSVs, and images. Load the app once while online, then it works offline.
+
 ## CSVs
 
 | File | Description |
