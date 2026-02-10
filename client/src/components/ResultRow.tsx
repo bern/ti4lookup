@@ -1,6 +1,136 @@
+import { useState, useCallback, useEffect } from 'react'
 import type { CardItem } from '../types'
 
-const IMAGES_BASE = '/images'
+const IMAGES_BASE = import.meta.env.BASE_URL + 'images'
+const COPY_ICON_SRC = import.meta.env.BASE_URL + 'svg/copy.svg'
+const COPY_ICON_DARK_SRC = import.meta.env.BASE_URL + 'svg/copy_dark.svg'
+
+/** Join non-empty strings with double newlines. */
+function joinSections(...parts: (string | undefined)[]): string {
+  return parts.filter((p): p is string => Boolean(p?.trim())).join('\n\n')
+}
+
+/** Label with its content: single newline between them. */
+function labelWithContent(label: string, content: string): string {
+  if (!label?.trim()) return content?.trim() ?? ''
+  if (!content?.trim()) return label.trim()
+  return `${label.trim()}\n${content.trim()}`
+}
+
+/** Build clipboard text from displayed card content. */
+function getCardCopyText(card: CardItem): string {
+  const baseLabel = CATEGORY_LABELS[card.type]
+  const factionName = 'factionName' in card ? card.factionName : undefined
+  const footer = factionName ? `${baseLabel} • ${factionName}` : baseLabel
+
+  if (card.type === 'action') {
+    return joinSections(card.name, card.version, card.timing, card.effect, footer)
+  }
+  if (card.type === 'agenda') {
+    const forAgainst = parseForAgainst(card.effect)
+    if (forAgainst) {
+      const meta = [card.agendaType, card.elect !== '-' ? `Elect: ${card.elect}` : '', card.version].filter(Boolean).join(' · ')
+      const removed = card.removedInPok === 'true' ? 'Removed in Prophecy of Kings' : ''
+      return joinSections(
+        card.name,
+        [meta, removed].filter(Boolean).join(' · ') || undefined,
+        forAgainst.introText || undefined,
+        labelWithContent('For', forAgainst.forText),
+        labelWithContent('Against', forAgainst.againstText),
+        footer
+      )
+    }
+    const meta = [card.agendaType, card.elect !== '-' ? `Elect: ${card.elect}` : '', card.version].filter(Boolean).join(' · ')
+    return joinSections(card.name, meta, card.effect, footer)
+  }
+  if (card.type === 'strategy') {
+    const meta = [card.initiative, card.color, card.version].filter(Boolean).join(' · ')
+    return joinSections(card.name, meta, labelWithContent('Primary', card.primary), labelWithContent('Secondary', card.secondary), footer)
+  }
+  if (card.type === 'public_objective') {
+    const meta = `Stage ${card.stage} · ${card.points} VP · ${card.whenToScore} · ${card.version}`
+    return joinSections(card.name, meta, card.condition, footer)
+  }
+  if (card.type === 'secret_objective') {
+    const meta = `${card.points} VP · ${card.whenToScore} · ${card.version}`
+    return joinSections(card.name, meta, card.condition, footer)
+  }
+  if (card.type === 'legendary_planet') {
+    const meta = [card.trait, card.resources && card.influence ? `${card.resources}/${card.influence}` : card.resources || card.influence, card.technology ? `${card.technology} tech skip` : null].filter(Boolean).join(' · ')
+    const parts: (string | undefined)[] = [card.name, `${meta} · ${card.version}`, card.ability]
+    if (card.howToAcquire) parts.push(labelWithContent('How to acquire', card.howToAcquire))
+    parts.push(footer)
+    return joinSections(...parts)
+  }
+  if (card.type === 'exploration') {
+    const meta = [card.explorationType, card.quantity ? `Qty ${card.quantity}` : '', card.version].filter(Boolean).join(' · ')
+    return joinSections(card.name, meta, card.effect, footer)
+  }
+  if (card.type === 'faction_ability') {
+    return joinSections(card.name, card.text, footer)
+  }
+  if (card.type === 'faction_leader') {
+    const meta = `${card.leaderType} · ${card.unlockCondition} · ${card.version}`
+    const parts: (string | undefined)[] = [card.name, meta]
+    if (card.abilityName) parts.push(labelWithContent(card.abilityName, card.ability))
+    else parts.push(card.ability)
+    parts.push(footer)
+    return joinSections(...parts)
+  }
+  if (card.type === 'promissory_note') {
+    return joinSections(card.name, card.version, card.effect, footer)
+  }
+  if (card.type === 'breakthrough') {
+    return joinSections(card.name, card.synergy || undefined, card.effect, footer)
+  }
+  if (card.type === 'technology') {
+    const meta = [card.techType, card.unit, card.version].filter(Boolean).join(' · ')
+    const parts: (string | undefined)[] = [card.name, meta, card.effect]
+    if (card.prerequisites?.trim() && card.prerequisites !== '[]') {
+      parts.push(labelWithContent('Prerequisites:', card.prerequisites))
+    }
+    parts.push(footer)
+    return joinSections(...parts)
+  }
+  if (card.type === 'galactic_event') {
+    return joinSections(card.name, card.version, card.effect, footer)
+  }
+  if (card.type === 'plot') {
+    return joinSections(card.name, card.version, card.effect, footer)
+  }
+  return ''
+}
+
+function CopyButton({ card }: { card: CardItem }) {
+  const [copied, setCopied] = useState(false)
+  useEffect(() => {
+    if (!copied) return
+    const t = setTimeout(() => setCopied(false), 1200)
+    return () => clearTimeout(t)
+  }, [copied])
+  const handleClick = useCallback(async () => {
+    const text = getCardCopyText(card)
+    try {
+      await navigator.clipboard.writeText(text)
+      setCopied(true)
+    } catch {
+      /* ignore */
+    }
+  }, [card])
+  return (
+    <button
+      type="button"
+      className="result-row__copy"
+      onClick={handleClick}
+      title="Copy"
+      aria-label="Copy"
+    >
+      <img src={COPY_ICON_SRC} alt="" className="result-row__copy-icon result-row__copy-icon--light" />
+      <img src={COPY_ICON_DARK_SRC} alt="" className="result-row__copy-icon result-row__copy-icon--dark" />
+      {copied && <span className="result-row__copy-feedback">Copied!</span>}
+    </button>
+  )
+}
 
 /** Planet traits with icons (including frontier). */
 const PLANET_TRAIT_IDS = new Set(['hazardous', 'cultural', 'industrial', 'relic', 'legendary', 'station', 'frontier'])
@@ -124,8 +254,11 @@ export function ResultRow({ card }: ResultRowProps) {
     return (
       <article className="result-row result-row--action" style={bgStyle}>
         <header className="result-row__header">
-          <span className="result-row__name">{card.name}</span>
-          <span className="result-row__version">{card.version}</span>
+          <div className="result-row__header-content">
+            <span className="result-row__name">{card.name}</span>
+            <span className="result-row__version">{card.version}</span>
+          </div>
+          <CopyButton card={card} />
         </header>
         {card.timing ? (
           <p className="result-row__timing">{card.timing}</p>
@@ -141,14 +274,17 @@ export function ResultRow({ card }: ResultRowProps) {
     return (
       <article className="result-row result-row--agenda" style={bgStyle}>
         <header className="result-row__header">
-          <span className="result-row__name">{card.name}</span>
-          <span className="result-row__meta">
-            {card.agendaType}
-            {card.elect && card.elect !== '-' ? ` · Elect: ${card.elect}` : ''} · {card.version}
-            {card.removedInPok === 'true' ? (
-              <span className="result-row__removed" title="Removed in Prophecy of Kings"> · 🚫 Removed in PoK</span>
-            ) : null}
-          </span>
+          <div className="result-row__header-content">
+            <span className="result-row__name">{card.name}</span>
+            <span className="result-row__meta">
+              {card.agendaType}
+              {card.elect && card.elect !== '-' ? ` · Elect: ${card.elect}` : ''} · {card.version}
+              {card.removedInPok === 'true' ? (
+                <span className="result-row__removed" title="Removed in Prophecy of Kings"> · 🚫 Removed in PoK</span>
+              ) : null}
+            </span>
+          </div>
+          <CopyButton card={card} />
         </header>
         {forAgainst ? (
           <>
@@ -172,10 +308,13 @@ export function ResultRow({ card }: ResultRowProps) {
     return (
       <article className="result-row result-row--public-objective" style={bgStyle}>
         <header className="result-row__header">
-          <span className="result-row__name">{card.name}</span>
-          <span className="result-row__meta">
-            Stage {card.stage} · {card.points} VP · {card.whenToScore} · {card.version}
-          </span>
+          <div className="result-row__header-content">
+            <span className="result-row__name">{card.name}</span>
+            <span className="result-row__meta">
+              Stage {card.stage} · {card.points} VP · {card.whenToScore} · {card.version}
+            </span>
+          </div>
+          <CopyButton card={card} />
         </header>
         <p className="result-row__effect">{card.condition}</p>
         <CardFooter card={card} />
@@ -187,10 +326,13 @@ export function ResultRow({ card }: ResultRowProps) {
     return (
       <article className="result-row result-row--secret-objective" style={bgStyle}>
         <header className="result-row__header">
-          <span className="result-row__name">{card.name}</span>
-          <span className="result-row__meta">
-            {card.points} VP · {card.whenToScore} · {card.version}
-          </span>
+          <div className="result-row__header-content">
+            <span className="result-row__name">{card.name}</span>
+            <span className="result-row__meta">
+              {card.points} VP · {card.whenToScore} · {card.version}
+            </span>
+          </div>
+          <CopyButton card={card} />
         </header>
         <p className="result-row__effect">{card.condition}</p>
         <CardFooter card={card} />
@@ -203,10 +345,13 @@ export function ResultRow({ card }: ResultRowProps) {
     return (
       <article className="result-row result-row--legendary-planet" style={bgStyle}>
         <header className="result-row__header">
-          <span className="result-row__name">{card.name}</span>
-          <span className="result-row__meta">
-            {meta} · {card.version}
-          </span>
+          <div className="result-row__header-content">
+            <span className="result-row__name">{card.name}</span>
+            <span className="result-row__meta">
+              {meta} · {card.version}
+            </span>
+          </div>
+          <CopyButton card={card} />
         </header>
         <p className="result-row__effect">{card.ability}</p>
         {card.howToAcquire ? (
@@ -224,11 +369,14 @@ export function ResultRow({ card }: ResultRowProps) {
     return (
       <article className="result-row result-row--exploration" style={bgStyle}>
         <header className="result-row__header">
-          <span className="result-row__name">{card.name}</span>
-          <span className="result-row__meta">
-            {card.explorationType}
-            {card.quantity ? ` · Qty ${card.quantity}` : ''} · {card.version}
-          </span>
+          <div className="result-row__header-content">
+            <span className="result-row__name">{card.name}</span>
+            <span className="result-row__meta">
+              {card.explorationType}
+              {card.quantity ? ` · Qty ${card.quantity}` : ''} · {card.version}
+            </span>
+          </div>
+          <CopyButton card={card} />
         </header>
         <p className="result-row__effect">{card.effect}</p>
         <CardFooter card={card} />
@@ -240,7 +388,10 @@ export function ResultRow({ card }: ResultRowProps) {
     return (
       <article className="result-row result-row--faction-ability" style={bgStyle}>
         <header className="result-row__header">
-          <span className="result-row__name">{card.name}</span>
+          <div className="result-row__header-content">
+            <span className="result-row__name">{card.name}</span>
+          </div>
+          <CopyButton card={card} />
         </header>
         <p className="result-row__effect">{card.text}</p>
         <CardFooter card={card} />
@@ -252,10 +403,13 @@ export function ResultRow({ card }: ResultRowProps) {
     return (
       <article className="result-row result-row--faction-leader" style={bgStyle}>
         <header className="result-row__header">
-          <span className="result-row__name">{card.name}</span>
-          <span className="result-row__meta">
-            {card.leaderType} · {card.unlockCondition} · {card.version}
-          </span>
+          <div className="result-row__header-content">
+            <span className="result-row__name">{card.name}</span>
+            <span className="result-row__meta">
+              {card.leaderType} · {card.unlockCondition} · {card.version}
+            </span>
+          </div>
+          <CopyButton card={card} />
         </header>
         {card.abilityName ? (
           <p className="result-row__label">{card.abilityName}</p>
@@ -270,8 +424,11 @@ export function ResultRow({ card }: ResultRowProps) {
     return (
       <article className="result-row result-row--promissory-note" style={bgStyle}>
         <header className="result-row__header">
-          <span className="result-row__name">{card.name}</span>
-          <span className="result-row__meta">{card.version}</span>
+          <div className="result-row__header-content">
+            <span className="result-row__name">{card.name}</span>
+            <span className="result-row__meta">{card.version}</span>
+          </div>
+          <CopyButton card={card} />
         </header>
         <p className="result-row__effect">{card.effect}</p>
         <CardFooter card={card} />
@@ -283,8 +440,11 @@ export function ResultRow({ card }: ResultRowProps) {
     return (
       <article className="result-row result-row--breakthrough" style={bgStyle}>
         <header className="result-row__header">
-          <span className="result-row__name">{card.name}</span>
-          <span className="result-row__meta">{card.synergy || ''}</span>
+          <div className="result-row__header-content">
+            <span className="result-row__name">{card.name}</span>
+            <span className="result-row__meta">{card.synergy || ''}</span>
+          </div>
+          <CopyButton card={card} />
         </header>
         <p className="result-row__effect">{card.effect}</p>
         <CardFooter card={card} />
@@ -298,8 +458,11 @@ export function ResultRow({ card }: ResultRowProps) {
     return (
       <article className="result-row result-row--technology" style={bgStyle}>
         <header className="result-row__header">
-          <span className="result-row__name">{card.name}</span>
-          <span className="result-row__meta">{meta}</span>
+          <div className="result-row__header-content">
+            <span className="result-row__name">{card.name}</span>
+            <span className="result-row__meta">{meta}</span>
+          </div>
+          <CopyButton card={card} />
         </header>
         <p className="result-row__effect">{card.effect}</p>
         {prereqIds.length > 0 && (
@@ -321,8 +484,11 @@ export function ResultRow({ card }: ResultRowProps) {
     return (
       <article className="result-row result-row--galactic-event" style={bgStyle}>
         <header className="result-row__header">
-          <span className="result-row__name">{card.name}</span>
-          <span className="result-row__meta">{card.version}</span>
+          <div className="result-row__header-content">
+            <span className="result-row__name">{card.name}</span>
+            <span className="result-row__meta">{card.version}</span>
+          </div>
+          <CopyButton card={card} />
         </header>
         <p className="result-row__effect">{card.effect}</p>
         <CardFooter card={card} />
@@ -334,8 +500,11 @@ export function ResultRow({ card }: ResultRowProps) {
     return (
       <article className="result-row result-row--plot" style={bgStyle}>
         <header className="result-row__header">
-          <span className="result-row__name">{card.name}</span>
-          <span className="result-row__meta">{card.version}</span>
+          <div className="result-row__header-content">
+            <span className="result-row__name">{card.name}</span>
+            <span className="result-row__meta">{card.version}</span>
+          </div>
+          <CopyButton card={card} />
         </header>
         <p className="result-row__effect">{card.effect}</p>
         <CardFooter card={card} />
@@ -346,10 +515,13 @@ export function ResultRow({ card }: ResultRowProps) {
   return (
     <article className="result-row result-row--strategy" style={bgStyle}>
       <header className="result-row__header">
-        <span className="result-row__name">{card.name}</span>
-        <span className="result-row__meta">
-          {card.initiative} · {card.color} · {card.version}
-        </span>
+        <div className="result-row__header-content">
+          <span className="result-row__name">{card.name}</span>
+          <span className="result-row__meta">
+            {card.initiative} · {card.color} · {card.version}
+          </span>
+        </div>
+        <CopyButton card={card} />
       </header>
       <p className="result-row__label">Primary</p>
       <p className="result-row__effect">{card.primary}</p>

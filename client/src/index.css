@@ -556,11 +556,97 @@ body {
   border: 1px solid var(--color-border-card);
 }
 
+.result-row__copy {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-text-subtle);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: color 0.15s, background-color 0.15s;
+}
+
+.result-row__copy:hover {
+  color: var(--color-text);
+  background: var(--color-bg-btn-hover);
+}
+
+.result-row__copy:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+.result-row__copy-icon {
+  width: 1rem;
+  height: 1rem;
+  opacity: 0.7;
+}
+
+.result-row__copy-icon--dark {
+  display: none;
+}
+
+[data-theme='dark'] .result-row__copy-icon--light,
+[data-theme='hylar'] .result-row__copy-icon--light,
+[data-theme='gashlai'] .result-row__copy-icon--light,
+[data-theme='void'] .result-row__copy-icon--light {
+  display: none;
+}
+
+[data-theme='dark'] .result-row__copy-icon--dark,
+[data-theme='hylar'] .result-row__copy-icon--dark,
+[data-theme='gashlai'] .result-row__copy-icon--dark,
+[data-theme='void'] .result-row__copy-icon--dark {
+  display: block;
+}
+
+.result-row__copy:hover .result-row__copy-icon {
+  opacity: 1;
+}
+
+.result-row__copy-feedback {
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  transform: translateY(-50%);
+  margin-right: 0.5rem;
+  padding: 0.2rem 0.4rem;
+  font-size: 0.7rem;
+  color: var(--color-text-inverse);
+  background: var(--color-text);
+  border-radius: 4px;
+  white-space: nowrap;
+  animation: result-row__copy-feedback-fade 1.2s ease-out forwards;
+}
+
+@keyframes result-row__copy-feedback-fade {
+  0% { opacity: 0; }
+  15% { opacity: 1; }
+  75% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
 .result-row__header {
   display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.result-row__header-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   gap: 0.5rem;
-  margin-bottom: 0.25rem;
 }
 
 .result-row__name {
@@ -645,6 +731,26 @@ body {
 @media (max-width: 640px) {
   html {
     font-size: 112.5%;
+  }
+
+  .result-row__header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    align-items: start;
+    gap: 0.25rem;
+  }
+
+  .result-row__header-content {
+    grid-column: 1;
+    grid-row: 1 / -1;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .result-row__copy {
+    grid-column: 2;
+    grid-row: 1;
   }
 
   .expansion-selector__trigger,
