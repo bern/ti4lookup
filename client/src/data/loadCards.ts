@@ -166,13 +166,14 @@ export async function loadFactionNames(): Promise<Map<string, string>> {
 }
 
 /**
- * Fetches and parses faction abilities CSV. Columns: faction id, name, text.
+ * Fetches and parses faction abilities CSV. Columns: faction id, name, text, version.
  */
 export async function loadFactionAbilities(): Promise<FactionAbility[]> {
   return parseCsv(FACTION_ABILITIES_CSV_URL, (row) => ({
     factionId: (row['faction id'] ?? '').trim(),
     name: row.name ?? '',
     text: row.text ?? '',
+    version: row.version ?? '',
   }))
 }
 
@@ -204,7 +205,7 @@ export async function loadPromissoryNotes(): Promise<PromissoryNote[]> {
 }
 
 /**
- * Fetches and parses breakthroughs CSV. Columns: faction id, name, synergy, effect.
+ * Fetches and parses breakthroughs CSV. Columns: faction id, name, synergy, effect, version.
  */
 export async function loadBreakthroughs(): Promise<Breakthrough[]> {
   return parseCsv(BREAKTHROUGHS_CSV_URL, (row) => ({
@@ -212,6 +213,7 @@ export async function loadBreakthroughs(): Promise<Breakthrough[]> {
     name: row.name ?? '',
     synergy: row.synergy ?? '',
     effect: row.effect ?? '',
+    version: row.version ?? '',
   }))
 }
 
@@ -305,7 +307,7 @@ export async function loadAllCards(): Promise<CardItem[]> {
     ...c,
     factionName: factionNames.get(c.factionId) ?? undefined,
     type: 'faction_ability',
-    searchText: [c.factionId, factionNames.get(c.factionId), c.name, c.text].filter(Boolean).join(' '),
+    searchText: [c.factionId, factionNames.get(c.factionId), c.name, c.text, c.version].filter(Boolean).join(' '),
   }))
   const factionLeaderItems: CardItem[] = factionLeaders.map((c) => ({
     ...c,
@@ -323,7 +325,7 @@ export async function loadAllCards(): Promise<CardItem[]> {
     ...c,
     factionName: factionNames.get(c.factionId) ?? undefined,
     type: 'breakthrough',
-    searchText: [c.factionId, factionNames.get(c.factionId), c.name, c.synergy, c.effect].filter(Boolean).join(' '),
+    searchText: [c.factionId, factionNames.get(c.factionId), c.name, c.synergy, c.effect, c.version].filter(Boolean).join(' '),
   }))
   const technologyItems: CardItem[] = technologies.map((c) => ({
     ...c,

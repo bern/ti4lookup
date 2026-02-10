@@ -1,13 +1,32 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useMemo } from 'react'
 import { loadAllCards } from './data/loadCards'
 import { HomeView, type View } from './views/HomeView'
 import { SearchView } from './views/SearchView'
 import { CategoryView } from './views/CategoryView'
 import { ThemeSelector, type ThemeId } from './components/ThemeSelector'
+import {
+  ExpansionSelector,
+  type ExpansionId,
+  expansionIdsToVersions,
+  cardVersionMatchesExpansions,
+} from './components/ExpansionSelector'
 import type { CardItem } from './types'
 
 const RECENT_MAX = 10
 const THEME_STORAGE_KEY = 'ti4lookup-theme'
+const EXPANSIONS_STORAGE_KEY = 'ti4lookup-expansions'
+
+function parseStoredExpansions(s: string | null): Set<ExpansionId> {
+  if (!s) return new Set()
+  try {
+    const parsed = JSON.parse(s) as unknown
+    if (!Array.isArray(parsed)) return new Set()
+    const valid = ['pok', 'codex1', 'codex2', 'codex3', 'codex4', 'thundersEdge'] as const
+    return new Set(parsed.filter((id): id is ExpansionId => valid.includes(id)))
+  } catch {
+    return new Set()
+  }
+}
 
 function addRecent(prev: string[], query: string): string[] {
   const trimmed = query.trim()
@@ -31,6 +50,31 @@ export function App() {
     }
     return 'light'
   })
+  const [expansions, setExpansions] = useState<Set<ExpansionId>>(() => {
+    try {
+      const stored = parseStoredExpansions(localStorage.getItem(EXPANSIONS_STORAGE_KEY))
+      if (stored.size > 0) return stored
+      return new Set(['pok', 'codex1', 'codex2', 'codex3', 'codex4', 'thundersEdge'])
+    } catch {
+      return new Set(['pok', 'codex1', 'codex2', 'codex3', 'codex4', 'thundersEdge'])
+    }
+  })
+
+  const filteredCards = useMemo(() => {
+    const versions = expansionIdsToVersions(expansions)
+    return cards.filter((card) => cardVersionMatchesExpansions(
+      'version' in card ? card.version : undefined,
+      versions
+    ))
+  }, [cards, expansions])
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(EXPANSIONS_STORAGE_KEY, JSON.stringify([...expansions]))
+    } catch {
+      /* ignore */
+    }
+  }, [expansions])
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
@@ -57,7 +101,10 @@ export function App() {
       <div className="app">
         <header className="app-header">
           <h1 className="app-title">TI4 Lookup</h1>
-          <ThemeSelector value={theme} onChange={setTheme} />
+          <div className="app-header__actions">
+            <ExpansionSelector selected={expansions} onChange={setExpansions} />
+            <ThemeSelector value={theme} onChange={setTheme} />
+          </div>
         </header>
         <main className="app-main">
           <p className="results-message results-message--error">{error}</p>
@@ -71,7 +118,10 @@ export function App() {
       <div className="app">
         <header className="app-header">
           <h1 className="app-title">TI4 Lookup</h1>
-          <ThemeSelector value={theme} onChange={setTheme} />
+          <div className="app-header__actions">
+            <ExpansionSelector selected={expansions} onChange={setExpansions} />
+            <ThemeSelector value={theme} onChange={setTheme} />
+          </div>
         </header>
         <main className="app-main">
           <p className="results-message">Loading…</p>
@@ -84,7 +134,10 @@ export function App() {
     <div className="app">
       <header className="app-header">
         <h1 className="app-title">TI4 Lookup</h1>
-        <ThemeSelector value={theme} onChange={setTheme} />
+        <div className="app-header__actions">
+          <ExpansionSelector selected={expansions} onChange={setExpansions} />
+          <ThemeSelector value={theme} onChange={setTheme} />
+        </div>
       </header>
       {view === 'home' && (
         <main className="app-main home-main">
@@ -96,7 +149,7 @@ export function App() {
       )}
       {view === 'search' && (
         <SearchView
-          cards={cards}
+          cards={filteredCards}
           recentSearches={recentSearches}
           onAddRecent={onAddRecent}
           onBack={() => setView('home')}
@@ -104,7 +157,7 @@ export function App() {
       )}
       {(view === 'action' || view === 'agenda' || view === 'strategy' || view === 'public_objective' || view === 'secret_objective' || view === 'legendary_planet' || view === 'exploration' || view === 'faction_ability' || view === 'faction_leader' || view === 'promissory_note' || view === 'breakthrough' || view === 'technology') && (
         <CategoryView
-          cards={cards}
+          cards={filteredCards}
           category={view}
           onBack={() => setView('home')}
         />

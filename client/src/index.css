@@ -133,13 +133,68 @@ body {
   border-bottom: 1px solid var(--color-border);
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 100;
 }
 
 .app-title {
   margin: 0;
   font-size: 1.25rem;
   font-weight: 600;
+}
+
+.app-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.expansion-selector {
+  position: relative;
+}
+
+.expansion-selector__trigger {
+  padding: 0.35rem 0.6rem;
+  font-size: 0.85rem;
+  color: var(--color-text);
+  background: var(--color-bg-input);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.expansion-selector__trigger:hover,
+.expansion-selector__trigger:focus {
+  border-color: var(--color-border-focus);
+  outline: none;
+}
+
+.expansion-selector__dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.25rem;
+  min-width: 12rem;
+  padding: 0.5rem;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 101;
+}
+
+.expansion-selector__option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.expansion-selector__option input {
+  flex-shrink: 0;
 }
 
 .theme-select {

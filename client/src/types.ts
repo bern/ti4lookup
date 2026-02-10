@@ -84,7 +84,7 @@ export interface Exploration {
 }
 
 /**
- * Faction ability from CSV. Columns: faction id, name, text.
+ * Faction ability from CSV. Columns: faction id, name, text, version.
  * factionName is set at load from factions.csv for display (category footer).
  */
 export interface FactionAbility {
@@ -92,6 +92,7 @@ export interface FactionAbility {
   factionName?: string
   name: string
   text: string
+  version: string
 }
 
 /**
@@ -122,7 +123,7 @@ export interface PromissoryNote {
 }
 
 /**
- * Breakthrough from CSV. Columns: faction id, name, synergy, effect.
+ * Breakthrough from CSV. Columns: faction id, name, synergy, effect, version.
  * factionName is set at load from factions.csv for display (category footer).
  */
 export interface Breakthrough {
@@ -131,6 +132,7 @@ export interface Breakthrough {
   name: string
   synergy: string
   effect: string
+  version: string
 }
 
 /**
