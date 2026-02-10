@@ -43,7 +43,7 @@ Fourth Moon,mentak,flagship,8,1,7(x2),3,"Other players' ships in this system can
 Moll Terminus,mentak,mech,2,,6,,"Other players' ground forces on this planet cannot use SUSTAIN DAMAGE.",SUSTAIN DAMAGE.,pok
 The Inferno,muaat,flagship,8,1,5(x2),3,"ACTION: Spend 1 token from your strategy pool to place 1 cruiser in this system.",SUSTAIN DAMAGE.,base game
 Ember Colossus,muaat,mech,2,,6,,"When you use your Star Forge faction ability in this system or an adjacent system, you may place 1 infantry from your reinforcements with this unit.",SUSTAIN DAMAGE.,pok
-Prototype War Sun 1,muaat,war sun,12,1,3(x3),6,"Other players' units in this system lose the PLANETARY SHIELD ability.,SUSTAIN DAMAGE. BOMBARDMENT 3(x3)".,base game
+Prototype War Sun 1,muaat,war sun,12,1,3(x3),6,"Other players' units in this system lose the PLANETARY SHIELD ability.",SUSTAIN DAMAGE. BOMBARDMENT 3(x3).,base game
 Matriarch,naalu,flagship,8,1,9(x2),6,"During an invasion in this system, you may commit fighters to planets as if they were ground forces. After combat return those units to the space area.",SUSTAIN DAMAGE.,base game
 Iconoclast,naalu,mech,2,,6,,"During combat against an opponent who has at least 1 relic fragment, apply +2 to the results of this unit's combat rolls.",SUSTAIN DAMAGE.,pok
 Hybrid Crystal Fighter 1,naalu,fighter,0.5,,8,,,,base game
