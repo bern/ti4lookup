@@ -151,6 +151,26 @@ export interface Technology {
   factionName?: string
 }
 
+/**
+ * Galactic event from CSV. Columns: name, effect, version.
+ */
+export interface GalacticEvent {
+  name: string
+  effect: string
+  version: string
+}
+
+/**
+ * Plot from CSV. Columns: name, faction ids, effect, version.
+ * factionIds is parsed from e.g. "[firmament,obsidian]".
+ */
+export interface Plot {
+  name: string
+  factionIds: string[]
+  effect: string
+  version: string
+}
+
 /** Combined item for search/display with searchText for Fuse. */
 export type CardItem =
   | (ActionCard & { type: 'action'; searchText: string })
@@ -165,3 +185,5 @@ export type CardItem =
   | (PromissoryNote & { type: 'promissory_note'; searchText: string })
   | (Breakthrough & { type: 'breakthrough'; searchText: string })
   | (Technology & { type: 'technology'; searchText: string })
+  | (GalacticEvent & { type: 'galactic_event'; searchText: string })
+  | (Plot & { type: 'plot'; searchText: string })

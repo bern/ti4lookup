@@ -22,6 +22,8 @@ const CATEGORY_LABELS: Record<CardItem['type'], string> = {
   promissory_note: 'Promissory Notes',
   breakthrough: 'Breakthroughs',
   technology: 'Technologies',
+  galactic_event: 'Galactic Events',
+  plot: 'Plots',
 }
 
 /** Parse prerequisites string e.g. "[blue,blue,yellow]" into color ids for icons. */
@@ -55,6 +57,9 @@ function getCardImages(card: CardItem): string[] {
     if (trait && PLANET_TRAIT_IDS.has(trait)) ids.push(trait)
     const tech = card.technology?.toLowerCase()
     if (tech && TECH_TYPE_IDS.has(tech)) ids.push(tech)
+  }
+  if (card.type === 'plot' && card.factionIds?.length) {
+    ids.push(...card.factionIds)
   }
   return [...new Set(ids)]
 }
@@ -307,6 +312,32 @@ export function ResultRow({ card }: ResultRowProps) {
             </span>
           </>
         )}
+        <CardFooter card={card} />
+      </article>
+    )
+  }
+
+  if (card.type === 'galactic_event') {
+    return (
+      <article className="result-row result-row--galactic-event" style={bgStyle}>
+        <header className="result-row__header">
+          <span className="result-row__name">{card.name}</span>
+          <span className="result-row__meta">{card.version}</span>
+        </header>
+        <p className="result-row__effect">{card.effect}</p>
+        <CardFooter card={card} />
+      </article>
+    )
+  }
+
+  if (card.type === 'plot') {
+    return (
+      <article className="result-row result-row--plot" style={bgStyle}>
+        <header className="result-row__header">
+          <span className="result-row__name">{card.name}</span>
+          <span className="result-row__meta">{card.version}</span>
+        </header>
+        <p className="result-row__effect">{card.effect}</p>
         <CardFooter card={card} />
       </article>
     )

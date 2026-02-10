@@ -1,5 +1,5 @@
 import Papa from 'papaparse'
-import type { ActionCard, StrategyCard, Agenda, PublicObjective, SecretObjective, LegendaryPlanet, Exploration, FactionAbility, FactionLeader, PromissoryNote, Breakthrough, Technology, CardItem } from '../types'
+import type { ActionCard, StrategyCard, Agenda, PublicObjective, SecretObjective, LegendaryPlanet, Exploration, FactionAbility, FactionLeader, PromissoryNote, Breakthrough, Technology, GalacticEvent, Plot, CardItem } from '../types'
 
 const ACTION_CSV_URL = '/action_cards.csv'
 const STRATEGY_CSV_URL = '/strategy_cards.csv'
@@ -13,6 +13,8 @@ const PROMISSORY_NOTES_CSV_URL = '/promissory_notes.csv'
 const BREAKTHROUGHS_CSV_URL = '/breakthroughs.csv'
 const TECHNOLOGIES_CSV_URL = '/technologies.csv'
 const FACTIONS_CSV_URL = '/factions.csv'
+const GALACTIC_EVENTS_CSV_URL = '/galactic_events.csv'
+const PLOTS_CSV_URL = '/plots.csv'
 
 function parseCsv<T>(url: string, mapRow: (row: Record<string, string>) => T): Promise<T[]> {
   return fetch(url)
@@ -250,11 +252,40 @@ export async function loadTechnologies(): Promise<Technology[]> {
   }))
 }
 
+function parseFactionIds(s: string): string[] {
+  const inner = (s ?? '').replace(/^\[|\]$/g, '').trim()
+  if (!inner) return []
+  return inner.split(',').map((id) => id.trim()).filter(Boolean)
+}
+
 /**
- * Loads action cards, strategy cards, agendas, objectives, legendary planets, exploration, faction abilities, faction leaders, promissory notes, breakthroughs, technologies; returns a combined CardItem[] for search/display.
+ * Fetches and parses galactic events CSV. Columns: name, effect, version.
+ */
+export async function loadGalacticEvents(): Promise<GalacticEvent[]> {
+  return parseCsv(GALACTIC_EVENTS_CSV_URL, (row) => ({
+    name: row.name ?? '',
+    effect: row.effect ?? '',
+    version: row.version ?? '',
+  }))
+}
+
+/**
+ * Fetches and parses plots CSV. Columns: name, faction ids, effect, version.
+ */
+export async function loadPlots(): Promise<Plot[]> {
+  return parseCsv(PLOTS_CSV_URL, (row) => ({
+    name: row.name ?? '',
+    factionIds: parseFactionIds(row['faction ids'] ?? ''),
+    effect: row.effect ?? '',
+    version: row.version ?? '',
+  }))
+}
+
+/**
+ * Loads action cards, strategy cards, agendas, objectives, legendary planets, exploration, faction abilities, faction leaders, promissory notes, breakthroughs, technologies, galactic events, plots; returns a combined CardItem[] for search/display.
  */
 export async function loadAllCards(): Promise<CardItem[]> {
-  const [actionCards, strategyCards, agendas, objectives, legendaryPlanets, exploration, factionAbilities, factionLeaders, promissoryNotes, breakthroughs, technologies, factionNames] = await Promise.all([
+  const [actionCards, strategyCards, agendas, objectives, legendaryPlanets, exploration, factionAbilities, factionLeaders, promissoryNotes, breakthroughs, technologies, galacticEvents, plots, factionNames] = await Promise.all([
     loadActionCards(),
     loadStrategyCards(),
     loadAgendas(),
@@ -266,6 +297,8 @@ export async function loadAllCards(): Promise<CardItem[]> {
     loadPromissoryNotes(),
     loadBreakthroughs(),
     loadTechnologies(),
+    loadGalacticEvents(),
+    loadPlots(),
     loadFactionNames(),
   ])
   const actionItems: CardItem[] = actionCards.map((c) => ({
@@ -351,6 +384,16 @@ export async function loadAllCards(): Promise<CardItem[]> {
     type: 'technology',
     searchText: [c.name, c.factionId, factionNames.get(c.factionId), c.techType, c.unit, c.prerequisites, c.effect, c.version].filter(Boolean).join(' '),
   }))
+  const galacticEventItems: CardItem[] = galacticEvents.map((c) => ({
+    ...c,
+    type: 'galactic_event',
+    searchText: [c.name, c.effect, c.version].filter(Boolean).join(' '),
+  }))
+  const plotItems: CardItem[] = plots.map((c) => ({
+    ...c,
+    type: 'plot',
+    searchText: [c.name, c.factionIds.join(' '), c.effect, c.version].filter(Boolean).join(' '),
+  }))
   return [
     ...actionItems,
     ...strategyItems,
@@ -364,5 +407,7 @@ export async function loadAllCards(): Promise<CardItem[]> {
     ...promissoryNoteItems,
     ...breakthroughItems,
     ...technologyItems,
+    ...galacticEventItems,
+    ...plotItems,
   ]
 }

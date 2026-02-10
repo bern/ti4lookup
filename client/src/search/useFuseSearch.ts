@@ -5,7 +5,7 @@ import type { CardItem } from '../types'
 const MAX_RESULTS = 50
 const DEBOUNCE_MS = 50
 
-export type CardType = 'action' | 'agenda' | 'strategy' | 'public_objective' | 'secret_objective' | 'legendary_planet' | 'exploration' | 'faction_ability' | 'faction_leader' | 'promissory_note' | 'breakthrough' | 'technology'
+export type CardType = 'action' | 'agenda' | 'strategy' | 'public_objective' | 'secret_objective' | 'legendary_planet' | 'exploration' | 'faction_ability' | 'faction_leader' | 'promissory_note' | 'breakthrough' | 'technology' | 'galactic_event' | 'plot'
 
 /**
  * Fuse.js over cards. Searches name and searchText.
@@ -53,6 +53,8 @@ export function partitionByType(cards: CardItem[]): {
   promissory_note: CardItem[]
   breakthrough: CardItem[]
   technology: CardItem[]
+  galactic_event: CardItem[]
+  plot: CardItem[]
 } {
   const action = sortByName(cards.filter((c) => c.type === 'action'))
   const agenda = sortByName(cards.filter((c) => c.type === 'agenda'))
@@ -66,7 +68,9 @@ export function partitionByType(cards: CardItem[]): {
   const promissory_note = sortByName(cards.filter((c) => c.type === 'promissory_note'))
   const breakthrough = sortByName(cards.filter((c) => c.type === 'breakthrough'))
   const technology = sortByName(cards.filter((c) => c.type === 'technology'))
-  return { action, agenda, strategy, public_objective, secret_objective, legendary_planet, exploration, faction_ability, faction_leader, promissory_note, breakthrough, technology }
+  const galactic_event = sortByName(cards.filter((c) => c.type === 'galactic_event'))
+  const plot = sortByName(cards.filter((c) => c.type === 'plot'))
+  return { action, agenda, strategy, public_objective, secret_objective, legendary_planet, exploration, faction_ability, faction_leader, promissory_note, breakthrough, technology, galactic_event, plot }
 }
 
 function filterByType(cards: CardItem[], type: CardType): CardItem[] {

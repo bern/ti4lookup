@@ -118,6 +118,12 @@ export function SearchView({
                 <ResultsList cards={partitioned.breakthrough} />
               </section>
             )}
+            {partitioned.plot.length > 0 && (
+              <section className="results-section" aria-label="Plots">
+                <h2 className="section-title">Plots</h2>
+                <ResultsList cards={partitioned.plot} />
+              </section>
+            )}
             {results.length === 0 && (
               <p className="results-message">No cards found for this faction.</p>
             )}
@@ -195,6 +201,18 @@ export function SearchView({
               <section className="results-section" aria-label="Exploration">
                 <h2 className="section-title">Exploration</h2>
                 <ResultsList cards={partitioned.exploration} />
+              </section>
+            )}
+            {partitioned.galactic_event.length > 0 && (
+              <section className="results-section" aria-label="Galactic Events">
+                <h2 className="section-title">Galactic Events</h2>
+                <ResultsList cards={partitioned.galactic_event} />
+              </section>
+            )}
+            {partitioned.plot.length > 0 && (
+              <section className="results-section" aria-label="Plots">
+                <h2 className="section-title">Plots</h2>
+                <ResultsList cards={partitioned.plot} />
               </section>
             )}
             {results.length === 0 && (

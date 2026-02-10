@@ -21,6 +21,8 @@ function cardKey(card: CardItem, index: number): string {
   if (card.type === 'promissory_note') return `promissory_note-${card.factionId}-${card.name}-${version}-${index}`
   if (card.type === 'breakthrough') return `breakthrough-${card.factionId}-${card.name}-${index}`
   if (card.type === 'technology') return `technology-${card.factionId}-${card.name}-${card.techType}-${version}-${index}`
+  if (card.type === 'galactic_event') return `galactic_event-${card.name}-${version}-${index}`
+  if (card.type === 'plot') return `plot-${card.name}-${version}-${index}`
   return `fallback-${index}`
 }
 

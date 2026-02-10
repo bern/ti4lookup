@@ -18,6 +18,8 @@ const CATEGORY_LABELS: Record<CardType, string> = {
   promissory_note: 'Promissory Notes',
   breakthrough: 'Breakthroughs',
   technology: 'Technologies',
+  galactic_event: 'Galactic Events',
+  plot: 'Plots',
 }
 
 const CATEGORY_PLACEHOLDERS: Record<CardType, string> = {
@@ -33,6 +35,8 @@ const CATEGORY_PLACEHOLDERS: Record<CardType, string> = {
   promissory_note: 'Search promissory notes…',
   breakthrough: 'Search breakthroughs…',
   technology: 'Search technologies…',
+  galactic_event: 'Search galactic events…',
+  plot: 'Search plots…',
 }
 
 interface CategoryViewProps {

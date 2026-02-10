@@ -76,9 +76,11 @@ export function App() {
       versions
     ))
     if (factionFilter) {
-      result = result.filter(
-        (card) => 'factionId' in card && card.factionId === factionFilter
-      )
+      result = result.filter((card) => {
+        if ('factionId' in card && card.factionId === factionFilter) return true
+        if (card.type === 'plot' && 'factionIds' in card && card.factionIds?.includes(factionFilter)) return true
+        return false
+      })
     }
     return result
   }, [cards, expansions, factionFilter])
@@ -214,7 +216,7 @@ export function App() {
           }}
         />
       )}
-      {(view === 'action' || view === 'agenda' || view === 'strategy' || view === 'public_objective' || view === 'secret_objective' || view === 'legendary_planet' || view === 'exploration' || view === 'faction_ability' || view === 'faction_leader' || view === 'promissory_note' || view === 'breakthrough' || view === 'technology') && (
+      {(view === 'action' || view === 'agenda' || view === 'strategy' || view === 'public_objective' || view === 'secret_objective' || view === 'legendary_planet' || view === 'exploration' || view === 'faction_ability' || view === 'faction_leader' || view === 'promissory_note' || view === 'breakthrough' || view === 'technology' || view === 'galactic_event' || view === 'plot') && (
         <CategoryView
           cards={filteredCards}
           category={view}
