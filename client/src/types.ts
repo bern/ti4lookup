@@ -171,6 +171,24 @@ export interface Plot {
   version: string
 }
 
+/**
+ * Unit from CSV. Columns: name, faction id, unit, cost, move, combat, capacity, text abilities, unit abilities, version.
+ * factionId empty = general unit; otherwise faction unit.
+ */
+export interface Unit {
+  name: string
+  factionId: string
+  unit: string
+  cost: string
+  move: string
+  combat: string
+  capacity: string
+  textAbilities: string
+  unitAbilities: string
+  version: string
+  factionName?: string
+}
+
 /** Combined item for search/display with searchText for Fuse. */
 export type CardItem =
   | (ActionCard & { type: 'action'; searchText: string })
@@ -187,3 +205,4 @@ export type CardItem =
   | (Technology & { type: 'technology'; searchText: string })
   | (GalacticEvent & { type: 'galactic_event'; searchText: string })
   | (Plot & { type: 'plot'; searchText: string })
+  | (Unit & { type: 'unit'; searchText: string })

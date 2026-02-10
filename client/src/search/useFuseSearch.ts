@@ -6,9 +6,10 @@ const MAX_RESULTS = 50
 const DEBOUNCE_MS = 50
 
 export type CardType =
-  | 'action' | 'agenda' | 'strategy' | 'public_objective' | 'secret_objective' | 'legendary_planet' | 'exploration'
+  | 'action' | 'agenda' | 'strategy' | 'public_objective' | 'secret_objective' | 'legendary_planet' | 'exploration' | 'relic'
   | 'faction_ability' | 'faction_leader' | 'promissory_note' | 'promissory_note_general' | 'promissory_note_faction'
   | 'breakthrough' | 'technology' | 'technology_general' | 'technology_faction' | 'galactic_event' | 'plot'
+  | 'unit' | 'unit_general' | 'unit_faction'
 
 /**
  * Fuse.js over cards. Searches name and searchText.
@@ -31,6 +32,21 @@ function createFuse(cards: CardItem[]): Fuse<CardItem> {
 /** Sort cards by name (A–Z). */
 export function sortByName(cards: CardItem[]): CardItem[] {
   return [...cards].sort((a, b) => a.name.localeCompare(b.name))
+}
+
+const EXPLORATION_TYPE_ORDER = ['cultural', 'industrial', 'hazardous', 'frontier'] as const
+
+/** Sort exploration cards: by type (cultural, industrial, hazardous, frontier), then by name. */
+function sortByExploration(cards: CardItem[]): CardItem[] {
+  return [...cards].sort((a, b) => {
+    if (a.type !== 'exploration' || b.type !== 'exploration') return 0
+    const ta = (a.explorationType ?? '').toLowerCase()
+    const tb = (b.explorationType ?? '').toLowerCase()
+    const ia = EXPLORATION_TYPE_ORDER.indexOf(ta as (typeof EXPLORATION_TYPE_ORDER)[number])
+    const ib = EXPLORATION_TYPE_ORDER.indexOf(tb as (typeof EXPLORATION_TYPE_ORDER)[number])
+    if (ia !== ib) return (ia >= 0 ? ia : 999) - (ib >= 0 ? ib : 999)
+    return a.name.localeCompare(b.name)
+  })
 }
 
 /** Sort strategy cards by initiative order (1–8). */
@@ -101,6 +117,63 @@ function sortByFactionLeader(cards: CardItem[]): CardItem[] {
   })
 }
 
+/** Parse unit cost for sorting. Empty/undefined = Infinity (sort to bottom). */
+function parseUnitCost(cost: string): number {
+  const s = (cost ?? '').trim()
+  if (!s) return Infinity
+  const n = parseFloat(s)
+  return Number.isFinite(n) ? n : Infinity
+}
+
+/** Unit type order: non-mech/flagship first, then flagship, then mech. */
+const UNIT_CLASS_ORDER: Record<string, number> = {
+  flagship: 1,
+  mech: 2,
+}
+
+function getUnitClassOrder(unit: string): number {
+  const u = (unit ?? '').toLowerCase()
+  return UNIT_CLASS_ORDER[u] ?? 0
+}
+
+/** Sort general units: by cost ascending, no-cost at bottom. */
+function sortByUnitGeneral(cards: CardItem[]): CardItem[] {
+  return [...cards].sort((a, b) => {
+    if (a.type !== 'unit' || b.type !== 'unit') return 0
+    const ca = parseUnitCost(a.cost)
+    const cb = parseUnitCost(b.cost)
+    if (ca !== cb) return ca - cb
+    return a.name.localeCompare(b.name)
+  })
+}
+
+/** Faction display order for grouping (matches factions.csv). */
+export const FACTION_ORDER = [
+  'arborec', 'barony', 'saar', 'muaat', 'hacan', 'sol', 'ghosts', 'lizix', 'mentak', 'naalu', 'nekro', 'sardakk',
+  'jolnar', 'winnu', 'xxcha', 'yin', 'yssaril', 'argent', 'empyrean', 'mahact', 'nra', 'nomad', 'titans', 'cabal',
+  'keleres', 'crimson', 'deepwrought', 'firmament', 'obsidian', 'bastion', 'lizards',
+]
+
+function sortByUnitFaction(cards: CardItem[]): CardItem[] {
+  function factionIndex(fid: string): number {
+    const i = FACTION_ORDER.indexOf(fid.toLowerCase())
+    return i >= 0 ? i : 999
+  }
+  return [...cards].sort((a, b) => {
+    if (a.type !== 'unit' || b.type !== 'unit') return 0
+    const fa = factionIndex(a.factionId ?? '')
+    const fb = factionIndex(b.factionId ?? '')
+    if (fa !== fb) return fa - fb
+    const oa = getUnitClassOrder(a.unit)
+    const ob = getUnitClassOrder(b.unit)
+    if (oa !== ob) return oa - ob
+    const ca = parseUnitCost(a.cost)
+    const cb = parseUnitCost(b.cost)
+    if (ca !== cb) return ca - cb
+    return a.name.localeCompare(b.name)
+  })
+}
+
 /** Partition cards by type and sort each appropriately. */
 export function partitionByType(cards: CardItem[]): {
   action: CardItem[]
@@ -110,6 +183,7 @@ export function partitionByType(cards: CardItem[]): {
   secret_objective: CardItem[]
   legendary_planet: CardItem[]
   exploration: CardItem[]
+  relic: CardItem[]
   faction_ability: CardItem[]
   faction_leader: CardItem[]
   promissory_note_general: CardItem[]
@@ -119,6 +193,8 @@ export function partitionByType(cards: CardItem[]): {
   technology_faction: CardItem[]
   galactic_event: CardItem[]
   plot: CardItem[]
+  unit_general: CardItem[]
+  unit_faction: CardItem[]
 } {
   const action = sortByName(cards.filter((c) => c.type === 'action'))
   const agenda = sortByName(cards.filter((c) => c.type === 'agenda'))
@@ -126,7 +202,9 @@ export function partitionByType(cards: CardItem[]): {
   const public_objective = sortByName(cards.filter((c) => c.type === 'public_objective'))
   const secret_objective = sortByName(cards.filter((c) => c.type === 'secret_objective'))
   const legendary_planet = sortByName(cards.filter((c) => c.type === 'legendary_planet'))
-  const exploration = sortByName(cards.filter((c) => c.type === 'exploration'))
+  const explorationCards = cards.filter((c) => c.type === 'exploration')
+  const exploration = sortByExploration(explorationCards.filter((c) => (c.explorationType ?? '').toLowerCase() !== 'relic'))
+  const relic = sortByName(explorationCards.filter((c) => (c.explorationType ?? '').toLowerCase() === 'relic'))
   const faction_ability = sortByName(cards.filter((c) => c.type === 'faction_ability'))
   const faction_leader = sortByFactionLeader(cards.filter((c) => c.type === 'faction_leader'))
   const promissoryNoteCards = cards.filter((c) => c.type === 'promissory_note')
@@ -138,7 +216,10 @@ export function partitionByType(cards: CardItem[]): {
   const technology_faction = sortByTechnologyFaction(techCards.filter((c) => (c.factionId ?? '').trim() !== ''))
   const galactic_event = sortByName(cards.filter((c) => c.type === 'galactic_event'))
   const plot = sortByName(cards.filter((c) => c.type === 'plot'))
-  return { action, agenda, strategy, public_objective, secret_objective, legendary_planet, exploration, faction_ability, faction_leader, promissory_note_general, promissory_note_faction, breakthrough, technology_general, technology_faction, galactic_event, plot }
+  const unitCards = cards.filter((c) => c.type === 'unit')
+  const unit_general = sortByUnitGeneral(unitCards.filter((c) => !(c.factionId ?? '').trim()))
+  const unit_faction = sortByUnitFaction(unitCards.filter((c) => (c.factionId ?? '').trim() !== ''))
+  return { action, agenda, strategy, public_objective, secret_objective, legendary_planet, exploration, relic, faction_ability, faction_leader, promissory_note_general, promissory_note_faction, breakthrough, technology_general, technology_faction, galactic_event, plot, unit_general, unit_faction }
 }
 
 function filterByType(cards: CardItem[], type: CardType): CardItem[] {
@@ -146,6 +227,11 @@ function filterByType(cards: CardItem[], type: CardType): CardItem[] {
   if (type === 'promissory_note_faction') return cards.filter((c) => c.type === 'promissory_note' && (c.factionId ?? '').trim() !== '')
   if (type === 'technology_general') return cards.filter((c) => c.type === 'technology' && !(c.factionId ?? '').trim())
   if (type === 'technology_faction') return cards.filter((c) => c.type === 'technology' && (c.factionId ?? '').trim() !== '')
+  if (type === 'unit_general') return cards.filter((c) => c.type === 'unit' && !(c.factionId ?? '').trim())
+  if (type === 'unit_faction') return cards.filter((c) => c.type === 'unit' && (c.factionId ?? '').trim() !== '')
+  if (type === 'unit') return cards.filter((c) => c.type === 'unit')
+  if (type === 'relic') return cards.filter((c) => c.type === 'exploration' && (c.explorationType ?? '').toLowerCase() === 'relic')
+  if (type === 'exploration') return cards.filter((c) => c.type === 'exploration' && (c.explorationType ?? '').toLowerCase() !== 'relic')
   return cards.filter((c) => c.type === type)
 }
 
@@ -174,9 +260,18 @@ export function useFuseSearch(cards: CardItem[], options: UseFuseSearchOptions =
   const fuse = useMemo(() => createFuse(filteredCards), [filteredCards])
   const allSorted = useMemo(() => {
     if (typeFilter === 'strategy') return sortByInitiative(filteredCards)
+    if (typeFilter === 'exploration') return sortByExploration(filteredCards)
     if (typeFilter === 'technology_general') return sortByTechnology(filteredCards)
     if (typeFilter === 'technology_faction') return sortByTechnologyFaction(filteredCards)
     if (typeFilter === 'faction_leader') return sortByFactionLeader(filteredCards)
+    if (typeFilter === 'unit_general') return sortByUnitGeneral(filteredCards)
+    if (typeFilter === 'unit_faction') return sortByUnitFaction(filteredCards)
+    if (typeFilter === 'unit') {
+      const unitCards = filteredCards.filter((c) => c.type === 'unit')
+      const general = sortByUnitGeneral(unitCards.filter((c) => !(c.factionId ?? '').trim()))
+      const faction = sortByUnitFaction(unitCards.filter((c) => (c.factionId ?? '').trim() !== ''))
+      return [...general, ...faction]
+    }
     return sortByName(filteredCards)
   }, [filteredCards, typeFilter])
 
@@ -186,9 +281,18 @@ export function useFuseSearch(cards: CardItem[], options: UseFuseSearchOptions =
     const hits = fuse.search(q, { limit })
     const items = hits.map((h) => h.item)
     if (typeFilter === 'strategy') return sortByInitiative(items)
+    if (typeFilter === 'exploration') return sortByExploration(items)
     if (typeFilter === 'technology_general') return sortByTechnology(items)
     if (typeFilter === 'technology_faction') return sortByTechnologyFaction(items)
     if (typeFilter === 'faction_leader') return sortByFactionLeader(items)
+    if (typeFilter === 'unit_general') return sortByUnitGeneral(items)
+    if (typeFilter === 'unit_faction') return sortByUnitFaction(items)
+    if (typeFilter === 'unit') {
+      const unitCards = items.filter((c) => c.type === 'unit')
+      const general = sortByUnitGeneral(unitCards.filter((c) => !(c.factionId ?? '').trim()))
+      const faction = sortByUnitFaction(unitCards.filter((c) => (c.factionId ?? '').trim() !== ''))
+      return [...general, ...faction]
+    }
     return items
   }, [debouncedQuery, fuse, allSorted, limit, typeFilter])
 

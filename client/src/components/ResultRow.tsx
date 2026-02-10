@@ -17,11 +17,26 @@ function labelWithContent(label: string, content: string): string {
   return `${label.trim()}\n${content.trim()}`
 }
 
-/** Get category label for footer; promissory notes and technologies split by faction. */
+/** Get category label for footer; promissory notes, technologies, units split by faction; exploration split into exploration/relic. */
 function getCategoryLabel(card: CardItem): string {
   if (card.type === 'promissory_note') return (card.factionId ?? '').trim() ? 'Faction Promissory Notes' : 'Promissory Notes (General)'
   if (card.type === 'technology') return (card.factionId ?? '').trim() ? 'Faction Technologies' : 'Technologies (General)'
+  if (card.type === 'unit') return (card.factionId ?? '').trim() ? 'Faction Units' : 'Units (General)'
+  if (card.type === 'exploration') return (card.explorationType ?? '').toLowerCase() === 'relic' ? 'Relics' : 'Exploration'
   return CATEGORY_LABELS[card.type]
+}
+
+/** Build unit stats header string: Infantry • Cost 1 • Combat 5(x2) • Move 2 • Capacity 1 */
+function getUnitStatsHeader(unit: { unit: string; cost: string; combat: string; move: string; capacity: string }): string {
+  const parts: string[] = []
+  if (unit.unit?.trim()) {
+    parts.push(unit.unit.trim().replace(/\b\w/g, (c) => c.toUpperCase()))
+  }
+  if (unit.cost?.trim()) parts.push(`Cost ${unit.cost}`)
+  if (unit.combat?.trim()) parts.push(`Combat ${unit.combat}`)
+  if (unit.move?.trim()) parts.push(`Move ${unit.move}`)
+  if (unit.capacity?.trim()) parts.push(`Capacity ${unit.capacity}`)
+  return parts.join(' · ')
 }
 
 /** Build clipboard text from displayed card content. */
@@ -88,7 +103,8 @@ function getCardCopyText(card: CardItem): string {
     return joinSections(card.name, card.version, card.effect, footer)
   }
   if (card.type === 'breakthrough') {
-    return joinSections(card.name, card.synergy || undefined, card.effect, footer)
+    const synergyPart = card.synergy?.trim() ? labelWithContent('Synergy', card.synergy) : undefined
+    return joinSections(card.name, card.effect, synergyPart, footer)
   }
   if (card.type === 'technology') {
     const meta = [card.techType, card.unit, card.version].filter(Boolean).join(' · ')
@@ -104,6 +120,11 @@ function getCardCopyText(card: CardItem): string {
   }
   if (card.type === 'plot') {
     return joinSections(card.name, card.version, card.effect, footer)
+  }
+  if (card.type === 'unit') {
+    const stats = getUnitStatsHeader(card)
+    const body = [card.textAbilities, card.unitAbilities].filter(Boolean).join('\n\n')
+    return joinSections(card.name, stats || undefined, body, card.version, footer)
   }
   return ''
 }
@@ -161,6 +182,7 @@ const CATEGORY_LABELS: Record<CardItem['type'], string> = {
   technology: 'Technologies',
   galactic_event: 'Galactic Events',
   plot: 'Plots',
+  unit: 'Units',
 }
 
 /** Parse prerequisites string e.g. "[blue,blue,yellow]" into color ids for icons. */
@@ -197,6 +219,9 @@ function getCardImages(card: CardItem): string[] {
   }
   if (card.type === 'plot' && card.factionIds?.length) {
     ids.push(...card.factionIds)
+  }
+  if (card.type === 'unit' && card.factionId) {
+    ids.push(card.factionId)
   }
   return [...new Set(ids)]
 }
@@ -459,16 +484,27 @@ export function ResultRow({ card }: ResultRowProps) {
   }
 
   if (card.type === 'breakthrough') {
+    const synergyIds = parsePrerequisiteIds(card.synergy)
     return (
       <article className="result-row result-row--breakthrough" style={bgStyle}>
         <header className="result-row__header">
           <div className="result-row__header-content">
             <span className="result-row__name">{card.name}</span>
-            <span className="result-row__meta">{card.synergy || ''}</span>
           </div>
           <CopyButton card={card} />
         </header>
         <p className="result-row__effect">{card.effect}</p>
+        {card.synergy?.trim() && (
+          <>
+            <div style={{ marginBottom: '1em' }} />
+            <p className="result-row__label">Synergy</p>
+            <span className="result-row__prerequisites">
+              {synergyIds.map((id, i) => (
+                <img key={`${id}-${i}`} src={`${IMAGES_BASE}/${id}.png`} alt="" className="result-row__icon" />
+              ))}
+            </span>
+          </>
+        )}
         <CardFooter card={card} />
       </article>
     )
@@ -529,6 +565,31 @@ export function ResultRow({ card }: ResultRowProps) {
           <CopyButton card={card} />
         </header>
         <p className="result-row__effect">{card.effect}</p>
+        <CardFooter card={card} />
+      </article>
+    )
+  }
+
+  if (card.type === 'unit') {
+    const statsHeader = getUnitStatsHeader(card)
+    return (
+      <article className="result-row result-row--unit" style={bgStyle}>
+        <header className="result-row__header">
+          <div className="result-row__header-content">
+            <span className="result-row__name">{card.name}</span>
+            {(statsHeader || card.version) ? (
+              <span className="result-row__meta result-row__unit-stats">
+                {statsHeader}
+                {statsHeader && card.version ? ' · ' : ''}
+                {card.version}
+              </span>
+            ) : null}
+          </div>
+          <CopyButton card={card} />
+        </header>
+        {card.textAbilities && <p className="result-row__effect">{card.textAbilities}</p>}
+        {card.textAbilities && card.unitAbilities && <div style={{ marginBottom: '1em' }} />}
+        {card.unitAbilities && <p className="result-row__effect">{card.unitAbilities}</p>}
         <CardFooter card={card} />
       </article>
     )

@@ -1,6 +1,6 @@
 import type { Faction } from '../data/loadCards'
 
-export type View = 'home' | 'search' | 'action' | 'agenda' | 'strategy' | 'public_objective' | 'secret_objective' | 'legendary_planet' | 'exploration' | 'faction_ability' | 'faction_leader' | 'promissory_note' | 'breakthrough' | 'technology' | 'galactic_event' | 'plot'
+export type View = 'home' | 'search' | 'action' | 'agenda' | 'strategy' | 'public_objective' | 'secret_objective' | 'legendary_planet' | 'exploration' | 'relic' | 'faction_ability' | 'faction_leader' | 'promissory_note' | 'breakthrough' | 'technology' | 'galactic_event' | 'plot' | 'unit'
 
 interface HomeViewProps {
   factions: Faction[]
@@ -41,6 +41,13 @@ export function HomeView({ factions, onOpenSearch, onOpenFaction, onOpenCategory
           onClick={() => onOpenCategory('technology')}
         >
           Technologies
+        </button>
+        <button
+          type="button"
+          className="home-category-btn"
+          onClick={() => onOpenCategory('unit')}
+        >
+          Units
         </button>
         <button
           type="button"
@@ -104,6 +111,13 @@ export function HomeView({ factions, onOpenSearch, onOpenFaction, onOpenCategory
           onClick={() => onOpenCategory('exploration')}
         >
           Exploration
+        </button>
+        <button
+          type="button"
+          className="home-category-btn"
+          onClick={() => onOpenCategory('relic')}
+        >
+          Relics
         </button>
         <button
           type="button"

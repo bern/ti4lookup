@@ -13,6 +13,7 @@ const CATEGORY_LABELS: Record<CardType, string> = {
   secret_objective: 'Secret Objectives',
   legendary_planet: 'Legendary Planets',
   exploration: 'Exploration',
+  relic: 'Relics',
   faction_ability: 'Faction Abilities',
   faction_leader: 'Faction Leaders',
   promissory_note: 'Promissory Notes',
@@ -24,6 +25,9 @@ const CATEGORY_LABELS: Record<CardType, string> = {
   technology_faction: 'Faction Technologies',
   galactic_event: 'Galactic Events',
   plot: 'Plots',
+  unit: 'Units',
+  unit_general: 'Units (General)',
+  unit_faction: 'Faction Units',
 }
 
 const CATEGORY_PLACEHOLDERS: Record<CardType, string> = {
@@ -34,6 +38,7 @@ const CATEGORY_PLACEHOLDERS: Record<CardType, string> = {
   secret_objective: 'Search secret objectives…',
   legendary_planet: 'Search legendary planets…',
   exploration: 'Search exploration…',
+  relic: 'Search relics…',
   faction_ability: 'Search faction abilities…',
   faction_leader: 'Search faction leaders…',
   promissory_note: 'Search promissory notes…',
@@ -45,6 +50,9 @@ const CATEGORY_PLACEHOLDERS: Record<CardType, string> = {
   technology_faction: 'Search faction technologies…',
   galactic_event: 'Search galactic events…',
   plot: 'Search plots…',
+  unit: 'Search units…',
+  unit_general: 'Search units (general)…',
+  unit_faction: 'Search faction units…',
 }
 
 interface CategoryViewProps {
@@ -75,6 +83,15 @@ export function CategoryView({ cards, category, onBack }: CategoryViewProps) {
     if (category !== 'promissory_note') return null
     const partitioned = partitionByType(results)
     return { general: partitioned.promissory_note_general, faction: partitioned.promissory_note_faction }
+  }, [category, results])
+
+  const unitBySection = useMemo(() => {
+    if (category !== 'unit') return null
+    const partitioned = partitionByType(results)
+    return {
+      general: partitioned.unit_general,
+      faction: partitioned.unit_faction,
+    }
   }, [category, results])
 
   return (
@@ -152,6 +169,25 @@ export function CategoryView({ cards, category, onBack }: CategoryViewProps) {
             )}
             {promissoryNoteBySection.general.length === 0 && promissoryNoteBySection.faction.length === 0 && (
               <p className="results-message">No promissory notes found.</p>
+            )}
+          </>
+        ) : unitBySection ? (
+          <>
+            <h2 className="section-title">{CATEGORY_LABELS[category]}</h2>
+            {unitBySection.general.length > 0 && (
+              <section className="results-section" aria-label="Units (General)">
+                <h3 className="section-title section-title--sub">Units (General)</h3>
+                <ResultsList cards={unitBySection.general} />
+              </section>
+            )}
+            {unitBySection.faction.length > 0 && (
+              <section className="results-section" aria-label="Faction Units">
+                <h3 className="section-title section-title--sub">Faction Units</h3>
+                <ResultsList cards={unitBySection.faction} />
+              </section>
+            )}
+            {unitBySection.general.length === 0 && unitBySection.faction.length === 0 && (
+              <p className="results-message">No units found.</p>
             )}
           </>
         ) : (

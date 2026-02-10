@@ -15,7 +15,10 @@ function cardKey(card: CardItem, index: number): string {
   if (card.type === 'public_objective') return `public_objective-${card.name}-${version}-${index}`
   if (card.type === 'secret_objective') return `secret_objective-${card.name}-${version}-${index}`
   if (card.type === 'legendary_planet') return `legendary_planet-${card.name}-${version}-${index}`
-  if (card.type === 'exploration') return `exploration-${card.name}-${card.explorationType}-${version}-${index}`
+  if (card.type === 'exploration') {
+    const isRelic = (card.explorationType ?? '').toLowerCase() === 'relic'
+    return isRelic ? `relic-${card.name}-${version}-${index}` : `exploration-${card.name}-${card.explorationType}-${version}-${index}`
+  }
   if (card.type === 'faction_ability') return `faction_ability-${card.factionId}-${card.name}-${index}`
   if (card.type === 'faction_leader') return `faction_leader-${card.factionId}-${card.name}-${card.leaderType}-${version}-${index}`
   if (card.type === 'promissory_note') return `promissory_note-${card.factionId}-${card.name}-${version}-${index}`
@@ -23,6 +26,7 @@ function cardKey(card: CardItem, index: number): string {
   if (card.type === 'technology') return `technology-${card.factionId}-${card.name}-${card.techType}-${version}-${index}`
   if (card.type === 'galactic_event') return `galactic_event-${card.name}-${version}-${index}`
   if (card.type === 'plot') return `plot-${card.name}-${version}-${index}`
+  if (card.type === 'unit') return `unit-${card.factionId}-${card.name}-${card.unit}-${version}-${index}`
   return `fallback-${index}`
 }
 
