@@ -1,11 +1,15 @@
+import type { Faction } from '../data/loadCards'
+
 export type View = 'home' | 'search' | 'action' | 'agenda' | 'strategy' | 'public_objective' | 'secret_objective' | 'legendary_planet' | 'exploration' | 'faction_ability' | 'faction_leader' | 'promissory_note' | 'breakthrough' | 'technology'
 
 interface HomeViewProps {
+  factions: Faction[]
   onOpenSearch: () => void
+  onOpenFaction: (factionId: string) => void
   onOpenCategory: (view: Exclude<View, 'home' | 'search'>) => void
 }
 
-export function HomeView({ onOpenSearch, onOpenCategory }: HomeViewProps) {
+export function HomeView({ factions, onOpenSearch, onOpenFaction, onOpenCategory }: HomeViewProps) {
   return (
     <div className="home-view">
       <button
@@ -102,6 +106,27 @@ export function HomeView({ onOpenSearch, onOpenCategory }: HomeViewProps) {
           Exploration
         </button>
       </nav>
+      <section className="home-factions" aria-label="Browse by faction">
+        <h2 className="section-title">Browse by faction</h2>
+        <div className="faction-grid">
+          {factions.map((faction) => (
+            <button
+              key={faction.id}
+              type="button"
+              className="faction-grid__btn"
+              onClick={() => onOpenFaction(faction.id)}
+              aria-label={`View cards for ${faction.name}`}
+            >
+              <span className="faction-grid__label">{faction.name}</span>
+              <img
+                src={`/images/${faction.id}.png`}
+                alt={`${faction.name} logo`}
+                className="faction-grid__img"
+              />
+            </button>
+          ))}
+        </div>
+      </section>
     </div>
   )
 }

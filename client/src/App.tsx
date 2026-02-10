@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useMemo } from 'react'
-import { loadAllCards } from './data/loadCards'
+import { loadAllCards, loadFactions, type Faction } from './data/loadCards'
 import { HomeView, type View } from './views/HomeView'
 import { SearchView } from './views/SearchView'
 import { CategoryView } from './views/CategoryView'
@@ -37,6 +37,8 @@ function addRecent(prev: string[], query: string): string[] {
 
 export function App() {
   const [cards, setCards] = useState<CardItem[]>([])
+  const [factions, setFactions] = useState<Faction[]>([])
+  const [factionFilter, setFactionFilter] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [view, setView] = useState<View>('home')
@@ -60,13 +62,26 @@ export function App() {
     }
   })
 
+  const visibleFactions = useMemo(() => {
+    const versions = expansionIdsToVersions(expansions)
+    return factions.filter((f) =>
+      cardVersionMatchesExpansions(f.version, versions)
+    )
+  }, [factions, expansions])
+
   const filteredCards = useMemo(() => {
     const versions = expansionIdsToVersions(expansions)
-    return cards.filter((card) => cardVersionMatchesExpansions(
+    let result = cards.filter((card) => cardVersionMatchesExpansions(
       'version' in card ? card.version : undefined,
       versions
     ))
-  }, [cards, expansions])
+    if (factionFilter) {
+      result = result.filter(
+        (card) => 'factionId' in card && card.factionId === factionFilter
+      )
+    }
+    return result
+  }, [cards, expansions, factionFilter])
 
   useEffect(() => {
     try {
@@ -86,8 +101,11 @@ export function App() {
   }, [theme])
 
   useEffect(() => {
-    loadAllCards()
-      .then(setCards)
+    Promise.all([loadAllCards(), loadFactions()])
+      .then(([cardsData, factionsData]) => {
+        setCards(cardsData)
+        setFactions(factionsData)
+      })
       .catch((e) => setError(e instanceof Error ? e.message : 'Failed to load'))
       .finally(() => setLoading(false))
   }, [])
@@ -95,6 +113,12 @@ export function App() {
   const onAddRecent = useCallback((query: string) => {
     setRecentSearches((prev) => addRecent(prev, query))
   }, [])
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+    const main = document.querySelector('.search-view__main, .category-view__main, .app-main')
+    if (main) main.scrollTop = 0
+  }, [view])
 
   if (error) {
     return (
@@ -142,7 +166,15 @@ export function App() {
       {view === 'home' && (
         <main className="app-main home-main">
           <HomeView
-            onOpenSearch={() => setView('search')}
+            factions={visibleFactions}
+            onOpenSearch={() => {
+              setFactionFilter(null)
+              setView('search')
+            }}
+            onOpenFaction={(factionId) => {
+              setFactionFilter(factionId)
+              setView('search')
+            }}
             onOpenCategory={(v) => setView(v)}
           />
         </main>
@@ -151,8 +183,13 @@ export function App() {
         <SearchView
           cards={filteredCards}
           recentSearches={recentSearches}
+          factionFilter={factionFilter}
+          factionFilterName={factionFilter ? factions.find((f) => f.id === factionFilter)?.name ?? null : null}
           onAddRecent={onAddRecent}
-          onBack={() => setView('home')}
+          onBack={() => {
+            setFactionFilter(null)
+            setView('home')
+          }}
         />
       )}
       {(view === 'action' || view === 'agenda' || view === 'strategy' || view === 'public_objective' || view === 'secret_objective' || view === 'legendary_planet' || view === 'exploration' || view === 'faction_ability' || view === 'faction_leader' || view === 'promissory_note' || view === 'breakthrough' || view === 'technology') && (

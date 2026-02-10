@@ -8,6 +8,8 @@ const RECENT_MAX = 10
 interface SearchViewProps {
   cards: CardItem[]
   recentSearches: string[]
+  factionFilter: string | null
+  factionFilterName: string | null
   onAddRecent: (query: string) => void
   onBack: () => void
 }
@@ -15,6 +17,8 @@ interface SearchViewProps {
 export function SearchView({
   cards,
   recentSearches,
+  factionFilter,
+  factionFilterName,
   onAddRecent,
   onBack,
 }: SearchViewProps) {
@@ -29,7 +33,8 @@ export function SearchView({
 
   const partitioned = partitionByType(results)
   const hasQuery = query.trim() !== ''
-  const showRecent = !hasQuery && recentSearches.length > 0
+  const showRecent = !hasQuery && recentSearches.length > 0 && !factionFilter
+  const showFactionResults = factionFilter && !hasQuery
 
   return (
     <div className="search-view">
@@ -69,6 +74,54 @@ export function SearchView({
               ))}
             </ul>
           </section>
+        )}
+        {showFactionResults && (
+          <div className="search-results-partitioned">
+            {factionFilterName && (
+              <h2 className="section-title">
+                {factionFilterName}
+              </h2>
+            )}
+            {partitioned.strategy.length > 0 && (
+              <section className="results-section" aria-label="Strategy Cards">
+                <h2 className="section-title">Strategy Cards</h2>
+                <ResultsList cards={partitioned.strategy} />
+              </section>
+            )}
+            {partitioned.faction_ability.length > 0 && (
+              <section className="results-section" aria-label="Faction Abilities">
+                <h2 className="section-title">Faction Abilities</h2>
+                <ResultsList cards={partitioned.faction_ability} />
+              </section>
+            )}
+            {partitioned.technology.length > 0 && (
+              <section className="results-section" aria-label="Technologies">
+                <h2 className="section-title">Technologies</h2>
+                <ResultsList cards={partitioned.technology} />
+              </section>
+            )}
+            {partitioned.faction_leader.length > 0 && (
+              <section className="results-section" aria-label="Faction Leaders">
+                <h2 className="section-title">Faction Leaders</h2>
+                <ResultsList cards={partitioned.faction_leader} />
+              </section>
+            )}
+            {partitioned.promissory_note.length > 0 && (
+              <section className="results-section" aria-label="Promissory Notes">
+                <h2 className="section-title">Promissory Notes</h2>
+                <ResultsList cards={partitioned.promissory_note} />
+              </section>
+            )}
+            {partitioned.breakthrough.length > 0 && (
+              <section className="results-section" aria-label="Breakthroughs">
+                <h2 className="section-title">Breakthroughs</h2>
+                <ResultsList cards={partitioned.breakthrough} />
+              </section>
+            )}
+            {results.length === 0 && (
+              <p className="results-message">No cards found for this faction.</p>
+            )}
+          </div>
         )}
         {hasQuery && (
           <div className="search-results-partitioned">

@@ -150,6 +150,12 @@ export async function loadExploration(): Promise<Exploration[]> {
   }))
 }
 
+export interface Faction {
+  id: string
+  name: string
+  version: string
+}
+
 /**
  * Fetches factions CSV and returns a map of faction id -> full name for search.
  */
@@ -163,6 +169,18 @@ export async function loadFactionNames(): Promise<Map<string, string>> {
     if (r.id) map.set(r.id, r.name)
   }
   return map
+}
+
+/**
+ * Fetches factions CSV and returns list of factions for the home grid.
+ */
+export async function loadFactions(): Promise<Faction[]> {
+  const rows = await parseCsv(FACTIONS_CSV_URL, (row) => ({
+    id: (row.id ?? '').trim(),
+    name: (row.name ?? '').trim(),
+    version: (row.version ?? '').trim(),
+  }))
+  return rows.filter((r) => r.id)
 }
 
 /**
