@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { SearchInput } from '../components/SearchInput'
 import { ResultsList } from '../components/ResultsList'
-import { useFuseSearch, sortByName } from '../search/useFuseSearch'
+import { useFuseSearch, sortByName, partitionByType } from '../search/useFuseSearch'
 import type { CardItem } from '../types'
 import type { CardType } from '../search/useFuseSearch'
 
@@ -16,8 +16,12 @@ const CATEGORY_LABELS: Record<CardType, string> = {
   faction_ability: 'Faction Abilities',
   faction_leader: 'Faction Leaders',
   promissory_note: 'Promissory Notes',
+  promissory_note_general: 'Promissory Notes (General)',
+  promissory_note_faction: 'Faction Promissory Notes',
   breakthrough: 'Breakthroughs',
   technology: 'Technologies',
+  technology_general: 'Technologies (General)',
+  technology_faction: 'Faction Technologies',
   galactic_event: 'Galactic Events',
   plot: 'Plots',
 }
@@ -33,8 +37,12 @@ const CATEGORY_PLACEHOLDERS: Record<CardType, string> = {
   faction_ability: 'Search faction abilities…',
   faction_leader: 'Search faction leaders…',
   promissory_note: 'Search promissory notes…',
+  promissory_note_general: 'Search promissory notes (general)…',
+  promissory_note_faction: 'Search faction promissory notes…',
   breakthrough: 'Search breakthroughs…',
   technology: 'Search technologies…',
+  technology_general: 'Search technologies (general)…',
+  technology_faction: 'Search faction technologies…',
   galactic_event: 'Search galactic events…',
   plot: 'Search plots…',
 }
@@ -55,6 +63,18 @@ export function CategoryView({ cards, category, onBack }: CategoryViewProps) {
     const stage1 = sortByName(results.filter((c) => c.type === 'public_objective' && c.stage === '1'))
     const stage2 = sortByName(results.filter((c) => c.type === 'public_objective' && c.stage === '2'))
     return { stage1, stage2 }
+  }, [category, results])
+
+  const technologyBySection = useMemo(() => {
+    if (category !== 'technology') return null
+    const partitioned = partitionByType(results)
+    return { general: partitioned.technology_general, faction: partitioned.technology_faction }
+  }, [category, results])
+
+  const promissoryNoteBySection = useMemo(() => {
+    if (category !== 'promissory_note') return null
+    const partitioned = partitionByType(results)
+    return { general: partitioned.promissory_note_general, faction: partitioned.promissory_note_faction }
   }, [category, results])
 
   return (
@@ -94,6 +114,44 @@ export function CategoryView({ cards, category, onBack }: CategoryViewProps) {
             )}
             {publicByStage.stage1.length === 0 && publicByStage.stage2.length === 0 && (
               <p className="results-message">No objectives found.</p>
+            )}
+          </>
+        ) : technologyBySection ? (
+          <>
+            <h2 className="section-title">{CATEGORY_LABELS[category]}</h2>
+            {technologyBySection.general.length > 0 && (
+              <section className="results-section" aria-label="Technologies (General)">
+                <h3 className="section-title section-title--sub">Technologies (General)</h3>
+                <ResultsList cards={technologyBySection.general} />
+              </section>
+            )}
+            {technologyBySection.faction.length > 0 && (
+              <section className="results-section" aria-label="Faction Technologies">
+                <h3 className="section-title section-title--sub">Faction Technologies</h3>
+                <ResultsList cards={technologyBySection.faction} />
+              </section>
+            )}
+            {technologyBySection.general.length === 0 && technologyBySection.faction.length === 0 && (
+              <p className="results-message">No technologies found.</p>
+            )}
+          </>
+        ) : promissoryNoteBySection ? (
+          <>
+            <h2 className="section-title">{CATEGORY_LABELS[category]}</h2>
+            {promissoryNoteBySection.general.length > 0 && (
+              <section className="results-section" aria-label="Promissory Notes (General)">
+                <h3 className="section-title section-title--sub">Promissory Notes (General)</h3>
+                <ResultsList cards={promissoryNoteBySection.general} />
+              </section>
+            )}
+            {promissoryNoteBySection.faction.length > 0 && (
+              <section className="results-section" aria-label="Faction Promissory Notes">
+                <h3 className="section-title section-title--sub">Faction Promissory Notes</h3>
+                <ResultsList cards={promissoryNoteBySection.faction} />
+              </section>
+            )}
+            {promissoryNoteBySection.general.length === 0 && promissoryNoteBySection.faction.length === 0 && (
+              <p className="results-message">No promissory notes found.</p>
             )}
           </>
         ) : (

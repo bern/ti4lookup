@@ -94,10 +94,16 @@ export function SearchView({
                 <ResultsList cards={partitioned.faction_ability} />
               </section>
             )}
-            {partitioned.technology.length > 0 && (
-              <section className="results-section" aria-label="Technologies">
-                <h2 className="section-title">Technologies</h2>
-                <ResultsList cards={partitioned.technology} />
+            {partitioned.technology_general.length > 0 && (
+              <section className="results-section" aria-label="Technologies (General)">
+                <h2 className="section-title">Technologies (General)</h2>
+                <ResultsList cards={partitioned.technology_general} />
+              </section>
+            )}
+            {partitioned.technology_faction.length > 0 && (
+              <section className="results-section" aria-label="Faction Technologies">
+                <h2 className="section-title">Faction Technologies</h2>
+                <ResultsList cards={partitioned.technology_faction} />
               </section>
             )}
             {partitioned.faction_leader.length > 0 && (
@@ -106,10 +112,16 @@ export function SearchView({
                 <ResultsList cards={partitioned.faction_leader} />
               </section>
             )}
-            {partitioned.promissory_note.length > 0 && (
-              <section className="results-section" aria-label="Promissory Notes">
-                <h2 className="section-title">Promissory Notes</h2>
-                <ResultsList cards={partitioned.promissory_note} />
+            {partitioned.promissory_note_general.length > 0 && (
+              <section className="results-section" aria-label="Promissory Notes (General)">
+                <h2 className="section-title">Promissory Notes (General)</h2>
+                <ResultsList cards={partitioned.promissory_note_general} />
+              </section>
+            )}
+            {partitioned.promissory_note_faction.length > 0 && (
+              <section className="results-section" aria-label="Faction Promissory Notes">
+                <h2 className="section-title">Faction Promissory Notes</h2>
+                <ResultsList cards={partitioned.promissory_note_faction} />
               </section>
             )}
             {partitioned.breakthrough.length > 0 && (
@@ -143,10 +155,16 @@ export function SearchView({
                 <ResultsList cards={partitioned.faction_ability} />
               </section>
             )}
-            {partitioned.technology.length > 0 && (
-              <section className="results-section" aria-label="Technologies">
-                <h2 className="section-title">Technologies</h2>
-                <ResultsList cards={partitioned.technology} />
+            {partitioned.technology_general.length > 0 && (
+              <section className="results-section" aria-label="Technologies (General)">
+                <h2 className="section-title">Technologies (General)</h2>
+                <ResultsList cards={partitioned.technology_general} />
+              </section>
+            )}
+            {partitioned.technology_faction.length > 0 && (
+              <section className="results-section" aria-label="Faction Technologies">
+                <h2 className="section-title">Faction Technologies</h2>
+                <ResultsList cards={partitioned.technology_faction} />
               </section>
             )}
             {partitioned.faction_leader.length > 0 && (
@@ -155,10 +173,16 @@ export function SearchView({
                 <ResultsList cards={partitioned.faction_leader} />
               </section>
             )}
-            {partitioned.promissory_note.length > 0 && (
-              <section className="results-section" aria-label="Promissory Notes">
-                <h2 className="section-title">Promissory Notes</h2>
-                <ResultsList cards={partitioned.promissory_note} />
+            {partitioned.promissory_note_general.length > 0 && (
+              <section className="results-section" aria-label="Promissory Notes (General)">
+                <h2 className="section-title">Promissory Notes (General)</h2>
+                <ResultsList cards={partitioned.promissory_note_general} />
+              </section>
+            )}
+            {partitioned.promissory_note_faction.length > 0 && (
+              <section className="results-section" aria-label="Faction Promissory Notes">
+                <h2 className="section-title">Faction Promissory Notes</h2>
+                <ResultsList cards={partitioned.promissory_note_faction} />
               </section>
             )}
             {partitioned.breakthrough.length > 0 && (

@@ -17,9 +17,16 @@ function labelWithContent(label: string, content: string): string {
   return `${label.trim()}\n${content.trim()}`
 }
 
+/** Get category label for footer; promissory notes and technologies split by faction. */
+function getCategoryLabel(card: CardItem): string {
+  if (card.type === 'promissory_note') return (card.factionId ?? '').trim() ? 'Faction Promissory Notes' : 'Promissory Notes (General)'
+  if (card.type === 'technology') return (card.factionId ?? '').trim() ? 'Faction Technologies' : 'Technologies (General)'
+  return CATEGORY_LABELS[card.type]
+}
+
 /** Build clipboard text from displayed card content. */
 function getCardCopyText(card: CardItem): string {
-  const baseLabel = CATEGORY_LABELS[card.type]
+  const baseLabel = getCategoryLabel(card)
   const factionName = 'factionName' in card ? card.factionName : undefined
   const footer = factionName ? `${baseLabel} • ${factionName}` : baseLabel
 
@@ -195,7 +202,7 @@ function getCardImages(card: CardItem): string[] {
 }
 
 function CardFooter({ card }: { card: CardItem }) {
-  const baseLabel = CATEGORY_LABELS[card.type]
+  const baseLabel = getCategoryLabel(card)
   const factionName = 'factionName' in card ? card.factionName : undefined
   const label = factionName ? `${baseLabel} • ${factionName}` : baseLabel
   const imageIds = getCardImages(card)
@@ -225,10 +232,25 @@ const CARD_COLOR_BG: Record<string, string> = {
   purple: 'rgba(120, 70, 160, 0.1)',
 }
 
+/** Technology color (blue, yellow, green, red) → rgba with low opacity. */
+const TECH_COLOR_BG: Record<string, string> = {
+  blue: 'rgba(60, 100, 180, 0.12)',
+  yellow: 'rgba(200, 170, 50, 0.12)',
+  green: 'rgba(50, 140, 70, 0.12)',
+  red: 'rgba(180, 50, 50, 0.12)',
+}
+
 function getCardBgStyle(card: CardItem): { backgroundColor?: string } {
-  if (card.type !== 'strategy' || !card.color) return {}
-  const bg = CARD_COLOR_BG[card.color.toLowerCase()]
-  return bg ? { backgroundColor: bg } : {}
+  if (card.type === 'strategy' && card.color) {
+    const bg = CARD_COLOR_BG[card.color.toLowerCase()]
+    return bg ? { backgroundColor: bg } : {}
+  }
+  if (card.type === 'technology') {
+    const t = (card.techType ?? '').trim().toLowerCase()
+    const bg = TECH_COLOR_BG[t]
+    return bg ? { backgroundColor: bg } : {}
+  }
+  return {}
 }
 
 /** If effect contains "FOR:" and "AGAINST:", return intro (if any), forText, againstText; otherwise null. */
