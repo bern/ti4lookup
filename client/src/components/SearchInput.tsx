@@ -21,7 +21,7 @@ export function SearchInput({
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    if (autoFocus) inputRef.current?.focus()
+    if (autoFocus && window.innerWidth >= 768) inputRef.current?.focus()
   }, [autoFocus])
 
   return (
