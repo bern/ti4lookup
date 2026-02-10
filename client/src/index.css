@@ -160,6 +160,28 @@ body {
   flex-shrink: 0;
 }
 
+.app-footer {
+  margin-top: auto;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  border-top: 1px solid var(--color-border);
+}
+
+.app-footer__text {
+  margin: 0.25rem 0;
+}
+
+.app-footer__link {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.app-footer__link:hover {
+  text-decoration: underline;
+}
+
 .expansion-selector {
   position: relative;
 }

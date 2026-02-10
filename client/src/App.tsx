@@ -10,6 +10,7 @@ import {
   expansionIdsToVersions,
   cardVersionMatchesExpansions,
 } from './components/ExpansionSelector'
+import { AppFooter } from './components/AppFooter'
 import type { CardItem } from './types'
 
 const RECENT_MAX = 10
@@ -141,6 +142,7 @@ export function App() {
         <main className="app-main">
           <p className="results-message results-message--error">{error}</p>
         </main>
+        <AppFooter />
       </div>
     )
   }
@@ -164,6 +166,7 @@ export function App() {
         <main className="app-main">
           <p className="results-message">Loading…</p>
         </main>
+        <AppFooter />
       </div>
     )
   }
@@ -223,6 +226,7 @@ export function App() {
           onBack={() => setView('home')}
         />
       )}
+      <AppFooter />
     </div>
   )
 }
