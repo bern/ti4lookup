@@ -124,7 +124,13 @@ export function App() {
     return (
       <div className="app">
         <header className="app-header">
-          <h1 className="app-title">TI4 Lookup</h1>
+          <button
+            type="button"
+            className="app-title app-title--btn"
+            onClick={() => setView('home')}
+          >
+            TI4 Lookup
+          </button>
           <div className="app-header__actions">
             <ExpansionSelector selected={expansions} onChange={setExpansions} />
             <ThemeSelector value={theme} onChange={setTheme} />
@@ -141,7 +147,13 @@ export function App() {
     return (
       <div className="app">
         <header className="app-header">
-          <h1 className="app-title">TI4 Lookup</h1>
+          <button
+            type="button"
+            className="app-title app-title--btn"
+            onClick={() => setView('home')}
+          >
+            TI4 Lookup
+          </button>
           <div className="app-header__actions">
             <ExpansionSelector selected={expansions} onChange={setExpansions} />
             <ThemeSelector value={theme} onChange={setTheme} />
@@ -157,7 +169,17 @@ export function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1 className="app-title">TI4 Lookup</h1>
+        <button
+          type="button"
+          className="app-title app-title--btn"
+          onClick={() => {
+            setFactionFilter(null)
+            setView('home')
+          }}
+          aria-label="Back to home"
+        >
+          TI4 Lookup
+        </button>
         <div className="app-header__actions">
           <ExpansionSelector selected={expansions} onChange={setExpansions} />
           <ThemeSelector value={theme} onChange={setTheme} />
