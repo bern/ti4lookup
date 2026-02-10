@@ -70,8 +70,8 @@ Advanced Carrier 1,sol,carrier,3,1,9,6,,,base game
 Spec Ops 1,sol,infantry,0.5,,7,,,,base game
 Ouranos,titans,flagship,8,1,7(x2),3,DEPLOY: After you activate a system that contains 1 or more of your PDS you may replace 1 of those PDS with this unit.,SUSTAIN DAMAGE.,pok
 Hecatoncheires,titans,mech,2,,6,,DEPLOY: When you would place a PDS on a planet you may place 1 mech and 1 infantry on that planet instead.,SUSTAIN DAMAGE.,pok
-Saturn Engine 1,titans,cruiser,2,2,7,1,,,,pok
-Hel-Titan 1,titans,pds,,,,,,This unit is treated as both a structure and a ground force. It cannot be transported.,SUSTAIN DAMAGE. PRODUCTION 1. PLANETARY SHIELD. SPACE CANNON 6.,pok
+Saturn Engine 1,titans,cruiser,2,2,7,1,,,pok
+Hel-Titan 1,titans,pds,,,,,This unit is treated as both a structure and a ground force. It cannot be transported.,SUSTAIN DAMAGE. PRODUCTION 1. PLANETARY SHIELD. SPACE CANNON 6.,pok
 Salai Sai Corian,winnu,flagship,8,1,7,3,When this unit makes a combat roll it rolls a number of dice (hit on a 7) equal to the number of your opponent's non-fighter ships in this system.,SUSTAIN DAMAGE.,base game
 Reclaimer,winnu,mech,2,,6,,After you resolve a tactical action where you gained control of this planet you may place 1 PDS or 1 Space Dock from your reinforcements on this planet.,SUSTAIN DAMAGE.,pok
 Loncara Ssodu,xxcha,flagship,8,1,7(x2),3,You may use this unit's SPACE CANNON against ships that are in adjacent systems.,SUSTAIN DAMAGE. SPACE CANNON 5(x3).,base game
