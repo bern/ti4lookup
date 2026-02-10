@@ -30,7 +30,16 @@ export function sortByName(cards: CardItem[]): CardItem[] {
   return [...cards].sort((a, b) => a.name.localeCompare(b.name))
 }
 
-/** Partition cards by type and sort each by name. */
+/** Sort strategy cards by initiative order (1–8). */
+function sortByInitiative(cards: CardItem[]): CardItem[] {
+  return [...cards].sort((a, b) => {
+    const na = (a.type === 'strategy' ? parseInt(a.initiative, 10) : 0) || 0
+    const nb = (b.type === 'strategy' ? parseInt(b.initiative, 10) : 0) || 0
+    return na - nb
+  })
+}
+
+/** Partition cards by type and sort each appropriately (strategy by initiative, others by name). */
 export function partitionByType(cards: CardItem[]): {
   action: CardItem[]
   agenda: CardItem[]
@@ -47,7 +56,7 @@ export function partitionByType(cards: CardItem[]): {
 } {
   const action = sortByName(cards.filter((c) => c.type === 'action'))
   const agenda = sortByName(cards.filter((c) => c.type === 'agenda'))
-  const strategy = sortByName(cards.filter((c) => c.type === 'strategy'))
+  const strategy = sortByInitiative(cards.filter((c) => c.type === 'strategy'))
   const public_objective = sortByName(cards.filter((c) => c.type === 'public_objective'))
   const secret_objective = sortByName(cards.filter((c) => c.type === 'secret_objective'))
   const legendary_planet = sortByName(cards.filter((c) => c.type === 'legendary_planet'))
@@ -87,14 +96,19 @@ export function useFuseSearch(cards: CardItem[], options: UseFuseSearchOptions =
   }, [query])
 
   const fuse = useMemo(() => createFuse(filteredCards), [filteredCards])
-  const allSorted = useMemo(() => sortByName(filteredCards), [filteredCards])
+  const allSorted = useMemo(() => {
+    if (typeFilter === 'strategy') return sortByInitiative(filteredCards)
+    return sortByName(filteredCards)
+  }, [filteredCards, typeFilter])
 
   const results = useMemo(() => {
     const q = debouncedQuery.trim()
     if (q === '') return allSorted
     const hits = fuse.search(q, { limit })
-    return hits.map((h) => h.item)
-  }, [debouncedQuery, fuse, allSorted, limit])
+    const items = hits.map((h) => h.item)
+    if (typeFilter === 'strategy') return sortByInitiative(items)
+    return items
+  }, [debouncedQuery, fuse, allSorted, limit, typeFilter])
 
   return { query, setQuery, results, debouncedQuery }
 }

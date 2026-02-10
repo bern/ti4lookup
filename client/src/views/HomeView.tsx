@@ -20,20 +20,6 @@ export function HomeView({ onOpenSearch, onOpenCategory }: HomeViewProps) {
         <button
           type="button"
           className="home-category-btn"
-          onClick={() => onOpenCategory('action')}
-        >
-          Action Cards
-        </button>
-        <button
-          type="button"
-          className="home-category-btn"
-          onClick={() => onOpenCategory('agenda')}
-        >
-          Agendas
-        </button>
-        <button
-          type="button"
-          className="home-category-btn"
           onClick={() => onOpenCategory('strategy')}
         >
           Strategy Cards
@@ -41,37 +27,16 @@ export function HomeView({ onOpenSearch, onOpenCategory }: HomeViewProps) {
         <button
           type="button"
           className="home-category-btn"
-          onClick={() => onOpenCategory('public_objective')}
-        >
-          Public Objectives
-        </button>
-        <button
-          type="button"
-          className="home-category-btn"
-          onClick={() => onOpenCategory('secret_objective')}
-        >
-          Secret Objectives
-        </button>
-        <button
-          type="button"
-          className="home-category-btn"
-          onClick={() => onOpenCategory('legendary_planet')}
-        >
-          Legendary Planets
-        </button>
-        <button
-          type="button"
-          className="home-category-btn"
-          onClick={() => onOpenCategory('exploration')}
-        >
-          Exploration
-        </button>
-        <button
-          type="button"
-          className="home-category-btn"
           onClick={() => onOpenCategory('faction_ability')}
         >
           Faction Abilities
+        </button>
+        <button
+          type="button"
+          className="home-category-btn"
+          onClick={() => onOpenCategory('technology')}
+        >
+          Technologies
         </button>
         <button
           type="button"
@@ -97,9 +62,44 @@ export function HomeView({ onOpenSearch, onOpenCategory }: HomeViewProps) {
         <button
           type="button"
           className="home-category-btn"
-          onClick={() => onOpenCategory('technology')}
+          onClick={() => onOpenCategory('public_objective')}
         >
-          Technologies
+          Public Objectives
+        </button>
+        <button
+          type="button"
+          className="home-category-btn"
+          onClick={() => onOpenCategory('secret_objective')}
+        >
+          Secret Objectives
+        </button>
+        <button
+          type="button"
+          className="home-category-btn"
+          onClick={() => onOpenCategory('agenda')}
+        >
+          Agendas
+        </button>
+        <button
+          type="button"
+          className="home-category-btn"
+          onClick={() => onOpenCategory('action')}
+        >
+          Action Cards
+        </button>
+        <button
+          type="button"
+          className="home-category-btn"
+          onClick={() => onOpenCategory('legendary_planet')}
+        >
+          Legendary Planets
+        </button>
+        <button
+          type="button"
+          className="home-category-btn"
+          onClick={() => onOpenCategory('exploration')}
+        >
+          Exploration
         </button>
       </nav>
     </div>

@@ -72,52 +72,22 @@ export function SearchView({
         )}
         {hasQuery && (
           <div className="search-results-partitioned">
-            {partitioned.action.length > 0 && (
-              <section className="results-section" aria-label="Action Cards">
-                <h2 className="section-title">Action Cards</h2>
-                <ResultsList cards={partitioned.action} />
-              </section>
-            )}
-            {partitioned.agenda.length > 0 && (
-              <section className="results-section" aria-label="Agendas">
-                <h2 className="section-title">Agendas</h2>
-                <ResultsList cards={partitioned.agenda} />
-              </section>
-            )}
             {partitioned.strategy.length > 0 && (
               <section className="results-section" aria-label="Strategy Cards">
                 <h2 className="section-title">Strategy Cards</h2>
                 <ResultsList cards={partitioned.strategy} />
               </section>
             )}
-            {partitioned.public_objective.length > 0 && (
-              <section className="results-section" aria-label="Public Objectives">
-                <h2 className="section-title">Public Objectives</h2>
-                <ResultsList cards={partitioned.public_objective} />
-              </section>
-            )}
-            {partitioned.secret_objective.length > 0 && (
-              <section className="results-section" aria-label="Secret Objectives">
-                <h2 className="section-title">Secret Objectives</h2>
-                <ResultsList cards={partitioned.secret_objective} />
-              </section>
-            )}
-            {partitioned.legendary_planet.length > 0 && (
-              <section className="results-section" aria-label="Legendary Planets">
-                <h2 className="section-title">Legendary Planets</h2>
-                <ResultsList cards={partitioned.legendary_planet} />
-              </section>
-            )}
-            {partitioned.exploration.length > 0 && (
-              <section className="results-section" aria-label="Exploration">
-                <h2 className="section-title">Exploration</h2>
-                <ResultsList cards={partitioned.exploration} />
-              </section>
-            )}
             {partitioned.faction_ability.length > 0 && (
               <section className="results-section" aria-label="Faction Abilities">
                 <h2 className="section-title">Faction Abilities</h2>
                 <ResultsList cards={partitioned.faction_ability} />
+              </section>
+            )}
+            {partitioned.technology.length > 0 && (
+              <section className="results-section" aria-label="Technologies">
+                <h2 className="section-title">Technologies</h2>
+                <ResultsList cards={partitioned.technology} />
               </section>
             )}
             {partitioned.faction_leader.length > 0 && (
@@ -138,10 +108,40 @@ export function SearchView({
                 <ResultsList cards={partitioned.breakthrough} />
               </section>
             )}
-            {partitioned.technology.length > 0 && (
-              <section className="results-section" aria-label="Technologies">
-                <h2 className="section-title">Technologies</h2>
-                <ResultsList cards={partitioned.technology} />
+            {partitioned.public_objective.length > 0 && (
+              <section className="results-section" aria-label="Public Objectives">
+                <h2 className="section-title">Public Objectives</h2>
+                <ResultsList cards={partitioned.public_objective} />
+              </section>
+            )}
+            {partitioned.secret_objective.length > 0 && (
+              <section className="results-section" aria-label="Secret Objectives">
+                <h2 className="section-title">Secret Objectives</h2>
+                <ResultsList cards={partitioned.secret_objective} />
+              </section>
+            )}
+            {partitioned.agenda.length > 0 && (
+              <section className="results-section" aria-label="Agendas">
+                <h2 className="section-title">Agendas</h2>
+                <ResultsList cards={partitioned.agenda} />
+              </section>
+            )}
+            {partitioned.action.length > 0 && (
+              <section className="results-section" aria-label="Action Cards">
+                <h2 className="section-title">Action Cards</h2>
+                <ResultsList cards={partitioned.action} />
+              </section>
+            )}
+            {partitioned.legendary_planet.length > 0 && (
+              <section className="results-section" aria-label="Legendary Planets">
+                <h2 className="section-title">Legendary Planets</h2>
+                <ResultsList cards={partitioned.legendary_planet} />
+              </section>
+            )}
+            {partitioned.exploration.length > 0 && (
+              <section className="results-section" aria-label="Exploration">
+                <h2 className="section-title">Exploration</h2>
+                <ResultsList cards={partitioned.exploration} />
               </section>
             )}
             {results.length === 0 && (
