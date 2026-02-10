@@ -116,6 +116,7 @@ body {
 }
 
 .app {
+  --header-height: 3.4rem;
   max-width: 640px;
   margin: 0 auto;
   min-height: 100vh;
@@ -407,7 +408,7 @@ body {
   object-fit: contain;
 }
 
-/* Search / Category view bar (back + search) - sticky so it never scrolls out of view */
+/* Search / Category view bar (back + search) - sticky to bottom of header so it never scrolls out of view */
 .view-bar {
   display: flex;
   align-items: center;
@@ -416,7 +417,7 @@ body {
   background: var(--color-bg-header);
   border-bottom: 1px solid var(--color-border);
   position: sticky;
-  top: 0;
+  top: var(--header-height, 3.5rem);
   z-index: 99;
   flex-shrink: 0;
 }
