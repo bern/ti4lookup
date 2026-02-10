@@ -16,22 +16,22 @@ A service worker precaches the app shell (HTML, JS, CSS), all CSVs, and images. 
 
 | File | Description |
 |------|-------------|
-| [action_cards.csv](data/csv/action_cards.csv) | Action cards |
-| [agendas.csv](data/csv/agendas.csv) | Agenda cards |
-| [breakthroughs.csv](data/csv/breakthroughs.csv) | Breakthrough cards |
-| [exploration.csv](data/csv/exploration.csv) | Exploration cards |
-| [faction_abilities.csv](data/csv/faction_abilities.csv) | Faction abilities |
-| [faction_leaders.csv](data/csv/faction_leaders.csv) | Faction leaders |
-| [factions.csv](data/csv/factions.csv) | Faction metadata |
-| [galactic_events.csv](data/csv/galactic_events.csv) | Galactic events |
-| [legendary_planets.csv](data/csv/legendary_planets.csv) | Legendary planets |
-| [objectives.csv](data/csv/objectives.csv) | Public & secret objectives |
-| [planet_traits.csv](data/csv/planet_traits.csv) | Planet traits |
-| [plots.csv](data/csv/plots.csv) | Plot cards |
-| [promissory_notes.csv](data/csv/promissory_notes.csv) | Promissory notes |
-| [strategy_cards.csv](data/csv/strategy_cards.csv) | Strategy cards |
-| [tech_types.csv](data/csv/tech_types.csv) | Tech type metadata |
-| [technologies.csv](data/csv/technologies.csv) | Technologies |
+| [action_cards.csv](client/public/action_cards.csv) | Action cards |
+| [agendas.csv](client/public/agendas.csv) | Agenda cards |
+| [breakthroughs.csv](client/public/breakthroughs.csv) | Breakthrough cards |
+| [exploration.csv](client/public/exploration.csv) | Exploration cards |
+| [faction_abilities.csv](client/public/faction_abilities.csv) | Faction abilities |
+| [faction_leaders.csv](client/public/faction_leaders.csv) | Faction leaders |
+| [factions.csv](client/public/factions.csv) | Faction metadata |
+| [galactic_events.csv](client/public/galactic_events.csv) | Galactic events |
+| [legendary_planets.csv](client/public/legendary_planets.csv) | Legendary planets |
+| [objectives.csv](client/public/objectives.csv) | Public & secret objectives |
+| [planet_traits.csv](client/public/planet_traits.csv) | Planet traits |
+| [plots.csv](client/public/plots.csv) | Plot cards |
+| [promissory_notes.csv](client/public/promissory_notes.csv) | Promissory notes |
+| [strategy_cards.csv](client/public/strategy_cards.csv) | Strategy cards |
+| [tech_types.csv](client/public/tech_types.csv) | Tech type metadata |
+| [technologies.csv](client/public/technologies.csv) | Technologies |
 
 ## App File Structure
 
