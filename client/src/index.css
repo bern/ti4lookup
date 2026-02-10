@@ -127,7 +127,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.6rem;
   padding: 1rem 1rem 0.5rem;
   background: var(--color-bg-header);
   border-bottom: 1px solid var(--color-border);
@@ -138,22 +138,19 @@ body {
 
 .app-title {
   margin: 0;
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 1.4rem;
+  font-weight: 700;
 }
 
 .app-title--btn {
   padding: 0;
-  font: inherit;
+  font-family: inherit;
   color: inherit;
   background: none;
   border: none;
   cursor: pointer;
 }
 
-.app-title--btn:hover {
-  opacity: 0.85;
-}
 
 .app-header__actions {
   display: flex;
@@ -210,8 +207,11 @@ body {
   flex-shrink: 0;
 }
 
-.theme-select {
-  flex-shrink: 0;
+.theme-selector {
+  position: relative;
+}
+
+.theme-selector__trigger {
   padding: 0.35rem 0.6rem;
   font-size: 0.85rem;
   color: var(--color-text);
@@ -221,10 +221,49 @@ body {
   cursor: pointer;
 }
 
-.theme-select:hover,
-.theme-select:focus {
+.theme-selector__trigger:hover,
+.theme-selector__trigger:focus {
   border-color: var(--color-border-focus);
   outline: none;
+}
+
+.theme-selector__dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.25rem;
+  min-width: 8rem;
+  padding: 0.5rem;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 101;
+}
+
+.theme-selector__option {
+  display: block;
+  width: 100%;
+  padding: 0.4rem 0.5rem;
+  font-size: 0.9rem;
+  text-align: left;
+  color: var(--color-text);
+  background: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.theme-selector__option:hover {
+  background: var(--color-bg-btn-hover);
+}
+
+[data-theme='light'] .theme-selector__option:hover {
+  background: #e8e8e8;
+}
+
+.theme-selector__option--selected {
+  font-weight: 600;
 }
 
 .search-input {
@@ -349,7 +388,7 @@ body {
 }
 
 .faction-grid__label {
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   font-weight: 600;
   color: var(--color-text);
   text-align: center;
@@ -577,4 +616,24 @@ body {
   align-items: center;
   gap: 0.25rem;
   flex-wrap: wrap;
+}
+
+/* Mobile: increase base font size for better readability while keeping layout consistent */
+@media (max-width: 640px) {
+  html {
+    font-size: 112.5%;
+  }
+
+  .expansion-selector__trigger,
+  .theme-selector__trigger {
+    font-size: 1rem;
+  }
+
+  .theme-selector__option {
+    font-size: 1rem;
+  }
+
+  .expansion-selector__option {
+    font-size: 1rem;
+  }
 }
