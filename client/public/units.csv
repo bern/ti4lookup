@@ -11,7 +11,7 @@ Letani Warrior 1,arborec,infantry,0.5,,8,,,PRODUCTION 1.,base game
 Duha Menaimon,arborec,flagship,8,1,7(x2),5,"After you activate this system, you may produce up to 5 units in this system.",SUSTAIN DAMAGE.,base game
 Letani Behemoth,arborec,mech,2,,6,,"DEPLOY: When you would use your Mitosis faction ability, you may replace 1 of your infantry with 1 mech from your reinforcements instead.",SUSTAIN DAMAGE. PRODUCTION 2. PLANETARY SHIELD.,pok
 Strike Wing Alpha 1,argent,destroyer,1,2,8,1,,ANTI-FIGHTER BARRAGE 9(x2).,pok
-Quetzecoatl,argent,flagship,8,1,7(x2),3,Other players cannot use space cannon against your ships in this system.",SUSTAIN DAMAGE.,pok
+Quetzecoatl,argent,flagship,8,1,7(x2),3,"Other players cannot use space cannon against your ships in this system.",SUSTAIN DAMAGE.,pok
 Aerie Sentinel,argent,mech,2,,6,,"This unit does not count against capacity if it is being transported or if it is in a space area with 1 or more of your ships that have capacity values.",SUSTAIN DAMAGE.,pok
 Arc Secundus,barony,flagship,8,1,5(x2),3,"Other players' units in this system lose PLANETARY SHIELD. At the start of each space combat round repair this ship.",SUSTAIN DAMAGE. BOMBARDMENT 5(x3).,base game
 Dunlain Reaper,barony,mech,2,,6,,"DEPLOY: At the start of a round of ground combat, you may spend 2 resources to replace 1 of your infantry in that combat with 1 mech.",SUSTAIN DAMAGE.,pok
