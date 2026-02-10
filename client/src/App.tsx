@@ -47,7 +47,7 @@ export function App() {
   const [theme, setTheme] = useState<ThemeId>(() => {
     try {
       const s = localStorage.getItem(THEME_STORAGE_KEY)
-      if (s && ['light', 'dark', 'hylar', 'gashlai', 'void'].includes(s)) return s as ThemeId
+      if (s && ['light', 'dark', 'hylar', 'gashlai', 'void', 'mordai'].includes(s)) return s as ThemeId
     } catch {
       /* ignore */
     }

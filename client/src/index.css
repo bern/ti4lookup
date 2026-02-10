@@ -99,6 +99,65 @@
   --shadow-focus: 0 0 0 2px rgba(139, 92, 246, 0.35);
 }
 
+/* --- Mordai: hacker terminal — black bg, vibrant green outlines --- */
+[data-theme='mordai'] {
+  --color-bg: #0a0a0a;
+  --color-bg-header: #0d0d0d;
+  --color-bg-card: #111;
+  --color-bg-input: #0f0f0f;
+  --color-bg-btn: #111;
+  --color-bg-btn-hover: #1a1a1a;
+  --color-text: #00ff41;
+  --color-text-muted: #00cc33;
+  --color-text-subtle: #009926;
+  --color-text-inverse: #0a0a0a;
+  --color-border: #00ff41;
+  --color-border-card: #00ff41;
+  --color-border-focus: #39ff14;
+  --color-accent: #39ff14;
+  --color-error: #ff4444;
+  --shadow-focus: 0 0 0 2px rgba(0, 255, 65, 0.4);
+}
+
+/* Mordai glitch effects */
+@keyframes mordai-flicker {
+  0%, 100% { opacity: 1; }
+  4%, 96% { opacity: 0.98; }
+  8%, 92% { opacity: 1; }
+  12%, 88% { opacity: 0.99; }
+  50% { opacity: 0.97; }
+}
+
+[data-theme='mordai'] body {
+  position: relative;
+  animation: mordai-flicker 4s ease-in-out infinite;
+}
+
+[data-theme='mordai'] body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0,
+    transparent 2px,
+    rgba(0, 0, 0, 0.12) 2px,
+    rgba(0, 0, 0, 0.12) 4px
+  );
+  pointer-events: none;
+  z-index: 9998;
+}
+
+[data-theme='mordai'] .result-row,
+[data-theme='mordai'] .section-title,
+[data-theme='mordai'] .app-title {
+  text-shadow: 0 0 6px rgba(0, 255, 65, 0.25);
+}
+
+[data-theme='mordai'] .result-row {
+  box-shadow: 0 0 8px rgba(0, 255, 65, 0.08);
+}
+
 /* --- Base styles --- */
 *,
 *::before,
@@ -596,14 +655,16 @@ body {
 [data-theme='dark'] .result-row__copy-icon--light,
 [data-theme='hylar'] .result-row__copy-icon--light,
 [data-theme='gashlai'] .result-row__copy-icon--light,
-[data-theme='void'] .result-row__copy-icon--light {
+[data-theme='void'] .result-row__copy-icon--light,
+[data-theme='mordai'] .result-row__copy-icon--light {
   display: none;
 }
 
 [data-theme='dark'] .result-row__copy-icon--dark,
 [data-theme='hylar'] .result-row__copy-icon--dark,
 [data-theme='gashlai'] .result-row__copy-icon--dark,
-[data-theme='void'] .result-row__copy-icon--dark {
+[data-theme='void'] .result-row__copy-icon--dark,
+[data-theme='mordai'] .result-row__copy-icon--dark {
   display: block;
 }
 
