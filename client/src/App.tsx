@@ -3,9 +3,11 @@ import { loadAllCards } from './data/loadCards'
 import { HomeView, type View } from './views/HomeView'
 import { SearchView } from './views/SearchView'
 import { CategoryView } from './views/CategoryView'
+import { ThemeSelector, type ThemeId } from './components/ThemeSelector'
 import type { CardItem } from './types'
 
 const RECENT_MAX = 10
+const THEME_STORAGE_KEY = 'ti4lookup-theme'
 
 function addRecent(prev: string[], query: string): string[] {
   const trimmed = query.trim()
@@ -20,6 +22,24 @@ export function App() {
   const [error, setError] = useState<string | null>(null)
   const [view, setView] = useState<View>('home')
   const [recentSearches, setRecentSearches] = useState<string[]>([])
+  const [theme, setTheme] = useState<ThemeId>(() => {
+    try {
+      const s = localStorage.getItem(THEME_STORAGE_KEY)
+      if (s && ['light', 'dark', 'hylar', 'gashlai', 'void'].includes(s)) return s as ThemeId
+    } catch {
+      /* ignore */
+    }
+    return 'light'
+  })
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, theme)
+    } catch {
+      /* ignore */
+    }
+  }, [theme])
 
   useEffect(() => {
     loadAllCards()
@@ -37,6 +57,7 @@ export function App() {
       <div className="app">
         <header className="app-header">
           <h1 className="app-title">TI4 Lookup</h1>
+          <ThemeSelector value={theme} onChange={setTheme} />
         </header>
         <main className="app-main">
           <p className="results-message results-message--error">{error}</p>
@@ -50,6 +71,7 @@ export function App() {
       <div className="app">
         <header className="app-header">
           <h1 className="app-title">TI4 Lookup</h1>
+          <ThemeSelector value={theme} onChange={setTheme} />
         </header>
         <main className="app-main">
           <p className="results-message">Loading…</p>
@@ -62,6 +84,7 @@ export function App() {
     <div className="app">
       <header className="app-header">
         <h1 className="app-title">TI4 Lookup</h1>
+        <ThemeSelector value={theme} onChange={setTheme} />
       </header>
       {view === 'home' && (
         <main className="app-main home-main">
