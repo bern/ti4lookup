@@ -66,7 +66,7 @@ Valkyrie Exoskeleton,sardakk,mech,2,,6,,After this unit uses its SUSTAIN DAMAGE 
 Exotrireme 1,sardakk,dreadnought,4,1,5,1,,SUSTAIN DAMAGE. BOMBARDMENT 4(x2).,base game
 Genesis,sol,flagship,8,1,5(x2),12,At the end of the status phase place 1 infantry from your reinforcements in this system's space area.,SUSTAIN DAMAGE.,base game
 ZS Thunderbolt M2,sol,mech,2,,6,,DEPLOY: After you use your Orbital Drop faction ability you may spend 3 resources to place 1 mech on that planet.,SUSTAIN DAMAGE.,pok
-Advanced Carrier 1,sol,carrier,3,1,9,6,,,,base game
+Advanced Carrier 1,sol,carrier,3,1,9,6,,,base game
 Spec Ops 1,sol,infantry,0.5,,7,,,,base game
 Ouranos,titans,flagship,8,1,7(x2),3,DEPLOY: After you activate a system that contains 1 or more of your PDS you may replace 1 of those PDS with this unit.,SUSTAIN DAMAGE.,pok
 Hecatoncheires,titans,mech,2,,6,,DEPLOY: When you would place a PDS on a planet you may place 1 mech and 1 infantry on that planet instead.,SUSTAIN DAMAGE.,pok
