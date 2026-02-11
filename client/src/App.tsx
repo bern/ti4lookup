@@ -36,13 +36,25 @@ function addRecent(prev: string[], query: string): string[] {
   return [trimmed, ...rest].slice(0, RECENT_MAX)
 }
 
+export type LocationState = { view: View; factionFilter: string | null }
+
+const HOME_STATE: LocationState = { view: 'home', factionFilter: null }
+
+function applyLocationState(state: LocationState | null): LocationState {
+  if (state && typeof state.view === 'string') {
+    const view = state.view as View
+    const factionFilter = state.factionFilter ?? null
+    return { view, factionFilter }
+  }
+  return HOME_STATE
+}
+
 export function App() {
   const [cards, setCards] = useState<CardItem[]>([])
   const [factions, setFactions] = useState<Faction[]>([])
-  const [factionFilter, setFactionFilter] = useState<string | null>(null)
+  const [location, setLocation] = useState<LocationState>(HOME_STATE)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [view, setView] = useState<View>('home')
   const [recentSearches, setRecentSearches] = useState<string[]>([])
   const [theme, setTheme] = useState<ThemeId>(() => {
     try {
@@ -89,6 +101,7 @@ export function App() {
       'version' in card ? card.version : undefined,
       versions
     ))
+    const factionFilter = location.factionFilter
     if (factionFilter) {
       result = result.filter((card) => {
         if ('factionId' in card && card.factionId === factionFilter) return true
@@ -97,7 +110,26 @@ export function App() {
       })
     }
     return result
-  }, [cards, expansions, factionFilter])
+  }, [cards, expansions, location.factionFilter])
+
+  const navigate = useCallback((next: LocationState) => {
+    window.history.pushState(next, '', window.location.href)
+    setLocation(next)
+  }, [])
+
+  useEffect(() => {
+    const state = applyLocationState(window.history.state as LocationState | null)
+    window.history.replaceState(state, '', window.location.href)
+    setLocation(state)
+  }, [])
+
+  useEffect(() => {
+    const handlePopState = (e: PopStateEvent) => {
+      setLocation(applyLocationState(e.state as LocationState | null))
+    }
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [])
 
   useEffect(() => {
     try {
@@ -134,7 +166,7 @@ export function App() {
     window.scrollTo(0, 0)
     const main = document.querySelector('.search-view__main, .category-view__main, .app-main')
     if (main) main.scrollTop = 0
-  }, [view])
+  }, [location.view])
 
   if (error) {
     return (
@@ -143,7 +175,7 @@ export function App() {
           <button
             type="button"
             className="app-title app-title--btn"
-            onClick={() => setView('home')}
+            onClick={() => setLocation(HOME_STATE)}
           >
             TI4 Lookup
           </button>
@@ -167,7 +199,7 @@ export function App() {
           <button
             type="button"
             className="app-title app-title--btn"
-            onClick={() => setView('home')}
+            onClick={() => setLocation(HOME_STATE)}
           >
             TI4 Lookup
           </button>
@@ -191,8 +223,9 @@ export function App() {
           type="button"
           className="app-title app-title--btn"
           onClick={() => {
-            setFactionFilter(null)
-            setView('home')
+            if (location.view !== 'home') {
+              window.history.back()
+            }
           }}
           aria-label="Back to home"
         >
@@ -203,42 +236,33 @@ export function App() {
           <ThemeSelector value={theme} onChange={setTheme} />
         </div>
       </header>
-      {view === 'home' && (
+      {location.view === 'home' && (
         <main className="app-main home-main">
           <HomeView
             factions={visibleFactions}
-            onOpenSearch={() => {
-              setFactionFilter(null)
-              setView('search')
-            }}
-            onOpenFaction={(factionId) => {
-              setFactionFilter(factionId)
-              setView('search')
-            }}
-            onOpenCategory={(v) => setView(v)}
+            onOpenSearch={() => navigate({ view: 'search', factionFilter: null })}
+            onOpenFaction={(factionId) => navigate({ view: 'search', factionFilter: factionId })}
+            onOpenCategory={(v) => navigate({ view: v, factionFilter: null })}
           />
         </main>
       )}
-      {view === 'search' && (
+      {location.view === 'search' && (
         <SearchView
           cards={filteredCards}
           recentSearches={recentSearches}
-          factionFilter={factionFilter}
-          factionFilterName={factionFilter ? factions.find((f) => f.id === factionFilter)?.name ?? null : null}
-          faction={factionFilter ? factions.find((f) => f.id === factionFilter) ?? null : null}
+          factionFilter={location.factionFilter}
+          factionFilterName={location.factionFilter ? factions.find((f) => f.id === location.factionFilter)?.name ?? null : null}
+          faction={location.factionFilter ? factions.find((f) => f.id === location.factionFilter) ?? null : null}
           techNameToColor={techNameToColor}
           onAddRecent={onAddRecent}
-          onBack={() => {
-            setFactionFilter(null)
-            setView('home')
-          }}
+          onBack={() => window.history.back()}
         />
       )}
-      {(view === 'action' || view === 'agenda' || view === 'strategy' || view === 'public_objective' || view === 'secret_objective' || view === 'legendary_planet' || view === 'exploration' || view === 'relic' || view === 'faction_ability' || view === 'faction_leader' || view === 'promissory_note' || view === 'breakthrough' || view === 'technology' || view === 'galactic_event' || view === 'plot' || view === 'unit') && (
+      {(location.view === 'action' || location.view === 'agenda' || location.view === 'strategy' || location.view === 'public_objective' || location.view === 'secret_objective' || location.view === 'legendary_planet' || location.view === 'exploration' || location.view === 'relic' || location.view === 'faction_ability' || location.view === 'faction_leader' || location.view === 'promissory_note' || location.view === 'breakthrough' || location.view === 'technology' || location.view === 'galactic_event' || location.view === 'plot' || location.view === 'unit') && (
         <CategoryView
           cards={filteredCards}
-          category={view}
-          onBack={() => setView('home')}
+          category={location.view}
+          onBack={() => window.history.back()}
         />
       )}
       <AppFooter />
