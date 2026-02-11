@@ -1,10 +1,55 @@
+import { useState, useCallback, useEffect } from 'react'
 import type { Faction } from '../data/loadCards'
 
 const IMAGES_BASE = import.meta.env.BASE_URL + 'images'
+const COPY_ICON_SRC = import.meta.env.BASE_URL + 'svg/copy.svg'
+const COPY_ICON_DARK_SRC = import.meta.env.BASE_URL + 'svg/copy_dark.svg'
 
 interface FactionSetupCardProps {
   faction: Faction
   techNameToColor: Map<string, string>
+}
+
+function getFactionSetupCopyText(faction: Faction): string {
+  const parts: string[] = [faction.name]
+  if (faction.startingFleet?.trim()) {
+    parts.push(`Starting Fleet\n${faction.startingFleet}`)
+  }
+  if (faction.startingTechnologies?.trim()) {
+    parts.push(`Starting Technologies\n${faction.startingTechnologies}`)
+  }
+  parts.push(`Faction Setup • ${faction.name}`)
+  return parts.join('\n\n')
+}
+
+function FactionCopyButton({ faction }: { faction: Faction }) {
+  const [copied, setCopied] = useState(false)
+  useEffect(() => {
+    if (!copied) return
+    const t = setTimeout(() => setCopied(false), 1200)
+    return () => clearTimeout(t)
+  }, [copied])
+  const handleClick = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(getFactionSetupCopyText(faction))
+      setCopied(true)
+    } catch {
+      /* ignore */
+    }
+  }, [faction])
+  return (
+    <button
+      type="button"
+      className="result-row__copy"
+      onClick={handleClick}
+      title="Copy"
+      aria-label="Copy"
+    >
+      <img src={COPY_ICON_SRC} alt="" className="result-row__copy-icon result-row__copy-icon--light" />
+      <img src={COPY_ICON_DARK_SRC} alt="" className="result-row__copy-icon result-row__copy-icon--dark" />
+      {copied && <span className="result-row__copy-feedback">Copied!</span>}
+    </button>
+  )
 }
 
 /** Parse starting technologies string into prefix (e.g. "Choose 1 of:") and list of tech names. */
@@ -69,6 +114,7 @@ export function FactionSetupCard({ faction, techNameToColor }: FactionSetupCardP
           />
           <span className="result-row__name">{faction.name}</span>
         </div>
+        <FactionCopyButton faction={faction} />
       </header>
       {(hasFleet || hasTech) && (
         <div className="result-row__faction-setup-body">
