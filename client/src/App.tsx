@@ -70,6 +70,19 @@ export function App() {
     )
   }, [factions, expansions])
 
+  const techNameToColor = useMemo(() => {
+    const map = new Map<string, string>()
+    for (const card of cards) {
+      if (card.type === 'technology' && card.techType) {
+        const color = card.techType.trim().toLowerCase()
+        if (['blue', 'green', 'red', 'yellow'].includes(color)) {
+          map.set(card.name.trim(), color)
+        }
+      }
+    }
+    return map
+  }, [cards])
+
   const filteredCards = useMemo(() => {
     const versions = expansionIdsToVersions(expansions)
     let result = cards.filter((card) => cardVersionMatchesExpansions(
@@ -212,6 +225,8 @@ export function App() {
           recentSearches={recentSearches}
           factionFilter={factionFilter}
           factionFilterName={factionFilter ? factions.find((f) => f.id === factionFilter)?.name ?? null : null}
+          faction={factionFilter ? factions.find((f) => f.id === factionFilter) ?? null : null}
+          techNameToColor={techNameToColor}
           onAddRecent={onAddRecent}
           onBack={() => {
             setFactionFilter(null)

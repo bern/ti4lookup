@@ -780,11 +780,43 @@ body {
   object-fit: contain;
 }
 
+.result-row__icon--inline {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  vertical-align: middle;
+  margin-left: 0.15em;
+}
+
+.result-row__faction-setup-tech {
+  overflow-wrap: break-word;
+}
+
 .result-row__prerequisites {
   display: flex;
   align-items: center;
   gap: 0.25rem;
   flex-wrap: wrap;
+}
+
+.result-row__header-content--faction-setup {
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.result-row__faction-setup-image {
+  width: 3rem;
+  height: 3rem;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.result-row__faction-setup-body {
+  margin-top: 0.25rem;
+}
+
+.result-row__faction-setup-body .result-row__effect {
+  overflow-wrap: break-word;
 }
 
 /* Mobile: increase base font size for better readability while keeping layout consistent */

@@ -157,6 +157,8 @@ export interface Faction {
   id: string
   name: string
   version: string
+  startingFleet?: string
+  startingTechnologies?: string
 }
 
 /**
@@ -182,6 +184,8 @@ export async function loadFactions(): Promise<Faction[]> {
     id: (row.id ?? '').trim(),
     name: (row.name ?? '').trim(),
     version: (row.version ?? '').trim(),
+    startingFleet: (row['starting fleet'] ?? '').trim() || undefined,
+    startingTechnologies: (row['starting technologies'] ?? '').trim() || undefined,
   }))
   return rows.filter((r) => r.id)
 }

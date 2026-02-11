@@ -1,7 +1,9 @@
 import { SearchInput } from '../components/SearchInput'
 import { ResultsList } from '../components/ResultsList'
+import { FactionSetupCard } from '../components/FactionSetupCard'
 import { useFuseSearch, partitionByType } from '../search/useFuseSearch'
 import type { CardItem } from '../types'
+import type { Faction } from '../data/loadCards'
 
 const RECENT_MAX = 10
 
@@ -10,6 +12,8 @@ interface SearchViewProps {
   recentSearches: string[]
   factionFilter: string | null
   factionFilterName: string | null
+  faction: Faction | null
+  techNameToColor: Map<string, string>
   onAddRecent: (query: string) => void
   onBack: () => void
 }
@@ -19,6 +23,8 @@ export function SearchView({
   recentSearches,
   factionFilter,
   factionFilterName,
+  faction,
+  techNameToColor,
   onAddRecent,
   onBack,
 }: SearchViewProps) {
@@ -81,6 +87,15 @@ export function SearchView({
               <h2 className="section-title">
                 {factionFilterName}
               </h2>
+            )}
+            {faction && (
+              <section className="results-section" aria-label="Faction Setup">
+                <ul className="results-list" role="list">
+                  <li className="results-list__item">
+                    <FactionSetupCard faction={faction} techNameToColor={techNameToColor} />
+                  </li>
+                </ul>
+              </section>
             )}
             {partitioned.strategy.length > 0 && (
               <section className="results-section" aria-label="Strategy Cards">

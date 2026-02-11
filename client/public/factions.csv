@@ -1,32 +1,32 @@
-name,id,version
-The Arborec,arborec,base game
-The Barony of Letnev,barony,base game
-The Clan of Saar,saar,base game
-The Embers of Muaat,muaat,base game
-The Emirates of Hacan,hacan,base game
-The Federation of Sol,sol,base game
-The Ghosts of Creuss,ghosts,base game
-The L1Z1X Mindnet,lizix,base game
-The Mentak Coalition,mentak,base game
-The Naalu Collective,naalu,base game
-The Nekro Virus,nekro,base game
-Sardakk N'orr,sardakk,base game
-The Universities of Jol-nar,jolnar,base game
-The Winnu,winnu,base game
-The Xxcha Kingdom,xxcha,base game
-The Yin Brotherhood,yin,base game
-The Yssaril Tribes,yssaril,base game
-The Argent Flight,argent,pok
-The Empyrean,empyrean,pok
-The Mahact Gene-Sorcerers,mahact,pok
-The Naaz-Rokha Alliance,nra,pok
-The Nomad,nomad,pok
-The Titans of Ul,titans,pok
-The Vuil'Raith Cabal,cabal,pok
-The Council Keleres,keleres,codex 3
-The Crimson Rebellion,crimson,thunders edge
-The Deepwrought Scholorate,deepwrought,thunders edge
-The Firmament,firmament,thunders edge
-The Obsidian,obsidian,thunders edge
-Last Bastion,bastion,thunders edge
-The Ral Nel Consortium,lizards,thunders edge
+name,id,version,starting fleet,starting technologies
+The Arborec,arborec,base game,"1 Carrier, 1 Cruiser, 2 Fighters, 4 Infantry, 1 Space Dock, 1 PDS",Magen Defense Grid
+The Barony of Letnev,barony,base game,"1 Dreadnought, 1 Carrier, 1 Destroyer, 1 Fighter, 3 Infantry, 1 Space Dock","Antimass Deflectors, Plasma Scoring"
+The Clan of Saar,saar,base game,"2 Carriers, 1 Cruiser, 2 Fighters, 4 Infantry, 1 Space Dock",Antimass Deflectors
+The Embers of Muaat,muaat,base game,"1 War Sun, 2 Fighters, 4 Infantry, 1 Space Dock",Plasma Scoring
+The Emirates of Hacan,hacan,base game,"2 Carriers, 1 Cruiser, 2 Fighters, 4 Infantry, 1 Space Dock","Sarween Tools, Antimass Deflectors"
+The Federation of Sol,sol,base game,"2 Carriers, 1 Destroyer, 3 Fighters, 5 Infantry, 1 Space Dock","Antimass Deflectors, Neural Motivator"
+The Ghosts of Creuss,ghosts,base game,"1 Carrier, 2 Destroyers, 2 Fighters, 4 Infantry, 1 Space Dock",Gravity Drive
+The L1Z1X Mindnet,lizix,base game,"1 Dreadnought, 1 Carrier, 3 Fighters, 5 Infantry, 1 Space Dock, 1 PDS","Plasma Scoring, Neural Motivator"
+The Mentak Coalition,mentak,base game,"1 Carrier, 2 Cruisers, 3 Fighters, 4 Infantry, 1 Space Dock, 1 PDS","Plasma Scoring, Sarween Tools"
+The Naalu Collective,naalu,base game,"1 Carrier, 1 Cruiser, 1 Destroyer, 3 Fighters, 4 Infantry, 1 Space Dock, 1 PDS","Sarween Tools, Neural Motivator"
+The Nekro Virus,nekro,base game,"1 Dreadnought, 1 Carrier, 1 Cruiser, 2 Fighters, 2 Infantry, 1 Space Dock",Dacxive Animators
+Sardakk N'orr,sardakk,base game,"2 Carriers, 1 Cruiser, 5 Infantry, 1 Space Dock, 1 PDS",None
+The Universities of Jol-nar,jolnar,base game,"1 Dreadnought, 2 Carriers, 1 Fighter, 2 Infantry, 1 Space Dock, 2 PDS","Antimass Deflectors, Sarween Tools, Neural Motivator, Plasma Scoring"
+The Winnu,winnu,base game,"1 Carrier, 1 Cruiser, 2 Fighters, 2 Infantry, 1 Space Dock, 1 PDS","Choose 1 of: Antimass Deflectors, Dark Energy Tap, Neural Motivator, Psychoarchaeology, Sarween Tools, Scanlink Drone Network, Plasma Scoring, AI Development Algorithm"
+The Xxcha Kingdom,xxcha,base game,"1 Carrier, 2 Cruisers, 3 Fighters, 4 Infantry, 1 Space Dock, 1 PDS",Graviton Laser System
+The Yin Brotherhood,yin,base game,"2 Carriers, 1 Destroyer, 4 Fighters, 4 Infantry, 1 Space Dock",Sarween Tools
+The Yssaril Tribes,yssaril,base game,"2 Carriers, 1 Cruiser, 2 Fighters, 5 Infantry, 1 Space Dock, 1 PDS",Neural Motivator
+The Argent Flight,argent,pok,"1 Carrier, 2 Destroyers, 2 Fighters, 5 Infantry, 1 Space Dock, 1 PDS","Choose 2 of: Neural Motivator, Sarween Tools, Plasma Scoring"
+The Empyrean,empyrean,pok,"2 Carriers, 1 Destroyer, 2 Fighters, 4 Infantry, 1 Space Dock",Dark Energy Tap
+The Mahact Gene-Sorcerers,mahact,pok,"1 Dreadnought, 1 Carrier, 1 Cruiser, 2 Fighters, 3 Infantry, 1 Space Dock","Predictive Intelligence, Bio-Stims"
+The Naaz-Rokha Alliance,nra,pok,"2 Carriers, 1 Destroyer, 2 Fighters, 1 Mech, 3 Infantry, 1 Space Dock,","Psychoarchaeology, AI Development Algorithm"
+The Nomad,nomad,pok,"1 Flagship, 1 Carrier, 1 Destroyer, 3 Fighters, 4 Infantry, 1 Space Dock",Sling Relay
+The Titans of Ul,titans,pok,"1 Dreadnought, 2 Cruisers, 2 Fighters, 3 Infantry, 1 Space Dock","Antimass Deflectors, Scanlink Drone Network"
+The Vuil'Raith Cabal,cabal,pok,"1 Dreadnought, 1 Carrier, 1 Cruiser, 3 Fighters, 3 Infantry, 1 Space Dock",Self-Assembly Routines
+The Council Keleres,keleres,codex 3,"2 Carriers, 1 Cruiser, 2 Fighters, 2 Infantry, 1 Space Dock",Choose two non-faction technologies owned by other players
+The Crimson Rebellion,crimson,thunders edge,"1 Carrier, 2 Destroyers, 3 Fighters, 4 Infantry, 1 Space Dock, 1 PDS","Choose 1: of Dark Energy Tap, Antimass Deflectors, Plasma Scoring, AI Development Algorithm"
+The Deepwrought Scholorate,deepwrought,thunders edge,"1 Dreadnought, 1 Carrier, 4 Fighters, 3 Infantry, 1 Space Dock","During setup, research technology twice"
+The Firmament,firmament,thunders edge,"1 Carrier, 1 Cruiser, 1 Destroyer, 3 Fighters, 3 Infantry, 1 Space Dock","Choose 1: of Neural Motivator, Psychoarchaeology, Sarween Tools, Scanlink Drone Network"
+The Obsidian,obsidian,thunders edge,Setup is done as The Firmament faction,
+Last Bastion,bastion,thunders edge,"1 Dreadnought, 1 Carrier, 1 Cruiser, 2 Fighters, 3 Infantry,  1 Space Dock","Choose 1: of Antimass Deflectors, Dark Energy Tap, Sarween Tools, Scanlink Drone Network"
+The Ral Nel Consortium,lizards,thunders edge,"1 Dreadnought, 1 Carrier, 1 Destroyer, 2 Fighters, 4 Infantry,  1 Space Dock, 2 PDS","Choose 1 of: Neural Motivator, Psychoarchaeology, Plasma Scoring, AI Development Algorithm"

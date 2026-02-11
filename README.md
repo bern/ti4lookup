@@ -32,6 +32,7 @@ A service worker precaches the app shell (HTML, JS, CSS), all CSVs, and images. 
 | [strategy_cards.csv](client/public/strategy_cards.csv) | Strategy cards |
 | [tech_types.csv](client/public/tech_types.csv) | Tech type metadata |
 | [technologies.csv](client/public/technologies.csv) | Technologies |
+| [units.csv](client/public/units.csv) | Units |
 
 ## App File Structure
 
