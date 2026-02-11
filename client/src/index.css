@@ -845,6 +845,15 @@ body {
     grid-row: 1;
   }
 
+  .result-row__header-content--faction-setup .result-row__faction-setup-image {
+    display: none;
+  }
+
+  .result-row__header-content--faction-setup {
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
   .expansion-selector__trigger,
   .theme-selector__trigger {
     font-size: 1rem;
