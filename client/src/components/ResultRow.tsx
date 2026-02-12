@@ -303,7 +303,7 @@ export function ResultRow({ card }: ResultRowProps) {
         <header className="result-row__header">
           <div className="result-row__header-content">
             <span className="result-row__name">{card.name}</span>
-            <span className="result-row__version">{card.version}</span>
+            <span className="result-row__meta">{`Qty ${card.quantity} · ${card.version}`}</span>
           </div>
           <CopyButton card={card} />
         </header>
