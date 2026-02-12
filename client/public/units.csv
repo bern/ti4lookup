@@ -46,6 +46,7 @@ Ember Colossus,muaat,mech,2,,6,,"When you use your Star Forge faction ability in
 Prototype War Sun 1,muaat,war sun,12,1,3(x3),6,"Other players' units in this system lose the PLANETARY SHIELD ability.",SUSTAIN DAMAGE. BOMBARDMENT 3(x3).,base game
 Matriarch,naalu,flagship,8,1,9(x2),6,"During an invasion in this system, you may commit fighters to planets as if they were ground forces. After combat return those units to the space area.",SUSTAIN DAMAGE.,base game
 Iconoclast,naalu,mech,2,,6,,"During combat against an opponent who has at least 1 relic fragment, apply +2 to the results of this unit's combat rolls.",SUSTAIN DAMAGE.,pok
+Iconoclast Ω,naalu,mech,2,,6,,"Other players cannot use ANTI-FIGHTER BARRAGE against your units in this system.",SUSTAIN DAMAGE.,codex 3
 Hybrid Crystal Fighter 1,naalu,fighter,0.5,,8,,,,base game
 Visz El Vir,nra,flagship,8,1,9(x2),4,"Your mechs in this system roll 1 additional die during combat.",SUSTAIN DAMAGE.,pok
 Eidolon,nra,mech,2,,6(x2),,"If this unit is in the space area of the active system at the start of a space combat, flip this card.",SUSTAIN DAMAGE.,pok
@@ -84,3 +85,6 @@ Blackshade Infiltrator,yssaril,mech,2,,6,,"DEPLOY: After you use your Stall Tact
 The Egeiro,bastion,flagship,8,1,9,3,"Apply +1 to the result of each of this unit's combat rolls for each non-home system that contains a planet you control.",SUSTAIN DAMAGE.,thunders edge
 A3 Valiance,bastion,mech,2,,6,,"When this unit is destroyed, if it was galvanized, galvanize up to 3 of your infantry in its system.",SUSTAIN DAMAGE.,thunders edge
 4X41C Helios V1,bastion,space dock,,,,,"The resource value of this planet is increased by 1.",PRODUCTION 2.,thunders edge
+Artemiris,keleres,flagship,8,1,7(x2),6,"This ship can move through systems that contain other players' ships.",SUSTAIN DAMAGE.,codex 3
+Artemiris Ω,keleres,flagship,8,2,5(x2),3,"Other players must spend 2 influence to activate the system that contains this ship.",SUSTAIN DAMAGE.,thunders edge
+Omniopiares,keleres,mech,2,,6,,"Other players must spend 1 influence to commit ground forces to the planet that contains this unit.",SUSTAIN DAMAGE.,codex 3

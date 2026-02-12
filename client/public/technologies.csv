@@ -85,7 +85,8 @@ Neural Parasite (Firmament),firmament,green,,"[green,green]","At the start of th
 Flip this card if the Obsidian faction is in play.",thunders edge
 Planesplitter (Firmament),firmament,yellow,,"[yellow,yellow]","When you gain this card, put The Fracture into play.
 Flip this card if the Obsidian faction is in play.",thunders edge
-Wormhole Generator,ghosts,blue,,"[blue,blue]",ACTION: Exhaust this card to place or move a Creuss wormhole token into either a system that contains a planet you control or a non-home system that does not contain another player's ships.,base game
+Wormhole Generator,ghosts,blue,,"[blue,blue]","At the start of the status phase, place or move a Creuss wormhole token into either a system that contains a planet you control or a non-home system that does not contain another player's ships.",base game
+Wormhole Generator Ω,ghosts,blue,,"[blue,blue]",ACTION: Exhaust this card to place or move a Creuss wormhole token into either a system that contains a planet you control or a non-home system that does not contain another player's ships.,codex 1
 Dimensional Splicer,ghosts,red,,[red],"At the start of space combat in a system that contains a wormhole and 1 or more of your ships, you may produce 1 hit and assign it to 1 of your opponent's ships.",base game
 Production Biomes,hacan,green,,"[green,green]",ACTION: Exhaust this card and spend 1 token from your strategy pool to gain 4 trade goods and choose 1 other player; that player gains 2 trade goods.,base game
 Quantum Datahub Node,hacan,yellow,,"[yellow,yellow,yellow]","At the end of the strategy phase, you may spend 1 token from your strategy pool and give another player 3 of your trade goods. If you do, give 1 of your strategy cards to that player and take 1 of their strategy cards.",base game
@@ -108,8 +109,8 @@ Crimson Legionnaire II,mahact,unit upgrade,infantry,"[green,green]","Cost 1(x2),
 After this unit is destroyed, gain 1 commodity or convert 1 of your commodities to a trade good. Then, place the unit on this card. At the start of your next turn, place each unit that is on this card on a planet you control in your home system.",pok
 Mirror Computing,mentak,yellow,,"[yellow,yellow,yellow]","When you spend trade goods, each trade good is worth 2 resources or influence instead of 1.",base game
 Salvage Operations,mentak,yellow,,"[yellow,yellow]","After you win or lose a space combat, gain 1 trade good; if you won the combat, you may also produce 1 ship in that system of any ship type that was destroyed during the combat.",base game
-Magmus Reactor,muaat,red,,"[red,red]","Your ships can move into supernovas.
-Each supernova that contains 1 or more of your units gains the PRODUCTION 5 ability as if it were 1 of your units.",base game
+Magmus Reactor,muaat,red,,"[red,red]","Your ships can move into supernovas. After 1 or more of your units use Production in a system that either contains a war sun or is adjacent to a supernova, gain 1 trade good.",base game
+Magmus Reactor Ω,muaat,red,,"[red,red]","Your ships can move into supernovas. Each supernova that contains 1 or more of your units gains the PRODUCTION 5 ability as if it were 1 of your units.",codex 1
 Prototype War Sun II,muaat,unit upgrade,war sun,"[red,red,red,yellow]","Cost 10, Combat 3(x3), Move 3, Capacity 6
 SUSTAIN DAMAGE, BOMBARDMENT 3(x3)
 Other players' units in this system lose PLANETARY SHIELD.",base game
@@ -160,7 +161,8 @@ ACTION: If you control Mecatol Rex, exhaust this card to place 1 infantry from y
 Hegemonic Trade Policy,winnu,yellow,,"[yellow,yellow]",Exhaust this card when 1 or more of your units use PRODUCTION; swap the resource and influence values of 1 planet you control during that use of Production.,base game
 Instinct Training,xxcha,green,,[green],You may exhaust this card and spend 1 token from your strategy pool when another player plays an action card; cancel that action card.,base game
 Nullification Field,xxcha,yellow,,"[yellow,yellow]","After another player activates a system that contains 1 or more of your ships, you may exhaust this card and spend 1 token from your strategy pool; immediately end that player's turn.",base game
-Yin Spinner Omega,yin,green,,"[green,green]","After you produce units, place up to 2 infantry from your reinforcements on any planet you control or in any space area that contains 1 or more of your ships.",base game
+Yin Spinner,yin,green,,"[green,green]","After 1 or more of your units use PRODUCTION, place 1 infantry from your reinforcements on a planet you control in that system.",base game
+Yin Spinner Ω,yin,green,,"[green,green]","After you produce units, place up to 2 infantry from your reinforcements on any planet you control or in any space area that contains 1 or more of your ships.",codex 1
 Impulse Core,yin,yellow,,"[yellow,yellow]","At the start of a space combat, you may destroy 1 of your cruisers or destroyers in the active system to produce 1 hit against your opponent's ships; that hit must be assigned by your opponent to 1 of their non-fighters ships if able.",base game
 Mageon Implants,yssaril,green,,"[green,green,green]",ACTION: Exhaust this card to look at another player's hand of action cards.  Choose 1 of those cards and add it to your hand.,base game
 Transparasteel Plating,yssaril,green,,[green],"During your turn of the action phase, players that have passed cannot play action cards.",base game
