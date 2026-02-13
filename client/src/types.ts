@@ -63,10 +63,12 @@ export interface SecretObjective {
 }
 
 /**
- * Legendary planet from CSV. Columns: name, trait, technology, resources, influence, ability, how to acquire, version.
+ * Legendary planet from CSV. Columns: name, faction id, trait, technology, resources, influence, ability, how to acquire, version.
  */
 export interface LegendaryPlanet {
   name: string
+  factionId?: string
+  factionName?: string
   trait: string
   technology: string
   resources: string

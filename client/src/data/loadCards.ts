@@ -135,6 +135,7 @@ export async function loadObjectives(): Promise<{ public: PublicObjective[]; sec
 export async function loadLegendaryPlanets(): Promise<LegendaryPlanet[]> {
   return parseCsv(LEGENDARY_PLANETS_CSV_URL, (row) => ({
     name: row.name ?? '',
+    factionId: (row['faction id'] ?? '').trim() || undefined,
     trait: row.trait ?? '',
     technology: row.technology ?? '',
     resources: row.resources ?? '',
@@ -372,9 +373,12 @@ export async function loadAllCards(): Promise<CardItem[]> {
   }))
   const legendaryPlanetItems: CardItem[] = legendaryPlanets.map((c) => ({
     ...c,
+    factionName: c.factionId ? (factionNames.get(c.factionId) ?? undefined) : undefined,
     type: 'legendary_planet',
     searchText: [
       c.name,
+      c.factionId,
+      c.factionId ? factionNames.get(c.factionId) : undefined,
       c.trait,
       c.technology,
       c.resources,

@@ -119,6 +119,7 @@ export function App() {
       result = result.filter((card) => {
         if ('factionId' in card && card.factionId === factionFilter) return true
         if (card.type === 'plot' && 'factionIds' in card && card.factionIds?.includes(factionFilter)) return true
+        if (card.type === 'legendary_planet' && 'factionId' in card && card.factionId === factionFilter) return true
         return false
       })
     }

@@ -17,7 +17,7 @@ function labelWithContent(label: string, content: string): string {
   return `${label.trim()}\n${content.trim()}`
 }
 
-/** Get category label for footer; promissory notes, technologies, units split by faction; exploration split into exploration/relic. */
+/** Get category label for footer; promissory notes, technologies, units split by faction; exploration split into exploration/relic; legendary planets include faction when applicable. */
 function getCategoryLabel(card: CardItem): string {
   if (card.type === 'promissory_note') return (card.factionId ?? '').trim() ? 'Faction Promissory Notes' : 'Promissory Notes (General)'
   if (card.type === 'technology') return (card.factionId ?? '').trim() ? 'Faction Technologies' : 'Technologies (General)'
@@ -212,6 +212,7 @@ function getCardImages(card: CardItem): string[] {
     if (t && EXPLORATION_TYPE_IDS.has(t)) ids.push(t)
   }
   if (card.type === 'legendary_planet') {
+    if (card.factionId) ids.push(card.factionId)
     const trait = card.trait?.toLowerCase()
     if (trait && PLANET_TRAIT_IDS.has(trait)) ids.push(trait)
     const tech = card.technology?.toLowerCase()

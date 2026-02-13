@@ -190,6 +190,12 @@ export function SearchView({
                 <ResultsList cards={partitioned.breakthrough} />
               </section>
             )}
+            {partitioned.legendary_planet.length > 0 && (
+              <section className="results-section" aria-label="Legendary Planets">
+                <h2 className="section-title">Legendary Planets</h2>
+                <ResultsList cards={partitioned.legendary_planet} />
+              </section>
+            )}
             {partitioned.plot.length > 0 && (
               <section className="results-section" aria-label="Plots">
                 <h2 className="section-title">Plots</h2>
