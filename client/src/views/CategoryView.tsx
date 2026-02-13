@@ -105,6 +105,15 @@ export function CategoryView({ cards, category, onBack }: CategoryViewProps) {
     }
   }, [category, results])
 
+  const agendaBySection = useMemo(() => {
+    if (category !== 'agenda') return null
+    const agendaCards = results.filter((c) => c.type === 'agenda')
+    const getAgendaType = (c: CardItem) => ('agendaType' in c ? (c as { agendaType: string }).agendaType : '')
+    const law = sortByName(agendaCards.filter((c) => getAgendaType(c).toLowerCase() === 'law'))
+    const directive = sortByName(agendaCards.filter((c) => getAgendaType(c).toLowerCase() === 'directive'))
+    return { law, directive }
+  }, [category, results])
+
   return (
     <div className="category-view">
       <div className="view-bar">
@@ -225,6 +234,25 @@ export function CategoryView({ cards, category, onBack }: CategoryViewProps) {
             )}
             {unitBySection.general.length === 0 && unitBySection.faction.length === 0 && (
               <p className="results-message">No units found.</p>
+            )}
+          </>
+        ) : agendaBySection ? (
+          <>
+            <h2 className="section-title">{CATEGORY_LABELS[category]}</h2>
+            {agendaBySection.law.length > 0 && (
+              <section className="results-section" aria-label="Laws">
+                <h3 className="section-title section-title--sub">Laws</h3>
+                <ResultsList cards={agendaBySection.law} />
+              </section>
+            )}
+            {agendaBySection.directive.length > 0 && (
+              <section className="results-section" aria-label="Directives">
+                <h3 className="section-title section-title--sub">Directives</h3>
+                <ResultsList cards={agendaBySection.directive} />
+              </section>
+            )}
+            {agendaBySection.law.length === 0 && agendaBySection.directive.length === 0 && (
+              <p className="results-message">No agendas found.</p>
             )}
           </>
         ) : (

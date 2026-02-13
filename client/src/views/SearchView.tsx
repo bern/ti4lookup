@@ -17,6 +17,13 @@ function partitionSecretObjectives(secretObj: CardItem[]) {
   return { secretAction, secretStatus, secretAgenda }
 }
 
+function partitionAgendas(agendaCards: CardItem[]) {
+  const getAgendaType = (c: CardItem) => ('agendaType' in c ? (c as { agendaType: string }).agendaType : '')
+  const law = sortByName(agendaCards.filter((c) => getAgendaType(c).toLowerCase() === 'law'))
+  const directive = sortByName(agendaCards.filter((c) => getAgendaType(c).toLowerCase() === 'directive'))
+  return { law, directive }
+}
+
 interface SearchViewProps {
   cards: CardItem[]
   recentSearches: string[]
@@ -60,6 +67,10 @@ export function SearchView({
   const hasPublicObjectives = publicObjectiveSections.stage1.length > 0 || publicObjectiveSections.stage2.length > 0
   const hasSecretObjectives = secretObjectiveSections.secretAction.length > 0 ||
     secretObjectiveSections.secretStatus.length > 0 || secretObjectiveSections.secretAgenda.length > 0
+  const agendaSections = useMemo(
+    () => partitionAgendas(partitioned.agenda),
+    [partitioned.agenda]
+  )
   const hasQuery = query.trim() !== ''
   const showRecent = !hasQuery && recentSearches.length > 0 && !factionFilter
   const showFactionResults = factionFilter && !hasQuery
@@ -292,10 +303,21 @@ export function SearchView({
                 )}
               </section>
             )}
-            {partitioned.agenda.length > 0 && (
+            {(agendaSections.law.length > 0 || agendaSections.directive.length > 0) && (
               <section className="results-section" aria-label="Agendas">
                 <h2 className="section-title">Agendas</h2>
-                <ResultsList cards={partitioned.agenda} />
+                {agendaSections.law.length > 0 && (
+                  <>
+                    <h3 className="section-title section-title--sub">Laws</h3>
+                    <ResultsList cards={agendaSections.law} />
+                  </>
+                )}
+                {agendaSections.directive.length > 0 && (
+                  <>
+                    <h3 className="section-title section-title--sub">Directives</h3>
+                    <ResultsList cards={agendaSections.directive} />
+                  </>
+                )}
               </section>
             )}
             {partitioned.action.length > 0 && (
