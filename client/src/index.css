@@ -455,16 +455,6 @@ body {
   }
 }
 
-@media (max-width: 360px) {
-  .home-categories {
-    grid-template-columns: 1fr;
-  }
-  .home-category-btn:last-child:nth-child(2n+1) {
-    grid-column: auto;
-    justify-self: stretch;
-  }
-}
-
 .home-category-btn {
   padding: 0.85rem 1rem;
   font-size: 1rem;
@@ -475,6 +465,12 @@ body {
   border: 1px solid var(--color-border);
   border-radius: 8px;
   cursor: pointer;
+}
+
+@media (max-width: 480px) {
+  .home-category-btn {
+    padding: 0.65rem 0.5rem;
+  }
 }
 
 .home-category-btn:hover {
