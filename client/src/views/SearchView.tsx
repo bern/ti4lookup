@@ -148,12 +148,6 @@ export function SearchView({
                 <ResultsList cards={partitioned.technology_general} />
               </section>
             )}
-            {partitioned.technology_faction.length > 0 && (
-              <section className="results-section" aria-label="Faction Technologies">
-                <h2 className="section-title">Faction Technologies</h2>
-                <ResultsList cards={partitioned.technology_faction} />
-              </section>
-            )}
             {partitioned.unit_general.length > 0 && (
               <section className="results-section" aria-label="Units (General)">
                 <h2 className="section-title">Units (General)</h2>
@@ -164,6 +158,12 @@ export function SearchView({
               <section className="results-section" aria-label="Faction Units">
                 <h2 className="section-title">Faction Units</h2>
                 <ResultsList cards={partitioned.unit_faction} />
+              </section>
+            )}
+            {partitioned.technology_faction.length > 0 && (
+              <section className="results-section" aria-label="Faction Technologies">
+                <h2 className="section-title">Faction Technologies</h2>
+                <ResultsList cards={partitioned.technology_faction} />
               </section>
             )}
             {partitioned.faction_leader.length > 0 && (
@@ -221,12 +221,6 @@ export function SearchView({
                 <ResultsList cards={partitioned.technology_general} />
               </section>
             )}
-            {partitioned.technology_faction.length > 0 && (
-              <section className="results-section" aria-label="Faction Technologies">
-                <h2 className="section-title">Faction Technologies</h2>
-                <ResultsList cards={partitioned.technology_faction} />
-              </section>
-            )}
             {partitioned.unit_general.length > 0 && (
               <section className="results-section" aria-label="Units (General)">
                 <h2 className="section-title">Units (General)</h2>
@@ -237,6 +231,12 @@ export function SearchView({
               <section className="results-section" aria-label="Faction Units">
                 <h2 className="section-title">Faction Units</h2>
                 <ResultsList cards={partitioned.unit_faction} />
+              </section>
+            )}
+            {partitioned.technology_faction.length > 0 && (
+              <section className="results-section" aria-label="Faction Technologies">
+                <h2 className="section-title">Faction Technologies</h2>
+                <ResultsList cards={partitioned.technology_faction} />
               </section>
             )}
             {partitioned.faction_leader.length > 0 && (
