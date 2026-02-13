@@ -20,6 +20,7 @@ export interface StrategyCard {
   secondary: string
   color: string
   version: string
+  excludeAfter?: string
 }
 
 /**
@@ -58,6 +59,7 @@ export interface SecretObjective {
   points: string
   whenToScore: string
   version: string
+  excludeAfter?: string
 }
 
 /**
@@ -112,6 +114,7 @@ export interface FactionLeader {
   abilityName: string
   ability: string
   version: string
+  excludeAfter?: string
 }
 
 /**
@@ -124,6 +127,7 @@ export interface PromissoryNote {
   factionName?: string
   effect: string
   version: string
+  excludeAfter?: string
 }
 
 /**
@@ -192,6 +196,7 @@ export interface Unit {
   unitAbilities: string
   version: string
   factionName?: string
+  excludeAfter?: string
 }
 
 /** Combined item for search/display with searchText for Fuse. */

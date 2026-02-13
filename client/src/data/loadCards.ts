@@ -59,6 +59,7 @@ export async function loadStrategyCards(): Promise<StrategyCard[]> {
     secondary: row.secondary ?? '',
     color: row.color ?? '',
     version: row.version ?? '',
+    excludeAfter: (row['exclude after'] ?? '').trim() || undefined,
   }))
 }
 
@@ -90,6 +91,7 @@ export async function loadObjectives(): Promise<{ public: PublicObjective[]; sec
     type: (row.type ?? '').toLowerCase(),
     whenToScore: row['when to score'] ?? '',
     version: row.version ?? '',
+    excludeAfter: (row['exclude after'] ?? '').trim() || undefined,
   }))
   const publicObjectives: PublicObjective[] = []
   const secretObjectives: SecretObjective[] = []
@@ -119,6 +121,7 @@ export async function loadObjectives(): Promise<{ public: PublicObjective[]; sec
         points: r.points,
         whenToScore: r.whenToScore,
         version: r.version,
+        excludeAfter: r.excludeAfter,
       })
     }
   }
@@ -218,6 +221,7 @@ export async function loadFactionLeaders(): Promise<FactionLeader[]> {
     abilityName: row['ability name'] ?? '',
     ability: row.ability ?? '',
     version: row.version ?? '',
+    excludeAfter: (row['exclude after'] ?? '').trim() || undefined,
   }))
 }
 
@@ -230,6 +234,7 @@ export async function loadPromissoryNotes(): Promise<PromissoryNote[]> {
     factionId: (row['faction id'] ?? '').trim(),
     effect: row.effect ?? '',
     version: row.version ?? '',
+    excludeAfter: (row['exclude after'] ?? '').trim() || undefined,
   }))
 }
 
@@ -306,6 +311,7 @@ export async function loadUnits(): Promise<Unit[]> {
     textAbilities: row['text abilities'] ?? '',
     unitAbilities: row['unit abilities'] ?? '',
     version: row.version ?? '',
+    excludeAfter: (row['exclude after'] ?? '').trim() || undefined,
   }))
 }
 
