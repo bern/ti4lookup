@@ -3,7 +3,7 @@ import { loadAllCards, loadFactions, type Faction } from './data/loadCards'
 import { HomeView, type View } from './views/HomeView'
 import { SearchView } from './views/SearchView'
 import { CategoryView } from './views/CategoryView'
-import { ThemeSelector, type ThemeId } from './components/ThemeSelector'
+import type { ThemeId } from './components/ThemeSelector'
 import {
   ExpansionSelector,
   type ExpansionId,
@@ -216,13 +216,12 @@ export function App() {
               includeRetiredCards={includeRetiredCards}
               onIncludeRetiredCardsChange={setIncludeRetiredCards}
             />
-            <ThemeSelector value={theme} onChange={setTheme} />
           </div>
         </header>
         <main className="app-main">
           <p className="results-message results-message--error">{error}</p>
         </main>
-        <AppFooter />
+        <AppFooter theme={theme} onThemeChange={setTheme} />
       </div>
     )
   }
@@ -245,13 +244,12 @@ export function App() {
               includeRetiredCards={includeRetiredCards}
               onIncludeRetiredCardsChange={setIncludeRetiredCards}
             />
-            <ThemeSelector value={theme} onChange={setTheme} />
           </div>
         </header>
         <main className="app-main">
           <p className="results-message">Loading…</p>
         </main>
-        <AppFooter />
+        <AppFooter theme={theme} onThemeChange={setTheme} />
       </div>
     )
   }
@@ -278,7 +276,6 @@ export function App() {
               includeRetiredCards={includeRetiredCards}
               onIncludeRetiredCardsChange={setIncludeRetiredCards}
             />
-          <ThemeSelector value={theme} onChange={setTheme} />
         </div>
       </header>
       {location.view === 'home' && (
@@ -310,7 +307,7 @@ export function App() {
           onBack={() => window.history.back()}
         />
       )}
-      <AppFooter />
+      <AppFooter theme={theme} onThemeChange={setTheme} />
     </div>
   )
 }

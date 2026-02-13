@@ -1,6 +1,16 @@
-export function AppFooter() {
+import { ThemeSelector, type ThemeId } from './ThemeSelector'
+
+interface AppFooterProps {
+  theme: ThemeId
+  onThemeChange: (theme: ThemeId) => void
+}
+
+export function AppFooter({ theme, onThemeChange }: AppFooterProps) {
   return (
     <footer className="app-footer">
+      <div className="app-footer__theme">
+        <ThemeSelector value={theme} onChange={onThemeChange} />
+      </div>
       <p className="app-footer__text">
         Made with ❤️ by{' '}
         <a
