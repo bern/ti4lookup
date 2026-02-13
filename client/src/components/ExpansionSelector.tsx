@@ -165,7 +165,7 @@ export function ExpansionSelector({
   }
 
   const count = selected.size
-  const label = `${count} expansion${count === 1 ? '' : 's'}`
+  const label = `${count} expansion${count === 1 ? '' : 's'}${includeRetiredCards ? ' + Ω' : ''}`
 
   return (
     <div className="expansion-selector" ref={ref}>
