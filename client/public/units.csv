@@ -85,6 +85,6 @@ Blackshade Infiltrator,yssaril,mech,2,,6,,"DEPLOY: After you use your Stall Tact
 The Egeiro,bastion,flagship,8,1,9,3,"Apply +1 to the result of each of this unit's combat rolls for each non-home system that contains a planet you control.",SUSTAIN DAMAGE.,thunders edge
 A3 Valiance,bastion,mech,2,,6,,"When this unit is destroyed, if it was galvanized, galvanize up to 3 of your infantry in its system.",SUSTAIN DAMAGE.,thunders edge
 4X41C Helios V1,bastion,space dock,,,,,"The resource value of this planet is increased by 1.",PRODUCTION 2.,thunders edge
-Artemiris,keleres,flagship,8,1,7(x2),6,"This ship can move through systems that contain other players' ships.",SUSTAIN DAMAGE.,codex 3
-Artemiris Ω,keleres,flagship,8,2,5(x2),3,"Other players must spend 2 influence to activate the system that contains this ship.",SUSTAIN DAMAGE.,thunders edge
+Artemiris,keleres,flagship,8,2,5(x2),3,"Other players must spend 2 influence to activate the system that contains this ship.",SUSTAIN DAMAGE.,codex 3
+Artemiris Ω,keleres,flagship,8,2,5(x2),3,"Other players must spend 2 influence to activate this system.",SUSTAIN DAMAGE.,thunders edge
 Omniopiares,keleres,mech,2,,6,,"Other players must spend 1 influence to commit ground forces to the planet that contains this unit.",SUSTAIN DAMAGE.,codex 3
