@@ -219,11 +219,12 @@ export async function loadFactionAbilities(): Promise<FactionAbility[]> {
 }
 
 /**
- * Fetches and parses faction leaders CSV. Columns: faction id, type, name, unlock condition, ability name, ability, version.
+ * Fetches and parses faction leaders CSV. Columns: faction id, type, name, unlock condition, ability name, ability, version, tribuni id.
  */
 export async function loadFactionLeaders(): Promise<FactionLeader[]> {
   return parseCsv(FACTION_LEADERS_CSV_URL, (row) => ({
     factionId: (row['faction id'] ?? '').trim(),
+    tribuniId: (row['tribuni id'] ?? '').trim() || undefined,
     leaderType: row.type ?? '',
     name: row.name ?? '',
     unlockCondition: row['unlock condition'] ?? '',
@@ -410,8 +411,9 @@ export async function loadAllCards(): Promise<CardItem[]> {
   const factionLeaderItems: CardItem[] = factionLeaders.map((c) => ({
     ...c,
     factionName: factionNames.get(c.factionId) ?? undefined,
+    tribuniName: c.tribuniId ? (factionNames.get(c.tribuniId) ?? undefined) : undefined,
     type: 'faction_leader',
-    searchText: [c.factionId, factionNames.get(c.factionId), c.leaderType, c.name, c.unlockCondition, c.abilityName, c.ability, c.version].filter(Boolean).join(' '),
+    searchText: [c.factionId, factionNames.get(c.factionId), c.tribuniId, c.tribuniId ? factionNames.get(c.tribuniId) : undefined, c.leaderType, c.name, c.unlockCondition, c.abilityName, c.ability, c.version].filter(Boolean).join(' '),
   }))
   const promissoryNoteItems: CardItem[] = promissoryNotes.map((c) => ({
     ...c,

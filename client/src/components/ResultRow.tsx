@@ -43,7 +43,12 @@ function getUnitStatsHeader(unit: { unit: string; cost: string; combat: string; 
 function getCardCopyText(card: CardItem): string {
   const baseLabel = getCategoryLabel(card)
   const factionName = 'factionName' in card ? card.factionName : undefined
-  const footer = factionName ? `${baseLabel} • ${factionName}` : baseLabel
+  const tribuniName = card.type === 'faction_leader' && 'tribuniName' in card ? card.tribuniName : undefined
+  let footer = baseLabel
+  if (factionName) {
+    footer = `${baseLabel} • ${factionName}`
+    if (tribuniName) footer += ` • ${tribuniName} Tribuni`
+  }
 
   if (card.type === 'action') {
     return joinSections(card.name, card.version, card.timing, card.effect, footer)
@@ -198,7 +203,10 @@ function parsePrerequisiteIds(prereq: string): string[] {
 function getCardImages(card: CardItem): string[] {
   const ids: string[] = []
   if (card.type === 'faction_ability' && card.factionId) ids.push(card.factionId)
-  if (card.type === 'faction_leader' && card.factionId) ids.push(card.factionId)
+  if (card.type === 'faction_leader') {
+    if (card.factionId) ids.push(card.factionId)
+    if (card.tribuniId) ids.push(card.tribuniId)
+  }
   if (card.type === 'promissory_note' && card.factionId) ids.push(card.factionId)
   if (card.type === 'breakthrough' && card.factionId) ids.push(card.factionId)
   if (card.type === 'technology') {
@@ -230,7 +238,12 @@ function getCardImages(card: CardItem): string[] {
 function CardFooter({ card }: { card: CardItem }) {
   const baseLabel = getCategoryLabel(card)
   const factionName = 'factionName' in card ? card.factionName : undefined
-  const label = factionName ? `${baseLabel} • ${factionName}` : baseLabel
+  const tribuniName = card.type === 'faction_leader' && 'tribuniName' in card ? card.tribuniName : undefined
+  let label = baseLabel
+  if (factionName) {
+    label = `${baseLabel} • ${factionName}`
+    if (tribuniName) label += ` • ${tribuniName} Tribuni`
+  }
   const imageIds = getCardImages(card)
   return (
     <footer className="result-row__footer">

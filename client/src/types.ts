@@ -104,12 +104,15 @@ export interface FactionAbility {
 }
 
 /**
- * Faction leader from CSV. Columns: faction id, type, name, unlock condition, ability name, ability, version.
+ * Faction leader from CSV. Columns: faction id, type, name, unlock condition, ability name, ability, version, tribuni id.
  * factionName is set at load from factions.csv for display (category footer).
+ * tribuniId maps to another faction; tribuniName is set at load for Tribuni leaders (e.g. Keleres).
  */
 export interface FactionLeader {
   factionId: string
   factionName?: string
+  tribuniId?: string
+  tribuniName?: string
   leaderType: string
   name: string
   unlockCondition: string
