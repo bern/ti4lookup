@@ -38,12 +38,99 @@ export function cardVersionMatchesExpansions(
   return selectedVersions.has(v)
 }
 
+/** Expansion order for "exclude after" and "removed in pok" logic. */
+const EXPANSION_ORDER: ExpansionId[] = [
+  'pok',
+  'codex1',
+  'codex2',
+  'codex3',
+  'codex4',
+  'thundersEdge',
+]
+
+/** Versions that map to expansion IDs (for exclude after comparison). */
+const VERSION_TO_EXPANSION_IDS: Record<string, ExpansionId[]> = {
+  'base game': EXPANSION_ORDER,
+  pok: ['pok', 'codex1', 'codex2', 'codex3', 'codex4', 'thundersEdge'],
+  'codex 1': ['codex1', 'codex2', 'codex3', 'codex4', 'thundersEdge'],
+  'codex 2': ['codex2', 'codex3', 'codex4', 'thundersEdge'],
+  'codex 3': ['codex3', 'codex4', 'thundersEdge'],
+  'codex 4': ['codex4', 'thundersEdge'],
+  'thunders edge': ['thundersEdge'],
+}
+
+/** Returns true if the card should be excluded based on "exclude after" column. */
+export function isExcludedByExcludeAfter(
+  excludeAfter: string | undefined,
+  selectedExpansions: Set<ExpansionId>
+): boolean {
+  const val = (excludeAfter ?? '').trim().toLowerCase()
+  if (!val) return false
+  const idsAtOrAfter = VERSION_TO_EXPANSION_IDS[val]
+  if (!idsAtOrAfter) return false
+  return idsAtOrAfter.some((id) => selectedExpansions.has(id))
+}
+
+/** Returns true if the card should be excluded based on "removed in pok" (agendas only). */
+export function isExcludedByRemovedInPok(
+  removedInPok: string,
+  selectedExpansions: Set<ExpansionId>
+): boolean {
+  if (removedInPok !== 'true') return false
+  return selectedExpansions.has('pok') || EXPANSION_ORDER.some((id) => selectedExpansions.has(id))
+}
+
+/** Count Ω characters in a string. */
+function countOmegas(s: string): number {
+  return (s.match(/Ω/g) ?? []).length
+}
+
+/** Base name without Ω. */
+function baseName(name: string): string {
+  return name.replace(/Ω/g, '').replace(/\s+/g, ' ').trim()
+}
+
+/** Get factionId from card for omega grouping (faction-specific cards group separately). */
+function getFactionId(card: { type: string; factionId?: string }): string {
+  return 'factionId' in card && card.factionId ? card.factionId : ''
+}
+
+/** Filter to only the latest omega version per (type, baseName, factionId). */
+export function filterToLatestOmega<T extends { name: string; type: string; factionId?: string }>(
+  cards: T[]
+): T[] {
+  const byKey = new Map<string, T[]>()
+  for (const card of cards) {
+    const key = `${card.type}:${baseName(card.name)}:${getFactionId(card)}`
+    const list = byKey.get(key) ?? []
+    list.push(card)
+    byKey.set(key, list)
+  }
+  const result: T[] = []
+  for (const list of byKey.values()) {
+    if (list.length === 1) {
+      result.push(list[0])
+    } else {
+      const best = list.reduce((a, b) => (countOmegas(b.name) >= countOmegas(a.name) ? b : a))
+      result.push(best)
+    }
+  }
+  return result
+}
+
 interface ExpansionSelectorProps {
   selected: Set<ExpansionId>
   onChange: (selected: Set<ExpansionId>) => void
+  includeReplacedCards: boolean
+  onIncludeReplacedCardsChange: (value: boolean) => void
 }
 
-export function ExpansionSelector({ selected, onChange }: ExpansionSelectorProps) {
+export function ExpansionSelector({
+  selected,
+  onChange,
+  includeReplacedCards,
+  onIncludeReplacedCardsChange,
+}: ExpansionSelectorProps) {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
@@ -104,6 +191,15 @@ export function ExpansionSelector({ selected, onChange }: ExpansionSelectorProps
               <span>{opt.label}</span>
             </label>
           ))}
+          <div className="expansion-selector__divider" />
+          <label className="expansion-selector__option">
+            <input
+              type="checkbox"
+              checked={includeReplacedCards}
+              onChange={(e) => onIncludeReplacedCardsChange(e.target.checked)}
+            />
+            <span>Include replaced cards</span>
+          </label>
         </div>
       )}
     </div>

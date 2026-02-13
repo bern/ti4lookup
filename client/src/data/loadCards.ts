@@ -43,6 +43,7 @@ export async function loadActionCards(): Promise<ActionCard[]> {
     timing: row.timing ?? '',
     effect: row.effect ?? '',
     version: row.version ?? '',
+    excludeAfter: (row['exclude after'] ?? '').trim() || undefined,
   }))
 }
 
@@ -73,6 +74,7 @@ export async function loadAgendas(): Promise<Agenda[]> {
     effect: row.effect ?? '',
     version: row.version ?? '',
     removedInPok: row['removed in pok'] ?? '',
+    excludeAfter: (row['exclude after'] ?? '').trim() || undefined,
   }))
 }
 
@@ -137,6 +139,7 @@ export async function loadLegendaryPlanets(): Promise<LegendaryPlanet[]> {
     ability: row.ability ?? '',
     howToAcquire: row['how to acquire'] ?? '',
     version: row.version ?? '',
+    excludeAfter: (row['exclude after'] ?? '').trim() || undefined,
   }))
 }
 
@@ -199,6 +202,7 @@ export async function loadFactionAbilities(): Promise<FactionAbility[]> {
     name: row.name ?? '',
     text: row.text ?? '',
     version: row.version ?? '',
+    excludeAfter: (row['exclude after'] ?? '').trim() || undefined,
   }))
 }
 
@@ -254,6 +258,7 @@ export async function loadTechnologies(): Promise<Technology[]> {
     prerequisites: (row.prerequisites ?? '').trim(),
     effect: row.effect ?? '',
     version: row.version ?? '',
+    excludeAfter: (row['exclude after'] ?? '').trim() || undefined,
   }))
 }
 

@@ -289,6 +289,12 @@ body {
   flex-shrink: 0;
 }
 
+.expansion-selector__divider {
+  height: 1px;
+  margin: 0.4rem 0;
+  background: var(--color-border);
+}
+
 .theme-selector {
   position: relative;
 }

@@ -7,6 +7,7 @@ export interface ActionCard {
   timing: string
   effect: string
   version: string
+  excludeAfter?: string
 }
 
 /**
@@ -32,6 +33,7 @@ export interface Agenda {
   effect: string
   version: string
   removedInPok: string
+  excludeAfter?: string
 }
 
 /**
@@ -70,6 +72,7 @@ export interface LegendaryPlanet {
   ability: string
   howToAcquire: string
   version: string
+  excludeAfter?: string
 }
 
 /**
@@ -93,6 +96,7 @@ export interface FactionAbility {
   name: string
   text: string
   version: string
+  excludeAfter?: string
 }
 
 /**
@@ -149,6 +153,7 @@ export interface Technology {
   effect: string
   version: string
   factionName?: string
+  excludeAfter?: string
 }
 
 /**

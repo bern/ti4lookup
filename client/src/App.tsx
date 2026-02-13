@@ -9,6 +9,9 @@ import {
   type ExpansionId,
   expansionIdsToVersions,
   cardVersionMatchesExpansions,
+  isExcludedByExcludeAfter,
+  isExcludedByRemovedInPok,
+  filterToLatestOmega,
 } from './components/ExpansionSelector'
 import { AppFooter } from './components/AppFooter'
 import type { CardItem } from './types'
@@ -16,6 +19,7 @@ import type { CardItem } from './types'
 const RECENT_MAX = 10
 const THEME_STORAGE_KEY = 'ti4lookup-theme'
 const EXPANSIONS_STORAGE_KEY = 'ti4lookup-expansions'
+const INCLUDE_REPLACED_STORAGE_KEY = 'ti4lookup-include-replaced'
 
 function parseStoredExpansions(s: string | null): Set<ExpansionId> {
   if (!s) return new Set()
@@ -74,6 +78,15 @@ export function App() {
       return new Set(['pok', 'codex1', 'codex2', 'codex3', 'codex4', 'thundersEdge'])
     }
   })
+  const [includeReplacedCards, setIncludeReplacedCards] = useState<boolean>(() => {
+    try {
+      const s = localStorage.getItem(INCLUDE_REPLACED_STORAGE_KEY)
+      if (s === null) return true // default checked
+      return s !== 'false'
+    } catch {
+      return true
+    }
+  })
 
   const visibleFactions = useMemo(() => {
     const versions = expansionIdsToVersions(expansions)
@@ -109,8 +122,17 @@ export function App() {
         return false
       })
     }
+    if (!includeReplacedCards) {
+      result = result.filter((card) => {
+        const excludeAfter = 'excludeAfter' in card ? card.excludeAfter : undefined
+        if (excludeAfter && isExcludedByExcludeAfter(excludeAfter, expansions)) return false
+        if (card.type === 'agenda' && 'removedInPok' in card && isExcludedByRemovedInPok(card.removedInPok, expansions)) return false
+        return true
+      })
+      result = filterToLatestOmega(result)
+    }
     return result
-  }, [cards, expansions, location.factionFilter])
+  }, [cards, expansions, location.factionFilter, includeReplacedCards])
 
   const navigate = useCallback((next: LocationState) => {
     window.history.pushState(next, '', window.location.href)
@@ -138,6 +160,14 @@ export function App() {
       /* ignore */
     }
   }, [expansions])
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(INCLUDE_REPLACED_STORAGE_KEY, String(includeReplacedCards))
+    } catch {
+      /* ignore */
+    }
+  }, [includeReplacedCards])
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
@@ -180,7 +210,12 @@ export function App() {
             TI4 Lookup
           </button>
           <div className="app-header__actions">
-            <ExpansionSelector selected={expansions} onChange={setExpansions} />
+            <ExpansionSelector
+              selected={expansions}
+              onChange={setExpansions}
+              includeReplacedCards={includeReplacedCards}
+              onIncludeReplacedCardsChange={setIncludeReplacedCards}
+            />
             <ThemeSelector value={theme} onChange={setTheme} />
           </div>
         </header>
@@ -204,7 +239,12 @@ export function App() {
             TI4 Lookup
           </button>
           <div className="app-header__actions">
-            <ExpansionSelector selected={expansions} onChange={setExpansions} />
+            <ExpansionSelector
+              selected={expansions}
+              onChange={setExpansions}
+              includeReplacedCards={includeReplacedCards}
+              onIncludeReplacedCardsChange={setIncludeReplacedCards}
+            />
             <ThemeSelector value={theme} onChange={setTheme} />
           </div>
         </header>
@@ -232,7 +272,12 @@ export function App() {
           TI4 Lookup
         </button>
         <div className="app-header__actions">
-          <ExpansionSelector selected={expansions} onChange={setExpansions} />
+          <ExpansionSelector
+              selected={expansions}
+              onChange={setExpansions}
+              includeReplacedCards={includeReplacedCards}
+              onIncludeReplacedCardsChange={setIncludeReplacedCards}
+            />
           <ThemeSelector value={theme} onChange={setTheme} />
         </div>
       </header>
