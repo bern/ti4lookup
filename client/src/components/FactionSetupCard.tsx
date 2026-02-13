@@ -18,6 +18,12 @@ function getFactionSetupCopyText(faction: Faction): string {
   if (faction.startingTechnologies?.trim()) {
     parts.push(`Starting Technologies\n${faction.startingTechnologies}`)
   }
+  if (faction.homeSystem?.trim()) {
+    parts.push(`Home System\n${faction.homeSystem}`)
+  }
+  if (faction.commodities != null) {
+    parts.push(`${faction.commodities} Commodities`)
+  }
   parts.push(`Faction Setup • ${faction.name}`)
   return parts.join('\n\n')
 }
@@ -73,6 +79,8 @@ function parseStartingTechs(raw: string): { prefix: string; techNames: string[] 
 export function FactionSetupCard({ faction, techNameToColor }: FactionSetupCardProps) {
   const hasFleet = Boolean(faction.startingFleet?.trim())
   const hasTech = Boolean(faction.startingTechnologies?.trim())
+  const hasHomeSystem = Boolean(faction.homeSystem?.trim())
+  const hasCommodities = faction.commodities != null
   const { prefix, techNames } = parseStartingTechs(faction.startingTechnologies ?? '')
 
   const renderTechContent = () => {
@@ -116,7 +124,7 @@ export function FactionSetupCard({ faction, techNameToColor }: FactionSetupCardP
         </div>
         <FactionCopyButton faction={faction} />
       </header>
-      {(hasFleet || hasTech) && (
+      {(hasFleet || hasTech || hasHomeSystem || hasCommodities) && (
         <div className="result-row__faction-setup-body">
           {hasFleet && (
             <>
@@ -129,6 +137,19 @@ export function FactionSetupCard({ faction, techNameToColor }: FactionSetupCardP
             <>
               <p className="result-row__label">Starting Technologies</p>
               {renderTechContent()}
+            </>
+          )}
+          {(hasFleet || hasTech) && hasHomeSystem && <div style={{ marginBottom: '1em' }} />}
+          {hasHomeSystem && (
+            <>
+              <p className="result-row__label">Home System</p>
+              <p className="result-row__effect">{faction.homeSystem}</p>
+            </>
+          )}
+          {(hasFleet || hasTech || hasHomeSystem) && hasCommodities && <div style={{ marginBottom: '1em' }} />}
+          {hasCommodities && (
+            <>
+              <p className="result-row__label">{faction.commodities} Commodities</p>
             </>
           )}
         </div>

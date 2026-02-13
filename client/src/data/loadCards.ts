@@ -166,6 +166,8 @@ export interface Faction {
   version: string
   startingFleet?: string
   startingTechnologies?: string
+  homeSystem?: string
+  commodities?: number
 }
 
 /**
@@ -187,13 +189,19 @@ export async function loadFactionNames(): Promise<Map<string, string>> {
  * Fetches factions CSV and returns list of factions for the home grid.
  */
 export async function loadFactions(): Promise<Faction[]> {
-  const rows = await parseCsv(FACTIONS_CSV_URL, (row) => ({
-    id: (row.id ?? '').trim(),
-    name: (row.name ?? '').trim(),
-    version: (row.version ?? '').trim(),
-    startingFleet: (row['starting fleet'] ?? '').trim() || undefined,
-    startingTechnologies: (row['starting technologies'] ?? '').trim() || undefined,
-  }))
+  const rows = await parseCsv(FACTIONS_CSV_URL, (row) => {
+    const commoditiesRaw = (row.commodities ?? '').trim()
+    const commodities = commoditiesRaw ? parseInt(commoditiesRaw, 10) : undefined
+    return {
+      id: (row.id ?? '').trim(),
+      name: (row.name ?? '').trim(),
+      version: (row.version ?? '').trim(),
+      startingFleet: (row['starting fleet'] ?? '').trim() || undefined,
+      startingTechnologies: (row['starting technologies'] ?? '').trim() || undefined,
+      homeSystem: (row['home system'] ?? '').trim() || undefined,
+      commodities: Number.isNaN(commodities) ? undefined : commodities,
+    }
+  })
   return rows.filter((r) => r.id)
 }
 
