@@ -1,11 +1,21 @@
+import { useMemo } from 'react'
 import { SearchInput } from '../components/SearchInput'
 import { ResultsList } from '../components/ResultsList'
 import { FactionSetupCard } from '../components/FactionSetupCard'
-import { useFuseSearch, partitionByType } from '../search/useFuseSearch'
+import { useFuseSearch, partitionByType, sortByName } from '../search/useFuseSearch'
 import type { CardItem } from '../types'
 import type { Faction } from '../data/loadCards'
 
 const RECENT_MAX = 10
+
+function partitionSecretObjectives(secretObj: CardItem[]) {
+  const whenLower = (w: string) => (w ?? '').toLowerCase()
+  const getWhen = (c: CardItem) => ('whenToScore' in c ? (c as { whenToScore: string }).whenToScore : '')
+  const secretAction = sortByName(secretObj.filter((c) => whenLower(getWhen(c)).includes('action')))
+  const secretStatus = sortByName(secretObj.filter((c) => whenLower(getWhen(c)).includes('status')))
+  const secretAgenda = sortByName(secretObj.filter((c) => whenLower(getWhen(c)).includes('agenda')))
+  return { secretAction, secretStatus, secretAgenda }
+}
 
 interface SearchViewProps {
   cards: CardItem[]
@@ -38,6 +48,18 @@ export function SearchView({
   }
 
   const partitioned = partitionByType(results)
+  const publicObjectiveSections = useMemo(() => {
+    const stage1 = sortByName(partitioned.public_objective.filter((c) => c.type === 'public_objective' && c.stage === '1'))
+    const stage2 = sortByName(partitioned.public_objective.filter((c) => c.type === 'public_objective' && c.stage === '2'))
+    return { stage1, stage2 }
+  }, [partitioned.public_objective])
+  const secretObjectiveSections = useMemo(
+    () => partitionSecretObjectives(partitioned.secret_objective),
+    [partitioned.secret_objective]
+  )
+  const hasPublicObjectives = publicObjectiveSections.stage1.length > 0 || publicObjectiveSections.stage2.length > 0
+  const hasSecretObjectives = secretObjectiveSections.secretAction.length > 0 ||
+    secretObjectiveSections.secretStatus.length > 0 || secretObjectiveSections.secretAgenda.length > 0
   const hasQuery = query.trim() !== ''
   const showRecent = !hasQuery && recentSearches.length > 0 && !factionFilter
   const showFactionResults = factionFilter && !hasQuery
@@ -230,16 +252,44 @@ export function SearchView({
                 <ResultsList cards={partitioned.breakthrough} />
               </section>
             )}
-            {partitioned.public_objective.length > 0 && (
+            {hasPublicObjectives && (
               <section className="results-section" aria-label="Public Objectives">
                 <h2 className="section-title">Public Objectives</h2>
-                <ResultsList cards={partitioned.public_objective} />
+                {publicObjectiveSections.stage1.length > 0 && (
+                  <>
+                    <h3 className="section-title section-title--sub">Stage 1</h3>
+                    <ResultsList cards={publicObjectiveSections.stage1} />
+                  </>
+                )}
+                {publicObjectiveSections.stage2.length > 0 && (
+                  <>
+                    <h3 className="section-title section-title--sub">Stage 2</h3>
+                    <ResultsList cards={publicObjectiveSections.stage2} />
+                  </>
+                )}
               </section>
             )}
-            {partitioned.secret_objective.length > 0 && (
+            {hasSecretObjectives && (
               <section className="results-section" aria-label="Secret Objectives">
                 <h2 className="section-title">Secret Objectives</h2>
-                <ResultsList cards={partitioned.secret_objective} />
+                {secretObjectiveSections.secretStatus.length > 0 && (
+                  <>
+                    <h3 className="section-title section-title--sub">Status Phase</h3>
+                    <ResultsList cards={secretObjectiveSections.secretStatus} />
+                  </>
+                )}
+                {secretObjectiveSections.secretAction.length > 0 && (
+                  <>
+                    <h3 className="section-title section-title--sub">Action Phase</h3>
+                    <ResultsList cards={secretObjectiveSections.secretAction} />
+                  </>
+                )}
+                {secretObjectiveSections.secretAgenda.length > 0 && (
+                  <>
+                    <h3 className="section-title section-title--sub">Agenda Phase</h3>
+                    <ResultsList cards={secretObjectiveSections.secretAgenda} />
+                  </>
+                )}
               </section>
             )}
             {partitioned.agenda.length > 0 && (

@@ -1,6 +1,6 @@
 import type { Faction } from '../data/loadCards'
 
-export type View = 'home' | 'search' | 'action' | 'agenda' | 'strategy' | 'public_objective' | 'secret_objective' | 'legendary_planet' | 'exploration' | 'relic' | 'faction_ability' | 'faction_leader' | 'promissory_note' | 'breakthrough' | 'technology' | 'galactic_event' | 'plot' | 'unit'
+export type View = 'home' | 'search' | 'action' | 'agenda' | 'strategy' | 'public_objective' | 'secret_objective' | 'legendary_planet' | 'exploration' | 'relic' | 'faction_ability' | 'faction_leader' | 'promissory_note' | 'breakthrough' | 'technology' | 'galactic_event' | 'unit'
 
 interface HomeViewProps {
   factions: Faction[]
@@ -125,13 +125,6 @@ export function HomeView({ factions, onOpenSearch, onOpenFaction, onOpenCategory
           onClick={() => onOpenCategory('galactic_event')}
         >
           Galactic Events
-        </button>
-        <button
-          type="button"
-          className="home-category-btn"
-          onClick={() => onOpenCategory('plot')}
-        >
-          Plots
         </button>
       </nav>
       <section className="home-factions" aria-label="Browse by faction">

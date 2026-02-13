@@ -73,6 +73,17 @@ export function CategoryView({ cards, category, onBack }: CategoryViewProps) {
     return { stage1, stage2 }
   }, [category, results])
 
+  const secretByPhase = useMemo(() => {
+    if (category !== 'secret_objective') return null
+    const secretObjectives = results.filter((c) => c.type === 'secret_objective')
+    const whenLower = (w: string) => (w ?? '').toLowerCase()
+    const getWhen = (c: CardItem) => ('whenToScore' in c ? (c as { whenToScore: string }).whenToScore : '')
+    const secretAction = sortByName(secretObjectives.filter((c) => whenLower(getWhen(c)).includes('action')))
+    const secretStatus = sortByName(secretObjectives.filter((c) => whenLower(getWhen(c)).includes('status')))
+    const secretAgenda = sortByName(secretObjectives.filter((c) => whenLower(getWhen(c)).includes('agenda')))
+    return { secretAction, secretStatus, secretAgenda }
+  }, [category, results])
+
   const technologyBySection = useMemo(() => {
     if (category !== 'technology') return null
     const partitioned = partitionByType(results)
@@ -130,6 +141,32 @@ export function CategoryView({ cards, category, onBack }: CategoryViewProps) {
               </section>
             )}
             {publicByStage.stage1.length === 0 && publicByStage.stage2.length === 0 && (
+              <p className="results-message">No objectives found.</p>
+            )}
+          </>
+        ) : secretByPhase ? (
+          <>
+            <h2 className="section-title">{CATEGORY_LABELS[category]}</h2>
+            {secretByPhase.secretStatus.length > 0 && (
+              <section className="results-section" aria-label="Status Phase">
+                <h3 className="section-title section-title--sub">Status Phase</h3>
+                <ResultsList cards={secretByPhase.secretStatus} />
+              </section>
+            )}
+            {secretByPhase.secretAction.length > 0 && (
+              <section className="results-section" aria-label="Action Phase">
+                <h3 className="section-title section-title--sub">Action Phase</h3>
+                <ResultsList cards={secretByPhase.secretAction} />
+              </section>
+            )}
+            {secretByPhase.secretAgenda.length > 0 && (
+              <section className="results-section" aria-label="Agenda Phase">
+                <h3 className="section-title section-title--sub">Agenda Phase</h3>
+                <ResultsList cards={secretByPhase.secretAgenda} />
+              </section>
+            )}
+            {secretByPhase.secretAction.length === 0 && secretByPhase.secretStatus.length === 0 &&
+              secretByPhase.secretAgenda.length === 0 && (
               <p className="results-message">No objectives found.</p>
             )}
           </>
