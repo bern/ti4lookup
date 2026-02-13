@@ -19,7 +19,7 @@ import type { CardItem } from './types'
 const RECENT_MAX = 10
 const THEME_STORAGE_KEY = 'ti4lookup-theme'
 const EXPANSIONS_STORAGE_KEY = 'ti4lookup-expansions'
-const INCLUDE_REPLACED_STORAGE_KEY = 'ti4lookup-include-replaced'
+const INCLUDE_RETIRED_STORAGE_KEY = 'ti4lookup-include-retired'
 
 function parseStoredExpansions(s: string | null): Set<ExpansionId> {
   if (!s) return new Set()
@@ -78,9 +78,9 @@ export function App() {
       return new Set(['pok', 'codex1', 'codex2', 'codex3', 'codex4', 'thundersEdge'])
     }
   })
-  const [includeReplacedCards, setIncludeReplacedCards] = useState<boolean>(() => {
+  const [includeRetiredCards, setIncludeRetiredCards] = useState<boolean>(() => {
     try {
-      const s = localStorage.getItem(INCLUDE_REPLACED_STORAGE_KEY)
+      const s = localStorage.getItem(INCLUDE_RETIRED_STORAGE_KEY)
       if (s === null) return true // default checked
       return s !== 'false'
     } catch {
@@ -122,7 +122,7 @@ export function App() {
         return false
       })
     }
-    if (!includeReplacedCards) {
+    if (!includeRetiredCards) {
       result = result.filter((card) => {
         const excludeAfter = 'excludeAfter' in card ? card.excludeAfter : undefined
         if (excludeAfter && isExcludedByExcludeAfter(excludeAfter, expansions)) return false
@@ -132,7 +132,7 @@ export function App() {
       result = filterToLatestOmega(result)
     }
     return result
-  }, [cards, expansions, location.factionFilter, includeReplacedCards])
+  }, [cards, expansions, location.factionFilter, includeRetiredCards])
 
   const navigate = useCallback((next: LocationState) => {
     window.history.pushState(next, '', window.location.href)
@@ -163,11 +163,11 @@ export function App() {
 
   useEffect(() => {
     try {
-      localStorage.setItem(INCLUDE_REPLACED_STORAGE_KEY, String(includeReplacedCards))
+      localStorage.setItem(INCLUDE_RETIRED_STORAGE_KEY, String(includeRetiredCards))
     } catch {
       /* ignore */
     }
-  }, [includeReplacedCards])
+  }, [includeRetiredCards])
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
@@ -213,8 +213,8 @@ export function App() {
             <ExpansionSelector
               selected={expansions}
               onChange={setExpansions}
-              includeReplacedCards={includeReplacedCards}
-              onIncludeReplacedCardsChange={setIncludeReplacedCards}
+              includeRetiredCards={includeRetiredCards}
+              onIncludeRetiredCardsChange={setIncludeRetiredCards}
             />
             <ThemeSelector value={theme} onChange={setTheme} />
           </div>
@@ -242,8 +242,8 @@ export function App() {
             <ExpansionSelector
               selected={expansions}
               onChange={setExpansions}
-              includeReplacedCards={includeReplacedCards}
-              onIncludeReplacedCardsChange={setIncludeReplacedCards}
+              includeRetiredCards={includeRetiredCards}
+              onIncludeRetiredCardsChange={setIncludeRetiredCards}
             />
             <ThemeSelector value={theme} onChange={setTheme} />
           </div>
@@ -275,8 +275,8 @@ export function App() {
           <ExpansionSelector
               selected={expansions}
               onChange={setExpansions}
-              includeReplacedCards={includeReplacedCards}
-              onIncludeReplacedCardsChange={setIncludeReplacedCards}
+              includeRetiredCards={includeRetiredCards}
+              onIncludeRetiredCardsChange={setIncludeRetiredCards}
             />
           <ThemeSelector value={theme} onChange={setTheme} />
         </div>

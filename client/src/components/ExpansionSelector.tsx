@@ -121,15 +121,15 @@ export function filterToLatestOmega<T extends { name: string; type: string; fact
 interface ExpansionSelectorProps {
   selected: Set<ExpansionId>
   onChange: (selected: Set<ExpansionId>) => void
-  includeReplacedCards: boolean
-  onIncludeReplacedCardsChange: (value: boolean) => void
+  includeRetiredCards: boolean
+  onIncludeRetiredCardsChange: (value: boolean) => void
 }
 
 export function ExpansionSelector({
   selected,
   onChange,
-  includeReplacedCards,
-  onIncludeReplacedCardsChange,
+  includeRetiredCards,
+  onIncludeRetiredCardsChange,
 }: ExpansionSelectorProps) {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
@@ -195,10 +195,10 @@ export function ExpansionSelector({
           <label className="expansion-selector__option">
             <input
               type="checkbox"
-              checked={includeReplacedCards}
-              onChange={(e) => onIncludeReplacedCardsChange(e.target.checked)}
+              checked={includeRetiredCards}
+              onChange={(e) => onIncludeRetiredCardsChange(e.target.checked)}
             />
-            <span>Include replaced cards</span>
+            <span>Include retired cards</span>
           </label>
         </div>
       )}
