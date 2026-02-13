@@ -24,8 +24,17 @@ export function ThemeSelector({ value, onChange }: ThemeSelectorProps) {
     function handleClickOutside(e: MouseEvent) {
       if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
     }
-    if (open) document.addEventListener('click', handleClickOutside)
-    return () => document.removeEventListener('click', handleClickOutside)
+    function handleEscape(e: KeyboardEvent) {
+      if (e.key === 'Escape') setOpen(false)
+    }
+    if (open) {
+      document.addEventListener('click', handleClickOutside)
+      document.addEventListener('keydown', handleEscape)
+    }
+    return () => {
+      document.removeEventListener('click', handleClickOutside)
+      document.removeEventListener('keydown', handleEscape)
+    }
   }, [open])
 
   const currentLabel = THEME_OPTIONS.find((o) => o.id === value)?.label ?? value
@@ -37,13 +46,13 @@ export function ThemeSelector({ value, onChange }: ThemeSelectorProps) {
         className="theme-selector__trigger"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        aria-haspopup="listbox"
+        aria-haspopup="true"
         aria-label="Select theme"
       >
         {currentLabel} ▾
       </button>
       {open && (
-        <div className="theme-selector__dropdown" role="listbox">
+        <div className="theme-selector__dropdown" role="group" aria-label="Theme options">
           {THEME_OPTIONS.map((opt) => (
             <button
               key={opt.id}

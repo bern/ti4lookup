@@ -95,7 +95,7 @@ export function SearchView({
           onCommit={commitRecent}
         />
       </div>
-      <main className="search-view__main">
+      <main id="main-content" className="search-view__main">
         {showRecent && (
           <section className="recent-searches" aria-label="Recent searches">
             <h2 className="section-title">Recent searches</h2>

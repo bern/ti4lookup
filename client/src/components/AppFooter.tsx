@@ -68,13 +68,13 @@ export function AppFooter({ theme, onThemeChange }: AppFooterProps) {
       </p>
       <p className="app-footer__text">
         Want to play with the data?{' '}
-        <a
-          href="#"
-          className="app-footer__link"
+        <button
+          type="button"
+          className="app-footer__link app-footer__link--btn"
           onClick={handleDownloadZip}
         >
           Click to download
-        </a>
+        </button>
       </p>
     </footer>
   )

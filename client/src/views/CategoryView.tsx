@@ -133,7 +133,7 @@ export function CategoryView({ cards, category, onBack }: CategoryViewProps) {
           aria-label={`Search ${CATEGORY_LABELS[category].toLowerCase()}`}
         />
       </div>
-      <main className="category-view__main">
+      <main id="main-content" className="category-view__main">
         {publicByStage ? (
           <>
             <h2 className="section-title">{CATEGORY_LABELS[category]}</h2>

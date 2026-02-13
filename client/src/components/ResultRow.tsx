@@ -151,11 +151,11 @@ function CopyButton({ card }: { card: CardItem }) {
       className="result-row__copy"
       onClick={handleClick}
       title="Copy"
-      aria-label="Copy"
+      aria-label={`Copy ${card.name} to clipboard`}
     >
-      <img src={COPY_ICON_SRC} alt="" className="result-row__copy-icon result-row__copy-icon--light" />
-      <img src={COPY_ICON_DARK_SRC} alt="" className="result-row__copy-icon result-row__copy-icon--dark" />
-      {copied && <span className="result-row__copy-feedback">Copied!</span>}
+      <img src={COPY_ICON_SRC} alt="" className="result-row__copy-icon result-row__copy-icon--light" aria-hidden />
+      <img src={COPY_ICON_DARK_SRC} alt="" className="result-row__copy-icon result-row__copy-icon--dark" aria-hidden />
+      {copied && <span className="result-row__copy-feedback" role="status" aria-live="polite">Copied!</span>}
     </button>
   )
 }
@@ -500,7 +500,7 @@ export function ResultRow({ card }: ResultRowProps) {
             <p className="result-row__label">Synergy</p>
             <span className="result-row__prerequisites">
               {synergyIds.map((id, i) => (
-                <img key={`${id}-${i}`} src={`${IMAGES_BASE}/${id}.png`} alt="" className="result-row__icon" />
+                <img key={`${id}-${i}`} src={`${IMAGES_BASE}/${id}.png`} alt={`${id} technology`} className="result-row__icon" />
               ))}
             </span>
           </>
@@ -528,7 +528,7 @@ export function ResultRow({ card }: ResultRowProps) {
             <p className="result-row__label">Prerequisites:</p>
             <span className="result-row__prerequisites">
               {prereqIds.map((id, i) => (
-                <img key={`${id}-${i}`} src={`${IMAGES_BASE}/${id}.png`} alt="" className="result-row__icon" />
+                <img key={`${id}-${i}`} src={`${IMAGES_BASE}/${id}.png`} alt={`${id} technology prerequisite`} className="result-row__icon" />
               ))}
             </span>
           </>

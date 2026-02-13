@@ -138,8 +138,17 @@ export function ExpansionSelector({
     function handleClickOutside(e: MouseEvent) {
       if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
     }
-    if (open) document.addEventListener('click', handleClickOutside)
-    return () => document.removeEventListener('click', handleClickOutside)
+    function handleEscape(e: KeyboardEvent) {
+      if (e.key === 'Escape') setOpen(false)
+    }
+    if (open) {
+      document.addEventListener('click', handleClickOutside)
+      document.addEventListener('keydown', handleEscape)
+    }
+    return () => {
+      document.removeEventListener('click', handleClickOutside)
+      document.removeEventListener('keydown', handleEscape)
+    }
   }, [open])
 
   const toggle = (id: ExpansionId) => {
@@ -174,13 +183,13 @@ export function ExpansionSelector({
         className="expansion-selector__trigger"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        aria-haspopup="listbox"
+        aria-haspopup="true"
         aria-label="Select expansions"
       >
         {label} ▾
       </button>
       {open && (
-        <div className="expansion-selector__dropdown" role="listbox">
+        <div className="expansion-selector__dropdown" role="group" aria-label="Expansion options">
           {EXPANSION_OPTIONS.map((opt) => (
             <label key={opt.id} className="expansion-selector__option">
               <input

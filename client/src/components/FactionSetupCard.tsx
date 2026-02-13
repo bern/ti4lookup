@@ -43,11 +43,11 @@ function FactionCopyButton({ faction }: { faction: Faction }) {
       className="result-row__copy"
       onClick={handleClick}
       title="Copy"
-      aria-label="Copy"
+      aria-label={`Copy ${faction.name} setup to clipboard`}
     >
-      <img src={COPY_ICON_SRC} alt="" className="result-row__copy-icon result-row__copy-icon--light" />
-      <img src={COPY_ICON_DARK_SRC} alt="" className="result-row__copy-icon result-row__copy-icon--dark" />
-      {copied && <span className="result-row__copy-feedback">Copied!</span>}
+      <img src={COPY_ICON_SRC} alt="" className="result-row__copy-icon result-row__copy-icon--light" aria-hidden />
+      <img src={COPY_ICON_DARK_SRC} alt="" className="result-row__copy-icon result-row__copy-icon--dark" aria-hidden />
+      {copied && <span className="result-row__copy-feedback" role="status" aria-live="polite">Copied!</span>}
     </button>
   )
 }

@@ -201,14 +201,20 @@ export function App() {
   if (error) {
     return (
       <div className="app">
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
         <header className="app-header">
-          <button
-            type="button"
-            className="app-title app-title--btn"
-            onClick={() => setLocation(HOME_STATE)}
-          >
-            TI4 Lookup
-          </button>
+          <h1 className="app-title-wrap">
+            <button
+              type="button"
+              className="app-title app-title--btn"
+              onClick={() => setLocation(HOME_STATE)}
+              aria-label="TI4 Lookup home"
+            >
+              TI4 Lookup
+            </button>
+          </h1>
           <div className="app-header__actions">
             <ExpansionSelector
               selected={expansions}
@@ -218,8 +224,8 @@ export function App() {
             />
           </div>
         </header>
-        <main className="app-main">
-          <p className="results-message results-message--error">{error}</p>
+        <main id="main-content" className="app-main">
+          <p className="results-message results-message--error" role="alert">{error}</p>
         </main>
         <AppFooter theme={theme} onThemeChange={setTheme} />
       </div>
@@ -229,14 +235,20 @@ export function App() {
   if (loading) {
     return (
       <div className="app">
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
         <header className="app-header">
-          <button
-            type="button"
-            className="app-title app-title--btn"
-            onClick={() => setLocation(HOME_STATE)}
-          >
-            TI4 Lookup
-          </button>
+          <h1 className="app-title-wrap">
+            <button
+              type="button"
+              className="app-title app-title--btn"
+              onClick={() => setLocation(HOME_STATE)}
+              aria-label="TI4 Lookup home"
+            >
+              TI4 Lookup
+            </button>
+          </h1>
           <div className="app-header__actions">
             <ExpansionSelector
               selected={expansions}
@@ -246,7 +258,7 @@ export function App() {
             />
           </div>
         </header>
-        <main className="app-main">
+        <main id="main-content" className="app-main">
           <p className="results-message">Loading…</p>
         </main>
         <AppFooter theme={theme} onThemeChange={setTheme} />
@@ -256,19 +268,24 @@ export function App() {
 
   return (
     <div className="app">
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
       <header className="app-header">
-        <button
-          type="button"
-          className="app-title app-title--btn"
-          onClick={() => {
-            if (location.view !== 'home') {
-              window.history.back()
-            }
-          }}
-          aria-label="Back to home"
-        >
-          TI4 Lookup
-        </button>
+        <h1 className="app-title-wrap">
+          <button
+            type="button"
+            className="app-title app-title--btn"
+            onClick={() => {
+              if (location.view !== 'home') {
+                window.history.back()
+              }
+            }}
+            aria-label={location.view === 'home' ? 'TI4 Lookup home' : 'Back to home'}
+          >
+            TI4 Lookup
+          </button>
+        </h1>
         <div className="app-header__actions">
           <ExpansionSelector
               selected={expansions}
@@ -279,7 +296,7 @@ export function App() {
         </div>
       </header>
       {location.view === 'home' && (
-        <main className="app-main home-main">
+        <main id="main-content" className="app-main home-main">
           <HomeView
             factions={visibleFactions}
             onOpenSearch={() => navigate({ view: 'search', factionFilter: null })}
