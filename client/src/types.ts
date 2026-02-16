@@ -35,6 +35,7 @@ export interface Agenda {
   version: string
   removedInPok: string
   excludeAfter?: string
+  excludeIn?: string
 }
 
 /**

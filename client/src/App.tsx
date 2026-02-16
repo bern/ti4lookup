@@ -10,7 +10,7 @@ import {
   expansionIdsToVersions,
   cardVersionMatchesExpansions,
   isExcludedByExcludeAfter,
-  isExcludedByRemovedInPok,
+  isExcludedByExcludeIn,
   filterToLatestOmega,
 } from './components/ExpansionSelector'
 import { AppFooter } from './components/AppFooter'
@@ -127,7 +127,7 @@ export function App() {
       result = result.filter((card) => {
         const excludeAfter = 'excludeAfter' in card ? card.excludeAfter : undefined
         if (excludeAfter && isExcludedByExcludeAfter(excludeAfter, expansions)) return false
-        if (card.type === 'agenda' && 'removedInPok' in card && isExcludedByRemovedInPok(card.removedInPok, expansions)) return false
+        if (card.type === 'agenda' && 'excludeIn' in card && isExcludedByExcludeIn(card.excludeIn, expansions)) return false
         return true
       })
       result = filterToLatestOmega(result)

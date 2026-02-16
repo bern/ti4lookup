@@ -76,6 +76,7 @@ export async function loadAgendas(): Promise<Agenda[]> {
     version: row.version ?? '',
     removedInPok: row['removed in pok'] ?? '',
     excludeAfter: (row['exclude after'] ?? '').trim() || undefined,
+    excludeIn: (row['exclude in'] ?? '').trim() || undefined,
   }))
 }
 
