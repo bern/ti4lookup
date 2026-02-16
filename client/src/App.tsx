@@ -140,6 +140,19 @@ export function App() {
     setLocation(next)
   }, [])
 
+  const scrollToTop = useCallback(() => {
+    window.scrollTo(0, 0)
+    const main = document.querySelector('.search-view__main, .category-view__main, .app-main')
+    if (main) main.scrollTop = 0
+  }, [])
+
+  const goHome = useCallback(() => {
+    if (location.view !== 'home') {
+      navigate(HOME_STATE)
+    }
+    scrollToTop()
+  }, [navigate, location.view, scrollToTop])
+
   useEffect(() => {
     const state = applyLocationState(window.history.state as LocationState | null)
     window.history.replaceState(state, '', window.location.href)
@@ -210,7 +223,7 @@ export function App() {
             <button
               type="button"
               className="app-title app-title--btn"
-              onClick={() => setLocation(HOME_STATE)}
+              onClick={goHome}
               aria-label="TI4 Lookup home"
             >
               TI4 Lookup
@@ -244,7 +257,7 @@ export function App() {
             <button
               type="button"
               className="app-title app-title--btn"
-              onClick={() => setLocation(HOME_STATE)}
+              onClick={goHome}
               aria-label="TI4 Lookup home"
             >
               TI4 Lookup
@@ -277,11 +290,7 @@ export function App() {
           <button
             type="button"
             className="app-title app-title--btn"
-            onClick={() => {
-              if (location.view !== 'home') {
-                window.history.back()
-              }
-            }}
+            onClick={goHome}
             aria-label={location.view === 'home' ? 'TI4 Lookup home' : 'Back to home'}
           >
             TI4 Lookup
