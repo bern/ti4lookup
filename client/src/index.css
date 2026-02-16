@@ -561,6 +561,11 @@ body {
   cursor: pointer;
 }
 
+.faction-portraits-toggle input:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
 .faction-portraits-toggle:hover {
   color: var(--color-text);
 }
