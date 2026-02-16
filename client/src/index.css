@@ -533,14 +533,50 @@ body {
   margin-top: 0.5rem;
 }
 
-.home-factions .section-title {
+.home-factions__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
   margin-bottom: 1rem;
+}
+
+.home-factions__header .section-title {
+  margin: 0;
+}
+
+.faction-portraits-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  user-select: none;
+}
+
+.faction-portraits-toggle input {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+}
+
+.faction-portraits-toggle:hover {
+  color: var(--color-text);
 }
 
 .faction-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
   gap: 1rem;
+}
+
+.faction-grid__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
 }
 
 .faction-grid__btn {
@@ -553,7 +589,9 @@ body {
   border: 2px solid var(--color-border);
   border-radius: 10px;
   cursor: pointer;
-  transition: border-color 0.15s, background-color 0.15s, transform 0.1s;
+  transition: border-color 0.15s, background-color 0.15s, transform 0.1s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .faction-grid__btn:hover {
@@ -564,6 +602,51 @@ body {
 .faction-grid__btn:active {
   transform: scale(0.98);
   background: var(--color-bg-btn);
+}
+
+.faction-grid__btn--symbol,
+.faction-grid__btn--portrait {
+  width: 100%;
+  min-height: 4rem;
+}
+
+.faction-grid__btn--symbol {
+  aspect-ratio: 1 / 1;
+  justify-content: flex-start;
+}
+
+@media (max-width: 480px) {
+  .faction-grid__btn--symbol {
+    aspect-ratio: 3 / 2;
+  }
+}
+
+.faction-grid__btn--portrait {
+  aspect-ratio: 3 / 4;
+  padding: 0;
+}
+
+.faction-grid__symbol-area {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.faction-grid__img {
+  width: 4rem;
+  height: 4rem;
+  object-fit: contain;
+}
+
+.faction-grid__portrait {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .faction-grid__label {
@@ -577,13 +660,9 @@ body {
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
-.faction-grid__img {
-  width: 4rem;
-  height: 4rem;
-  object-fit: contain;
-}
 
 /* Search / Category view bar (back + search) - sticky to bottom of header so it never scrolls out of view */
 .view-bar {

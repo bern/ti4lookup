@@ -1,4 +1,8 @@
+import { useState, useEffect } from 'react'
 import type { Faction } from '../data/loadCards'
+import { FactionGridItem } from '../components/FactionGridItem'
+
+const FACTION_PORTRAITS_STORAGE_KEY = 'ti4lookup-faction-portraits'
 
 export type View = 'home' | 'search' | 'action' | 'agenda' | 'strategy' | 'public_objective' | 'secret_objective' | 'legendary_planet' | 'exploration' | 'relic' | 'faction_ability' | 'faction_leader' | 'promissory_note' | 'breakthrough' | 'technology' | 'galactic_event' | 'unit'
 
@@ -10,6 +14,22 @@ interface HomeViewProps {
 }
 
 export function HomeView({ factions, onOpenSearch, onOpenFaction, onOpenCategory }: HomeViewProps) {
+  const [factionPortraits, setFactionPortraits] = useState(() => {
+    try {
+      const s = localStorage.getItem(FACTION_PORTRAITS_STORAGE_KEY)
+      return s === 'true'
+    } catch {
+      return false
+    }
+  })
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(FACTION_PORTRAITS_STORAGE_KEY, String(factionPortraits))
+    } catch {
+      /* ignore */
+    }
+  }, [factionPortraits])
   return (
     <div className="home-view">
       <button
@@ -128,23 +148,26 @@ export function HomeView({ factions, onOpenSearch, onOpenFaction, onOpenCategory
         </button>
       </nav>
       <section className="home-factions" aria-label="Browse by faction">
-        <h2 className="section-title">Browse by faction</h2>
+        <div className="home-factions__header">
+          <h2 className="section-title">Browse by faction</h2>
+          <label className="faction-portraits-toggle">
+            <input
+              type="checkbox"
+              checked={factionPortraits}
+              onChange={(e) => setFactionPortraits(e.target.checked)}
+              aria-label="Show faction portraits"
+            />
+            <span>Show Portraits</span>
+          </label>
+        </div>
         <div className="faction-grid">
           {factions.map((faction) => (
-            <button
+            <FactionGridItem
               key={faction.id}
-              type="button"
-              className="faction-grid__btn"
-              onClick={() => onOpenFaction(faction.id)}
-              aria-label={`View cards for ${faction.name}`}
-            >
-              <span className="faction-grid__label">{faction.name}</span>
-              <img
-                src={`/images/${faction.id}.png`}
-                alt={`${faction.name} logo`}
-                className="faction-grid__img"
-              />
-            </button>
+              faction={faction}
+              portraitMode={factionPortraits}
+              onOpenFaction={onOpenFaction}
+            />
           ))}
         </div>
       </section>
