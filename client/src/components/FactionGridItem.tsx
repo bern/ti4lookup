@@ -29,6 +29,7 @@ export function FactionGridItem({ faction, portraitMode, onOpenFaction }: Factio
           />
         ) : (
           <>
+            <span className="faction-grid__label">{faction.name}</span>
             <span className="faction-grid__symbol-area">
               <img
                 src={imgSrc}
@@ -36,7 +37,6 @@ export function FactionGridItem({ faction, portraitMode, onOpenFaction }: Factio
                 className="faction-grid__img"
               />
             </span>
-            <span className="faction-grid__label">{faction.name}</span>
           </>
         )}
       </button>

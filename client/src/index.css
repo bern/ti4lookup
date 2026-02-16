@@ -611,14 +611,8 @@ body {
 }
 
 .faction-grid__btn--symbol {
-  aspect-ratio: 1 / 1;
   justify-content: flex-start;
-}
-
-@media (max-width: 480px) {
-  .faction-grid__btn--symbol {
-    aspect-ratio: 3 / 2;
-  }
+  gap: 0.75rem;
 }
 
 .faction-grid__btn--portrait {
@@ -627,12 +621,30 @@ body {
 }
 
 .faction-grid__symbol-area {
-  flex: 1;
-  min-height: 0;
+  height: 4rem;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
+}
+
+.faction-grid__btn--symbol .faction-grid__label {
+  align-content: center;
+  min-height: 3.6em;
+  -webkit-line-clamp: 3;
+}
+
+@media (max-width: 480px) {
+  .faction-grid__btn--symbol .faction-grid__label {
+    min-height: 2.4em;
+    -webkit-line-clamp: 2;
+  }
+}
+
+@media (max-width: 480px) {
+  .faction-grid__btn--symbol{
+    padding: 0.6rem;
+  }
 }
 
 .faction-grid__img {
@@ -661,6 +673,12 @@ body {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+}
+
+@media (max-width: 480px) {
+  .faction-grid__label--below {
+    -webkit-line-clamp: 3;
+  }
 }
 
 
