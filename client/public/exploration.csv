@@ -30,11 +30,11 @@ Lost Crew,frontier,2,Draw 2 Action Cards .,pok
 Merchant Station,frontier,2,"You may replenish your commodities , or you may convert your commodities to trade goods.",pok
 Mirage,frontier,1,"Place the Mirage planet token in this system. Gain the Mirage planet card and ready it. Then, purge this card.",pok
 Unknown Relic Fragment,frontier,3,This card counts as a relic fragment of any type.,pok
-Dead World,frontier,1,Draw 1 relic.,pok
-Entropic Field,frontier,1,Gain 1 command token and 2 trade goods.,pok
-Keleres Ship,frontier,2,Gain 2 command tokens.,pok
-Major Entropic Field,frontier,1,Gain 1 command token and 3 trade goods.,pok
-Minor Entropic Field,frontier,1,Gain 1 command token and 1 trade good.,pok
+Dead World,frontier,1,Draw 1 relic.,codex 3
+Entropic Field,frontier,1,Gain 1 command token and 2 trade goods.,codex 3
+Keleres Ship,frontier,2,Gain 2 command tokens.,codex 3
+Major Entropic Field,frontier,1,Gain 1 command token and 3 trade goods.,codex 3
+Minor Entropic Field,frontier,1,Gain 1 command token and 1 trade good.,codex 3
 Dominus Orb,relic,1,"Before you move units during a tactical action , you may purge this card to move and transport units that are in systems that contain 1 of your command tokens .",pok
 Maw of Worlds,relic,1,"At the start of the agenda phase , you may purge this card and exhaust all of your planets to gain any 1 technology .",pok
 Scepter of Emelpar,relic,1,"When you would spend a token from your strategy pool , you may exhaust this card to spend a token from your reinforcements instead.",pok
