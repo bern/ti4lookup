@@ -85,16 +85,22 @@ export function HomeView({ factions, cards, onOpenSearch, onOpenFaction, onOpenC
         Search all…
       </button>
       <nav className="home-categories" aria-label="Categories">
-        {CATEGORY_BUTTONS.filter(({ view }) => categoryHasCards(view)).map(({ view, label }) => (
-          <button
-            key={view}
-            type="button"
-            className="home-category-btn"
-            onClick={() => onOpenCategory(view)}
-          >
-            {label}
-          </button>
-        ))}
+        {[...CATEGORY_BUTTONS]
+          .sort((a, b) => (categoryHasCards(a.view) === categoryHasCards(b.view) ? 0 : categoryHasCards(a.view) ? -1 : 1))
+          .map(({ view, label }) => {
+            const hasCards = categoryHasCards(view)
+            return (
+              <button
+                key={view}
+                type="button"
+                className="home-category-btn"
+                disabled={!hasCards}
+                onClick={() => onOpenCategory(view)}
+              >
+                {label}
+              </button>
+            )
+          })}
       </nav>
       <section className="home-factions" aria-label="Browse by faction">
         <div className="home-factions__header">

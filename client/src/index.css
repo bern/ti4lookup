@@ -497,9 +497,14 @@ body {
   }
 }
 
-.home-category-btn:hover {
+.home-category-btn:hover:not(:disabled) {
   border-color: var(--color-text-subtle);
   background: var(--color-bg-btn-hover);
+}
+
+.home-category-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* Faction grid */
