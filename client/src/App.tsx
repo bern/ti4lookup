@@ -80,9 +80,10 @@ export function App() {
   })
   const [expansions, setExpansions] = useState<Set<ExpansionId>>(() => {
     try {
-      const stored = parseStoredExpansions(localStorage.getItem(EXPANSIONS_STORAGE_KEY))
-      if (stored.size > 0) return stored
-      return new Set(['pok', 'codex1', 'codex2', 'codex3', 'codex4', 'thundersEdge'])
+      const s = localStorage.getItem(EXPANSIONS_STORAGE_KEY)
+      if (s === null) return new Set(['pok', 'codex1', 'codex2', 'codex3', 'codex4', 'thundersEdge'])
+      const stored = parseStoredExpansions(s)
+      return stored
     } catch {
       return new Set(['pok', 'codex1', 'codex2', 'codex3', 'codex4', 'thundersEdge'])
     }
