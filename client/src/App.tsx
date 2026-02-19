@@ -142,6 +142,35 @@ export function App() {
       })
       result = filterToLatestOmega(result)
     }
+    if (!expansions.has('pok')) {
+      result = result.filter((card) => {
+        if (card.type === 'faction_leader') return false
+        if (card.type === 'exploration' && (card.explorationType ?? '').toLowerCase() !== 'relic') return false
+        if (card.type === 'unit' && (card.unit ?? '').toLowerCase() === 'mech') return false
+        return true
+      })
+    }
+    if (!expansions.has('thundersEdge')) {
+      result = result.filter((card) => {
+        if (card.type === 'breakthrough') return false
+        if (card.type === 'galactic_event') return false
+        return true
+      })
+    }
+    const hasRelicExpansion = expansions.has('pok') || expansions.has('codex2') || expansions.has('codex4') || expansions.has('thundersEdge')
+    if (!hasRelicExpansion) {
+      result = result.filter((card) => {
+        if (card.type === 'exploration' && (card.explorationType ?? '').toLowerCase() === 'relic') return false
+        return true
+      })
+    }
+    const hasLegendaryPlanetExpansion = expansions.has('pok') || expansions.has('codex3') || expansions.has('thundersEdge')
+    if (!hasLegendaryPlanetExpansion) {
+      result = result.filter((card) => {
+        if (card.type === 'legendary_planet') return false
+        return true
+      })
+    }
     return result
   }, [cards, expansions, location.factionFilter, includeRetiredCards])
 
@@ -342,6 +371,7 @@ export function App() {
         <main id="main-content" className="app-main home-main">
           <HomeView
             factions={visibleFactions}
+            cards={filteredCards}
             onOpenSearch={() => navigate({ view: 'search', factionFilter: null })}
             onOpenFaction={(factionId) => navigate({ view: 'search', factionFilter: factionId })}
             onOpenCategory={(v) => navigate({ view: v, factionFilter: null })}
