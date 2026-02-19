@@ -167,12 +167,13 @@ export interface Technology {
 }
 
 /**
- * Galactic event from CSV. Columns: name, effect, version.
+ * Galactic event from CSV. Columns: name, effect, version, requires pok.
  */
 export interface GalacticEvent {
   name: string
   effect: string
   version: string
+  requiresPok?: boolean
 }
 
 /**

@@ -285,13 +285,14 @@ function parseFactionIds(s: string): string[] {
 }
 
 /**
- * Fetches and parses galactic events CSV. Columns: name, effect, version.
+ * Fetches and parses galactic events CSV. Columns: name, effect, version, requires pok.
  */
 export async function loadGalacticEvents(): Promise<GalacticEvent[]> {
   return parseCsv(GALACTIC_EVENTS_CSV_URL, (row) => ({
     name: row.name ?? '',
     effect: row.effect ?? '',
     version: row.version ?? '',
+    requiresPok: (row['requires pok'] ?? '').toLowerCase() === 'true',
   }))
 }
 

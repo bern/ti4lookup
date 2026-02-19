@@ -157,6 +157,12 @@ export function App() {
         return true
       })
     }
+    if (!expansions.has('pok')) {
+      result = result.filter((card) => {
+        if (card.type === 'galactic_event' && 'requiresPok' in card && card.requiresPok) return false
+        return true
+      })
+    }
     const hasRelicExpansion = expansions.has('pok') || expansions.has('codex2') || expansions.has('codex4') || expansions.has('thundersEdge')
     if (!hasRelicExpansion) {
       result = result.filter((card) => {
