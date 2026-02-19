@@ -471,41 +471,14 @@ body {
 }
 
 .home-categories {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 0.75rem;
 }
 
-/* Center last button when it's alone on the row (17 items: last row has 2) */
-.home-category-btn:last-child:nth-child(3n+1) {
-  grid-column: 2;
-}
-
-/* Center last two buttons when they share the final row */
-.home-category-btn:nth-last-child(2):nth-child(3n+1) {
-  grid-column: 2;
-}
-.home-category-btn:last-child:nth-child(3n+2) {
-  grid-column: 3;
-}
-
-@media (max-width: 480px) {
-  .home-categories {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  /* Reset 3-col rules; center last button when alone (2-col grid) */
-  .home-category-btn:last-child:nth-child(3n+1),
-  .home-category-btn:nth-last-child(2):nth-child(3n+1),
-  .home-category-btn:last-child:nth-child(3n+2) {
-    grid-column: auto;
-  }
-  .home-category-btn:last-child:nth-child(2n+1) {
-    grid-column: 1 / -1;
-    justify-self: center;
-  }
-}
-
 .home-category-btn {
+  flex: 0 0 calc((100% - 2 * 0.75rem) / 3);
   padding: 0.85rem 1rem;
   font-size: 1rem;
   font-weight: 500;
@@ -519,6 +492,7 @@ body {
 
 @media (max-width: 480px) {
   .home-category-btn {
+    flex: 0 0 calc((100% - 0.75rem) / 2);
     padding: 0.65rem 0.5rem;
   }
 }
