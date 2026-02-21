@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect, useMemo } from 'react'
 import { loadAllCards, loadFactions, type Faction } from './data/loadCards'
-import { HomeView, type View } from './views/HomeView'
+import { HomeView } from './views/HomeView'
 import { SearchView } from './views/SearchView'
 import { CategoryView } from './views/CategoryView'
 import type { ThemeId } from './components/ThemeSelector'
@@ -10,11 +10,12 @@ import {
   expansionIdsToVersions,
   cardVersionMatchesExpansions,
   isExcludedByExcludeAfter,
-  isExcludedByRemovedInPok,
+  isExcludedByExcludeIn,
   filterToLatestOmega,
 } from './components/ExpansionSelector'
 import { AppFooter } from './components/AppFooter'
 import type { CardItem } from './types'
+import { pathToLocation, locationToPath, type LocationState } from './routes'
 
 const RECENT_MAX = 10
 const THEME_STORAGE_KEY = 'ti4lookup-theme'
@@ -40,17 +41,25 @@ function addRecent(prev: string[], query: string): string[] {
   return [trimmed, ...rest].slice(0, RECENT_MAX)
 }
 
-export type LocationState = { view: View; factionFilter: string | null }
-
 const HOME_STATE: LocationState = { view: 'home', factionFilter: null }
+const DEFAULT_TITLE = 'TI4 Lookup: Search for anything in Twilight Imperium 4'
 
-function applyLocationState(state: LocationState | null): LocationState {
-  if (state && typeof state.view === 'string') {
-    const view = state.view as View
-    const factionFilter = state.factionFilter ?? null
-    return { view, factionFilter }
-  }
-  return HOME_STATE
+const CATEGORY_LABELS: Record<Exclude<LocationState['view'], 'home' | 'search'>, string> = {
+  action: 'Action Cards',
+  agenda: 'Agendas',
+  strategy: 'Strategy Cards',
+  public_objective: 'Public Objectives',
+  secret_objective: 'Secret Objectives',
+  legendary_planet: 'Legendary Planets',
+  exploration: 'Exploration',
+  relic: 'Relics',
+  faction_ability: 'Faction Abilities',
+  faction_leader: 'Faction Leaders',
+  promissory_note: 'Promissory Notes',
+  breakthrough: 'Breakthroughs',
+  technology: 'Technologies',
+  galactic_event: 'Galactic Events',
+  unit: 'Units',
 }
 
 export function App() {
@@ -71,6 +80,10 @@ export function App() {
   })
   const [expansions, setExpansions] = useState<Set<ExpansionId>>(() => {
     try {
+      const s = localStorage.getItem(EXPANSIONS_STORAGE_KEY)
+      if (s === null) return new Set(['pok', 'codex1', 'codex2', 'codex3', 'codex4', 'thundersEdge'])
+      const stored = parseStoredExpansions(s)
+      return stored
       const stored = parseStoredExpansions(localStorage.getItem(EXPANSIONS_STORAGE_KEY))
       if (stored.size > 0) return stored
       return new Set(['baseGame', 'pok', 'codex1', 'codex2', 'codex3', 'codex4', 'thundersEdge'])
@@ -127,28 +140,83 @@ export function App() {
       result = result.filter((card) => {
         const excludeAfter = 'excludeAfter' in card ? card.excludeAfter : undefined
         if (excludeAfter && isExcludedByExcludeAfter(excludeAfter, expansions)) return false
-        if (card.type === 'agenda' && 'removedInPok' in card && isExcludedByRemovedInPok(card.removedInPok, expansions)) return false
+        if (card.type === 'agenda' && 'excludeIn' in card && isExcludedByExcludeIn(card.excludeIn, expansions)) return false
         return true
       })
       result = filterToLatestOmega(result)
+    }
+    if (!expansions.has('pok')) {
+      result = result.filter((card) => {
+        if (card.type === 'faction_leader') return false
+        if (card.type === 'exploration' && (card.explorationType ?? '').toLowerCase() !== 'relic') return false
+        if (card.type === 'unit' && (card.unit ?? '').toLowerCase() === 'mech') return false
+        return true
+      })
+    }
+    if (!expansions.has('thundersEdge')) {
+      result = result.filter((card) => {
+        if (card.type === 'breakthrough') return false
+        if (card.type === 'galactic_event') return false
+        return true
+      })
+    }
+    if (!expansions.has('pok')) {
+      result = result.filter((card) => {
+        if (card.type === 'galactic_event' && 'requiresPok' in card && card.requiresPok) return false
+        return true
+      })
+    }
+    const hasRelicExpansion = expansions.has('pok') || expansions.has('codex2') || expansions.has('codex4') || expansions.has('thundersEdge')
+    if (!hasRelicExpansion) {
+      result = result.filter((card) => {
+        if (card.type === 'exploration' && (card.explorationType ?? '').toLowerCase() === 'relic') return false
+        return true
+      })
+    }
+    const hasLegendaryPlanetExpansion = expansions.has('pok') || expansions.has('codex3') || expansions.has('thundersEdge')
+    if (!hasLegendaryPlanetExpansion) {
+      result = result.filter((card) => {
+        if (card.type === 'legendary_planet') return false
+        return true
+      })
     }
     return result
   }, [cards, expansions, location.factionFilter, includeRetiredCards])
 
   const navigate = useCallback((next: LocationState) => {
-    window.history.pushState(next, '', window.location.href)
+    const path = locationToPath(next)
+    window.history.pushState(next, '', path)
     setLocation(next)
   }, [])
 
+  const scrollToTop = useCallback(() => {
+    window.scrollTo(0, 0)
+    const main = document.querySelector('.search-view__main, .category-view__main, .app-main')
+    if (main) main.scrollTop = 0
+  }, [])
+
+  const goHome = useCallback(() => {
+    if (location.view !== 'home') {
+      navigate(HOME_STATE)
+    }
+    scrollToTop()
+  }, [navigate, location.view, scrollToTop])
+
   useEffect(() => {
-    const state = applyLocationState(window.history.state as LocationState | null)
-    window.history.replaceState(state, '', window.location.href)
+    const state = pathToLocation(window.location.pathname)
+    if (state.view !== 'home') {
+      // Insert home into history so back from a direct deep link goes to root
+      window.history.replaceState(HOME_STATE, '', locationToPath(HOME_STATE))
+      window.history.pushState(state, '', locationToPath(state))
+    } else {
+      window.history.replaceState(state, '', locationToPath(state))
+    }
     setLocation(state)
   }, [])
 
   useEffect(() => {
-    const handlePopState = (e: PopStateEvent) => {
-      setLocation(applyLocationState(e.state as LocationState | null))
+    const handlePopState = () => {
+      setLocation(pathToLocation(window.location.pathname))
     }
     window.addEventListener('popstate', handlePopState)
     return () => window.removeEventListener('popstate', handlePopState)
@@ -199,6 +267,22 @@ export function App() {
     if (main) main.scrollTop = 0
   }, [location.view])
 
+  useEffect(() => {
+    if (location.view === 'home') return
+    let label: string
+    if (location.view === 'search' && location.factionFilter) {
+      label = factions.find((f) => f.id === location.factionFilter)?.name ?? location.factionFilter
+    } else if (location.view === 'search') {
+      label = 'Search'
+    } else {
+      label = CATEGORY_LABELS[location.view]
+    }
+    document.title = `${label} - TI4 Lookup`
+    return () => {
+      document.title = DEFAULT_TITLE
+    }
+  }, [location.view, location.factionFilter, factions])
+
   if (error) {
     return (
       <div className="app">
@@ -210,7 +294,7 @@ export function App() {
             <button
               type="button"
               className="app-title app-title--btn"
-              onClick={() => setLocation(HOME_STATE)}
+              onClick={goHome}
               aria-label="TI4 Lookup home"
             >
               TI4 Lookup
@@ -244,7 +328,7 @@ export function App() {
             <button
               type="button"
               className="app-title app-title--btn"
-              onClick={() => setLocation(HOME_STATE)}
+              onClick={goHome}
               aria-label="TI4 Lookup home"
             >
               TI4 Lookup
@@ -277,11 +361,7 @@ export function App() {
           <button
             type="button"
             className="app-title app-title--btn"
-            onClick={() => {
-              if (location.view !== 'home') {
-                window.history.back()
-              }
-            }}
+            onClick={goHome}
             aria-label={location.view === 'home' ? 'TI4 Lookup home' : 'Back to home'}
           >
             TI4 Lookup
@@ -300,6 +380,7 @@ export function App() {
         <main id="main-content" className="app-main home-main">
           <HomeView
             factions={visibleFactions}
+            cards={filteredCards}
             onOpenSearch={() => navigate({ view: 'search', factionFilter: null })}
             onOpenFaction={(factionId) => navigate({ view: 'search', factionFilter: factionId })}
             onOpenCategory={(v) => navigate({ view: v, factionFilter: null })}

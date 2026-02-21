@@ -77,13 +77,28 @@ export function isExcludedByExcludeAfter(
   return idsAtOrAfter.some((id) => selectedExpansions.has(id))
 }
 
-/** Returns true if the card should be excluded based on "removed in pok" (agendas only). */
-export function isExcludedByRemovedInPok(
-  removedInPok: string,
+/** Maps "exclude in" CSV values (e.g. "pok") to ExpansionId. */
+const EXCLUDE_IN_TO_EXPANSION_ID: Record<string, ExpansionId> = {
+  pok: 'pok',
+  'codex 1': 'codex1',
+  'codex 2': 'codex2',
+  'codex 3': 'codex3',
+  'codex 4': 'codex4',
+  'thunders edge': 'thundersEdge',
+}
+
+/** Returns true if the card should be excluded based on "exclude in" (agendas only).
+ * Exclude only when the specific expansion is selected. If that expansion is unselected
+ * but later expansions are selected, the agenda is still included. */
+export function isExcludedByExcludeIn(
+  excludeIn: string | undefined,
   selectedExpansions: Set<ExpansionId>
 ): boolean {
-  if (removedInPok !== 'true') return false
-  return selectedExpansions.has('pok') || EXPANSION_ORDER.some((id) => selectedExpansions.has(id))
+  const val = (excludeIn ?? '').trim().toLowerCase()
+  if (!val) return false
+  const expansionId = EXCLUDE_IN_TO_EXPANSION_ID[val]
+  if (!expansionId) return false
+  return selectedExpansions.has(expansionId)
 }
 
 /** Count Ω characters in a string. */
