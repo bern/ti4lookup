@@ -461,6 +461,7 @@ export async function loadAllCards(): Promise<CardItem[]> {
       c.version,
     ].filter(Boolean).join(' '),
   }))
+
   return [
     ...actionItems,
     ...strategyItems,

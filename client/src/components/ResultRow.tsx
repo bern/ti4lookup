@@ -269,6 +269,7 @@ const CARD_COLOR_BG: Record<string, string> = {
   'light blue': 'rgba(100, 160, 220, 0.1)',
   'dark blue': 'rgba(50, 80, 160, 0.1)',
   purple: 'rgba(120, 70, 160, 0.1)',
+  pink: 'rgba(220, 100, 160, 0.1)',
 }
 
 /** Technology color (blue, yellow, green, red) → rgba with low opacity. */

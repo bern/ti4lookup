@@ -1,23 +1,27 @@
 import { useState, useRef, useEffect } from 'react'
 
-export type ExpansionId = 'pok' | 'codex1' | 'codex2' | 'codex3' | 'codex4' | 'thundersEdge'
+export type ExpansionId = 'baseGame' | 'pok' | 'codex1' | 'codex2' | 'codex3' | 'codex4' | 'thundersEdge' | 'twilightsFall'
 
 export const EXPANSION_OPTIONS: { id: ExpansionId; label: string }[] = [
+  { id: 'baseGame', label: 'Base Game' },
   { id: 'pok', label: 'Prophecy of Kings' },
   { id: 'codex1', label: 'Codex 1' },
   { id: 'codex2', label: 'Codex 2' },
   { id: 'codex3', label: 'Codex 3' },
   { id: 'codex4', label: 'Codex 4' },
   { id: 'thundersEdge', label: "Thunder's Edge" },
+  { id: 'twilightsFall', label: "Twilight's Fall" },
 ]
 
 const EXPANSION_TO_VERSION: Record<ExpansionId, string> = {
+  baseGame: 'base game',
   pok: 'pok',
   codex1: 'codex 1',
   codex2: 'codex 2',
   codex3: 'codex 3',
   codex4: 'codex 4',
   thundersEdge: 'thunders edge',
+  twilightsFall: 'twilights fall',
 }
 
 export function expansionIdsToVersions(ids: Set<ExpansionId>): Set<string> {
@@ -34,18 +38,20 @@ export function cardVersionMatchesExpansions(
 ): boolean {
   const v = (cardVersion ?? '').trim().toLowerCase()
   if (!v) return true // no version = always include (e.g. faction abilities, breakthroughs)
-  if (v === 'base game') return true
+  //if (v === 'base game') return true
   return selectedVersions.has(v)
 }
 
 /** Expansion order for "exclude after" and "removed in pok" logic. */
 const EXPANSION_ORDER: ExpansionId[] = [
+  'baseGame',
   'pok',
   'codex1',
   'codex2',
   'codex3',
   'codex4',
   'thundersEdge',
+  'twilightsFall',
 ]
 
 /** Versions that map to expansion IDs (for exclude after comparison). */
@@ -160,15 +166,34 @@ export function ExpansionSelector({
         next.delete('codex2')
         next.delete('codex3')
         next.delete('codex4')
-      }
-    } else {
-      next.add(id)
-      if (id === 'thundersEdge') {
+      } else if (id === 'twilightsFall') {
+        next.add('thundersEdge')
+        next.add('pok')
+        next.add('baseGame')
         next.add('codex1')
         next.add('codex2')
         next.add('codex3')
         next.add('codex4')
       }
+    } else {
+      next.add(id)
+      if (id === 'pok') {
+        next.add('baseGame')
+      } else if (id === 'thundersEdge') {
+        next.add('baseGame')
+        next.add('codex1')
+        next.add('codex2')
+        next.add('codex3')
+        next.add('codex4')
+      } else if (id === 'twilightsFall') {
+        next.delete('thundersEdge')
+        next.delete('pok')
+        next.delete('baseGame')
+        next.delete('codex1')
+        next.delete('codex2')
+        next.delete('codex3')
+        next.delete('codex4')
+      } 
     }
     onChange(next)
   }

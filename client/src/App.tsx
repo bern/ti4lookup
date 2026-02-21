@@ -26,7 +26,7 @@ function parseStoredExpansions(s: string | null): Set<ExpansionId> {
   try {
     const parsed = JSON.parse(s) as unknown
     if (!Array.isArray(parsed)) return new Set()
-    const valid = ['pok', 'codex1', 'codex2', 'codex3', 'codex4', 'thundersEdge'] as const
+    const valid = ['baseGame', 'pok', 'codex1', 'codex2', 'codex3', 'codex4', 'thundersEdge', 'twilightsFall'] as const
     return new Set(parsed.filter((id): id is ExpansionId => valid.includes(id)))
   } catch {
     return new Set()
@@ -73,9 +73,9 @@ export function App() {
     try {
       const stored = parseStoredExpansions(localStorage.getItem(EXPANSIONS_STORAGE_KEY))
       if (stored.size > 0) return stored
-      return new Set(['pok', 'codex1', 'codex2', 'codex3', 'codex4', 'thundersEdge'])
+      return new Set(['baseGame', 'pok', 'codex1', 'codex2', 'codex3', 'codex4', 'thundersEdge'])
     } catch {
-      return new Set(['pok', 'codex1', 'codex2', 'codex3', 'codex4', 'thundersEdge'])
+      return new Set(['baseGame', 'pok', 'codex1', 'codex2', 'codex3', 'codex4', 'thundersEdge'])
     }
   })
   const [includeRetiredCards, setIncludeRetiredCards] = useState<boolean>(() => {
@@ -318,7 +318,7 @@ export function App() {
           onBack={() => window.history.back()}
         />
       )}
-      {(location.view === 'action' || location.view === 'agenda' || location.view === 'strategy' || location.view === 'public_objective' || location.view === 'secret_objective' || location.view === 'legendary_planet' || location.view === 'exploration' || location.view === 'relic' || location.view === 'faction_ability' || location.view === 'faction_leader' || location.view === 'promissory_note' || location.view === 'breakthrough' || location.view === 'technology' || location.view === 'galactic_event' || location.view === 'unit') && (
+      {(location.view === 'action' || location.view === 'agenda' || location.view === 'strategy' || location.view === 'public_objective' || location.view === 'secret_objective' || location.view === 'legendary_planet' || location.view === 'exploration' || location.view === 'relic' || location.view === 'faction_ability' || location.view === 'faction_leader' || location.view === 'promissory_note' || location.view === 'breakthrough' || location.view === 'technology' || location.view === 'galactic_event' || location.view === 'unit') && ( //location.view === 'genome'
         <CategoryView
           cards={filteredCards}
           category={location.view}
