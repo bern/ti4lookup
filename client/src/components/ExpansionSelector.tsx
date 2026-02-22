@@ -1,9 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
 
-export type ExpansionId = 'baseGame' | 'pok' | 'codex1' | 'codex2' | 'codex3' | 'codex4' | 'thundersEdge' | 'twilightsFall'
+export type ExpansionId = 'pok' | 'codex1' | 'codex2' | 'codex3' | 'codex4' | 'thundersEdge' | 'twilightsFall'
 
 export const EXPANSION_OPTIONS: { id: ExpansionId; label: string }[] = [
-  { id: 'baseGame', label: 'Base Game' },
   { id: 'pok', label: 'Prophecy of Kings' },
   { id: 'codex1', label: 'Codex 1' },
   { id: 'codex2', label: 'Codex 2' },
@@ -14,7 +13,6 @@ export const EXPANSION_OPTIONS: { id: ExpansionId; label: string }[] = [
 ]
 
 const EXPANSION_TO_VERSION: Record<ExpansionId, string> = {
-  baseGame: 'base game',
   pok: 'pok',
   codex1: 'codex 1',
   codex2: 'codex 2',
@@ -38,13 +36,12 @@ export function cardVersionMatchesExpansions(
 ): boolean {
   const v = (cardVersion ?? '').trim().toLowerCase()
   if (!v) return true // no version = always include (e.g. faction abilities, breakthroughs)
-  //if (v === 'base game') return true
+  if (v === 'base game') return true
   return selectedVersions.has(v)
 }
 
 /** Expansion order for "exclude after" and "removed in pok" logic. */
 const EXPANSION_ORDER: ExpansionId[] = [
-  'baseGame',
   'pok',
   'codex1',
   'codex2',
@@ -184,10 +181,7 @@ export function ExpansionSelector({
       }
     } else {
       next.add(id)
-      if (id === 'pok') {
-        next.add('baseGame')
-      } else if (id === 'thundersEdge') {
-        next.add('baseGame')
+      if (id === 'thundersEdge') {
         next.add('codex1')
         next.add('codex2')
         next.add('codex3')

@@ -22,7 +22,7 @@ function getCategoryButtonLabels(expansions: Set<ExpansionId>): { view: Exclude<
   const isTwilightsFall = expansions.has('twilightsFall')
   return [
     { view: 'strategy', label: 'Strategy Cards' },
-    { view: 'faction_ability', label: 'Faction Abilities' },
+    { view: 'faction_ability', label: isTwilightsFall ? 'Abilities' : 'Faction Abilities' },
     { view: 'technology', label: 'Technologies' },
     { view: 'unit', label: 'Units' },
     { view: 'faction_leader', label: isTwilightsFall ? 'Genomes & Paradigms' : 'Faction Leaders' },

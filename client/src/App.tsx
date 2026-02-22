@@ -27,7 +27,7 @@ function parseStoredExpansions(s: string | null): Set<ExpansionId> {
   try {
     const parsed = JSON.parse(s) as unknown
     if (!Array.isArray(parsed)) return new Set()
-    const valid = ['baseGame', 'pok', 'codex1', 'codex2', 'codex3', 'codex4', 'thundersEdge'] as const
+    const valid = ['pok', 'codex1', 'codex2', 'codex3', 'codex4', 'thundersEdge'] as const
     return new Set(parsed.filter((id): id is ExpansionId => valid.includes(id)))
   } catch {
     return new Set()
@@ -55,7 +55,7 @@ function getCategoryLabels(expansions: Set<ExpansionId>): Record<Exclude<Locatio
     legendary_planet: 'Legendary Planets',
     exploration: 'Exploration',
     relic: 'Relics',
-    faction_ability: 'Faction Abilities',
+    faction_ability: isTwilightsFall ? 'Abilities' : 'Faction Abilities',
     faction_leader: isTwilightsFall ? 'Genomes & Paradigms' : 'Faction Leaders',
     promissory_note: 'Promissory Notes',
     breakthrough: 'Breakthroughs',
@@ -84,11 +84,11 @@ export function App() {
   const [expansions, setExpansions] = useState<Set<ExpansionId>>(() => {
     try {
       const s = localStorage.getItem(EXPANSIONS_STORAGE_KEY)
-      if (s === null) return new Set(['baseGame','pok', 'codex1', 'codex2', 'codex3', 'codex4', 'thundersEdge'])
+      if (s === null) return new Set(['pok', 'codex1', 'codex2', 'codex3', 'codex4', 'thundersEdge'])
       const stored = parseStoredExpansions(s)
       return stored
     } catch {
-      return new Set(['baseGame', 'pok', 'codex1', 'codex2', 'codex3', 'codex4', 'thundersEdge'])
+      return new Set(['pok', 'codex1', 'codex2', 'codex3', 'codex4', 'thundersEdge'])
     }
   })
   const [includeRetiredCards, setIncludeRetiredCards] = useState<boolean>(() => {
@@ -193,6 +193,9 @@ export function App() {
         if (card.type === 'strategy' && card.version.toLowerCase() !== 'twilights fall') return false
         if (card.type === 'unit' && card.version.toLowerCase() !== 'twilights fall') return false
         if (card.type === 'technology' && card.version.toLowerCase() !== 'twilights fall') return false
+        if (card.type === 'breakthrough' && card.version.toLowerCase() !== 'twilights fall') return false
+        if (card.type === 'promissory_note' && card.version.toLowerCase() !== 'twilights fall') return false
+        
         return true
       })
     }
