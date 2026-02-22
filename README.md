@@ -17,11 +17,11 @@ A service worker precaches the app shell (HTML, JS, CSS), all CSVs, and images. 
 | File | Description |
 |------|-------------|
 | [action_cards.csv](client/public/action_cards.csv) | Action cards |
-| [agendas.csv](client/public/agendas.csv) | Agenda cards |
+| [agendas.csv](client/public/agendas.csv) | Agenda cards (Edict cards) |
 | [breakthroughs.csv](client/public/breakthroughs.csv) | Breakthrough cards |
 | [exploration.csv](client/public/exploration.csv) | Exploration cards |
 | [faction_abilities.csv](client/public/faction_abilities.csv) | Faction abilities |
-| [faction_leaders.csv](client/public/faction_leaders.csv) | Faction leaders |
+| [faction_leaders.csv](client/public/faction_leaders.csv) | Faction leaders (Genomes & Paradigms) |
 | [factions.csv](client/public/factions.csv) | Faction metadata |
 | [galactic_events.csv](client/public/galactic_events.csv) | Galactic events |
 | [legendary_planets.csv](client/public/legendary_planets.csv) | Legendary planets |
