@@ -115,6 +115,16 @@ export function CategoryView({ cards, category, onBack }: CategoryViewProps) {
     return { law, directive, edict }
   }, [category, results])
 
+    const leadersBySection = useMemo(() => {
+    if (category !== 'faction_leader') return null
+    const factionLeaderCards = results.filter((c) => c.type === 'faction_leader')
+    const getLeaderType = (c: CardItem) => ('leaderType' in c ? (c as { leaderType: string }).leaderType : '')
+    const genomes = sortByName(factionLeaderCards.filter((c) => getLeaderType(c).toLowerCase() === 'genome'))
+    const paradigms = sortByName(factionLeaderCards.filter((c) => getLeaderType(c).toLowerCase() === 'paradigm'))
+    const leaders = sortByName(factionLeaderCards.filter((c) => (getLeaderType(c).toLowerCase() !== 'paradigm') && (getLeaderType(c).toLowerCase() !== 'genome')))
+    return { genomes, paradigms, leaders }
+  }, [category, results])
+
   return (
     <div className="category-view">
       <div className="view-bar">
@@ -260,6 +270,31 @@ export function CategoryView({ cards, category, onBack }: CategoryViewProps) {
             )}
             {agendaBySection.law.length === 0 && agendaBySection.directive.length === 0 && agendaBySection.edict.length === 0 && (
               <p className="results-message">No agendas found.</p>
+            )}
+          </>
+        ) : leadersBySection ? (
+          <>
+            <h2 className='section-title'>{CATEGORY_LABELS[category]}</h2>
+            {leadersBySection.genomes.length > 0 && (
+              <section className="results-section" aria-label="Genomes">
+                <h3 className="section-title section-title--sub">Genomes</h3>
+                <ResultsList cards={leadersBySection.genomes} />
+              </section>
+            )}
+            {leadersBySection.paradigms.length > 0 && (
+              <section className="results-section" aria-label="Paradigms">
+                <h3 className="section-title section-title--sub">Paradigms</h3>
+                <ResultsList cards={leadersBySection.paradigms} />
+              </section>
+            )}
+            {leadersBySection.leaders.length > 0 && (
+              <section className="results-section" aria-label="Faction Leaders">
+                <h3 className="section-title section-title--sub">Faction Leaders</h3>
+                <ResultsList cards={leadersBySection.leaders} />
+              </section>
+            )}
+            {leadersBySection.genomes.length === 0 && leadersBySection.paradigms.length === 0 && leadersBySection.leaders.length === 0 && (
+              <p className="results-message">No leaders found.</p>
             )}
           </>
         ) : (

@@ -474,7 +474,7 @@ export function ResultRow({ card }: ResultRowProps) {
           <div className="result-row__header-content">
             <span className="result-row__name">{card.name}</span>
             <span className="result-row__meta">
-              {card.leaderType} · {card.unlockCondition} · {card.version}
+              {card.unlockCondition?.trim() ? `${card.leaderType} · ${card.unlockCondition} · ${card.version}` : `${card.leaderType} · ${card.version}`}
             </span>
           </div>
           <CopyButton card={card} />

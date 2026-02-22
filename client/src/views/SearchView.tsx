@@ -25,6 +25,14 @@ function partitionAgendas(agendaCards: CardItem[]) {
   return { law, directive, edict }
 }
 
+function partitionFactionLeaders(factionLeaderCards: CardItem[]) {
+  const getLeaderType = (c: CardItem) => ('leaderType' in c ? (c as { leaderType: string }).leaderType : '')
+  const genomes = sortByName(factionLeaderCards.filter((c) => getLeaderType(c).toLowerCase() === 'genome'))
+  const paradigms = sortByName(factionLeaderCards.filter((c) => getLeaderType(c).toLowerCase() === 'paradigm'))
+  const leaders = sortByName(factionLeaderCards.filter((c) => (getLeaderType(c).toLowerCase() !== 'paradigm') && (getLeaderType(c).toLowerCase() !== 'genome')))
+  return { genomes, paradigms, leaders }
+}
+
 interface SearchViewProps {
   cards: CardItem[]
   recentSearches: string[]
@@ -72,6 +80,12 @@ export function SearchView({
     () => partitionAgendas(partitioned.agenda),
     [partitioned.agenda]
   )
+  const factionLeaderSections = useMemo(
+    () => partitionFactionLeaders(partitioned.faction_leader),
+    [partitioned.faction_leader]
+  )
+  const hasParadigms = factionLeaderSections.paradigms.length > 0
+  const hasGenomes = factionLeaderSections.genomes.length > 0
   const hasQuery = query.trim() !== ''
   const showRecent = !hasQuery && recentSearches.length > 0 && !factionFilter
   const showFactionResults = factionFilter && !hasQuery
@@ -246,10 +260,33 @@ export function SearchView({
                 <ResultsList cards={partitioned.technology_faction} />
               </section>
             )}
-            {partitioned.faction_leader.length > 0 && (
+            {/* {partitioned.faction_leader.length > 0 && (
               <section className="results-section" aria-label="Faction Leaders">
                 <h2 className="section-title">Faction Leaders</h2>
                 <ResultsList cards={partitioned.faction_leader} />
+              </section>
+            )} */}
+            {(factionLeaderSections.genomes.length > 0 || factionLeaderSections.paradigms.length > 0 || factionLeaderSections.leaders.length > 0) && (
+              <section className="results-section" aria-label="Faction Leaders">
+                <h2 className="section-title">Faction Leaders</h2>
+                {factionLeaderSections.genomes.length > 0 && (
+                  <>
+                    <h3 className="section-title section-title--sub">Genomes</h3>
+                    <ResultsList cards={factionLeaderSections.genomes} />
+                  </>
+                )}
+                {factionLeaderSections.paradigms.length > 0 && (
+                  <>
+                    <h3 className="section-title section-title--sub">Paradigms</h3>
+                    <ResultsList cards={factionLeaderSections.paradigms} />
+                  </>
+                )}
+                {factionLeaderSections.leaders.length > 0 && (
+                  <>
+                    <h3 className="section-title section-title--sub">Faction Leaders</h3>
+                    <ResultsList cards={factionLeaderSections.leaders} />
+                  </>
+                )}
               </section>
             )}
             {partitioned.promissory_note_general.length > 0 && (
