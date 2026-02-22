@@ -17,6 +17,26 @@ const GALACTIC_EVENTS_CSV_URL = '/galactic_events.csv'
 const PLOTS_CSV_URL = '/plots.csv'
 const UNITS_CSV_URL = '/units.csv'
 
+/** Category names included in searchText so users can search by category (e.g. "galactic event", "action card"). */
+const CATEGORY_SEARCH_TERMS: Record<string, string> = {
+  action: 'action card',
+  agenda: 'agenda',
+  strategy: 'strategy card',
+  public_objective: 'public objective',
+  secret_objective: 'secret objective',
+  legendary_planet: 'legendary planet',
+  exploration: 'exploration',
+  relic: 'relic',
+  faction_ability: 'faction ability',
+  faction_leader: 'faction leader',
+  promissory_note: 'promissory note',
+  breakthrough: 'breakthrough',
+  technology: 'technology',
+  galactic_event: 'galactic event',
+  plot: 'plot',
+  unit: 'unit',
+}
+
 function parseCsv<T>(url: string, mapRow: (row: Record<string, string>) => T): Promise<T[]> {
   return fetch(url)
     .then((res) => {
@@ -351,17 +371,18 @@ export async function loadAllCards(): Promise<CardItem[]> {
   const actionItems: CardItem[] = actionCards.map((c) => ({
     type: 'action',
     ...c,
-    searchText: [c.name, c.quantity, c.timing, c.effect, c.version].filter(Boolean).join(' '),
+    searchText: [CATEGORY_SEARCH_TERMS.action, c.name, c.quantity, c.timing, c.effect, c.version].filter(Boolean).join(' '),
   }))
   const strategyItems: CardItem[] = strategyCards.map((c) => ({
     type: 'strategy',
     ...c,
-    searchText: [c.name, c.initiative, c.primary, c.secondary, c.color, c.version].filter(Boolean).join(' '),
+    searchText: [CATEGORY_SEARCH_TERMS.strategy, c.name, c.initiative, c.primary, c.secondary, c.color, c.version].filter(Boolean).join(' '),
   }))
   const agendaItems: CardItem[] = agendas.map((c) => ({
     ...c,
     type: 'agenda',
     searchText: [
+      CATEGORY_SEARCH_TERMS.agenda,
       c.name,
       c.agendaType,
       c.elect,
@@ -375,18 +396,19 @@ export async function loadAllCards(): Promise<CardItem[]> {
   const publicObjectiveItems: CardItem[] = objectives.public.map((c) => ({
     ...c,
     type: 'public_objective',
-    searchText: [c.name, c.condition, c.points, c.stage, c.whenToScore, c.version].filter(Boolean).join(' '),
+    searchText: [CATEGORY_SEARCH_TERMS.public_objective, c.name, c.condition, c.points, c.stage, c.whenToScore, c.version].filter(Boolean).join(' '),
   }))
   const secretObjectiveItems: CardItem[] = objectives.secret.map((c) => ({
     ...c,
     type: 'secret_objective',
-    searchText: [c.name, c.condition, c.points, c.whenToScore, c.version].filter(Boolean).join(' '),
+    searchText: [CATEGORY_SEARCH_TERMS.secret_objective, c.name, c.condition, c.points, c.whenToScore, c.version].filter(Boolean).join(' '),
   }))
   const legendaryPlanetItems: CardItem[] = legendaryPlanets.map((c) => ({
     ...c,
     factionName: c.factionId ? (factionNames.get(c.factionId) ?? undefined) : undefined,
     type: 'legendary_planet',
     searchText: [
+      CATEGORY_SEARCH_TERMS.legendary_planet,
       c.name,
       c.factionId,
       c.factionId ? factionNames.get(c.factionId) : undefined,
@@ -399,57 +421,62 @@ export async function loadAllCards(): Promise<CardItem[]> {
       c.version,
     ].filter(Boolean).join(' '),
   }))
-  const explorationItems: CardItem[] = exploration.map((c) => ({
-    ...c,
-    type: 'exploration',
-    searchText: [c.name, c.explorationType, c.quantity, c.effect, c.version].filter(Boolean).join(' '),
-  }))
+  const explorationItems: CardItem[] = exploration.map((c) => {
+    const isRelic = (c.explorationType ?? '').toLowerCase() === 'relic'
+    const categoryTerms = isRelic ? [CATEGORY_SEARCH_TERMS.relic, CATEGORY_SEARCH_TERMS.exploration] : [CATEGORY_SEARCH_TERMS.exploration]
+    return {
+      ...c,
+      type: 'exploration' as const,
+      searchText: [...categoryTerms, c.name, c.explorationType, c.quantity, c.effect, c.version].filter(Boolean).join(' '),
+    }
+  })
   const factionAbilityItems: CardItem[] = factionAbilities.map((c) => ({
     ...c,
     factionName: factionNames.get(c.factionId) ?? undefined,
     type: 'faction_ability',
-    searchText: [c.factionId, factionNames.get(c.factionId), c.name, c.text, c.version].filter(Boolean).join(' '),
+    searchText: [CATEGORY_SEARCH_TERMS.faction_ability, c.factionId, factionNames.get(c.factionId), c.name, c.text, c.version].filter(Boolean).join(' '),
   }))
   const factionLeaderItems: CardItem[] = factionLeaders.map((c) => ({
     ...c,
     factionName: factionNames.get(c.factionId) ?? undefined,
     tribuniName: c.tribuniId ? (factionNames.get(c.tribuniId) ?? undefined) : undefined,
     type: 'faction_leader',
-    searchText: [c.factionId, factionNames.get(c.factionId), c.tribuniId, c.tribuniId ? factionNames.get(c.tribuniId) : undefined, c.leaderType, c.name, c.unlockCondition, c.abilityName, c.ability, c.version].filter(Boolean).join(' '),
+    searchText: [CATEGORY_SEARCH_TERMS.faction_leader, c.factionId, factionNames.get(c.factionId), c.tribuniId, c.tribuniId ? factionNames.get(c.tribuniId) : undefined, c.leaderType, c.name, c.unlockCondition, c.abilityName, c.ability, c.version].filter(Boolean).join(' '),
   }))
   const promissoryNoteItems: CardItem[] = promissoryNotes.map((c) => ({
     ...c,
     factionName: c.factionId ? (factionNames.get(c.factionId) ?? undefined) : undefined,
     type: 'promissory_note',
-    searchText: [c.name, c.factionId, factionNames.get(c.factionId), c.effect, c.version].filter(Boolean).join(' '),
+    searchText: [CATEGORY_SEARCH_TERMS.promissory_note, c.name, c.factionId, factionNames.get(c.factionId), c.effect, c.version].filter(Boolean).join(' '),
   }))
   const breakthroughItems: CardItem[] = breakthroughs.map((c) => ({
     ...c,
     factionName: factionNames.get(c.factionId) ?? undefined,
     type: 'breakthrough',
-    searchText: [c.factionId, factionNames.get(c.factionId), c.name, c.synergy, c.effect, c.version].filter(Boolean).join(' '),
+    searchText: [CATEGORY_SEARCH_TERMS.breakthrough, c.factionId, factionNames.get(c.factionId), c.name, c.synergy, c.effect, c.version].filter(Boolean).join(' '),
   }))
   const technologyItems: CardItem[] = technologies.map((c) => ({
     ...c,
     factionName: c.factionId ? (factionNames.get(c.factionId) ?? undefined) : undefined,
     type: 'technology',
-    searchText: [c.name, c.factionId, factionNames.get(c.factionId), c.techType, c.unit, c.prerequisites, c.effect, c.version].filter(Boolean).join(' '),
+    searchText: [CATEGORY_SEARCH_TERMS.technology, c.name, c.factionId, factionNames.get(c.factionId), c.techType, c.unit, c.prerequisites, c.effect, c.version].filter(Boolean).join(' '),
   }))
   const galacticEventItems: CardItem[] = galacticEvents.map((c) => ({
     ...c,
     type: 'galactic_event',
-    searchText: [c.name, c.effect, c.version].filter(Boolean).join(' '),
+    searchText: [CATEGORY_SEARCH_TERMS.galactic_event, c.name, c.effect, c.version].filter(Boolean).join(' '),
   }))
   const plotItems: CardItem[] = plots.map((c) => ({
     ...c,
     type: 'plot',
-    searchText: [c.name, c.factionIds.join(' '), c.effect, c.version].filter(Boolean).join(' '),
+    searchText: [CATEGORY_SEARCH_TERMS.plot, c.name, c.factionIds.join(' '), c.effect, c.version].filter(Boolean).join(' '),
   }))
   const unitItems: CardItem[] = units.map((c) => ({
     ...c,
     factionName: c.factionId ? (factionNames.get(c.factionId) ?? undefined) : undefined,
     type: 'unit',
     searchText: [
+      CATEGORY_SEARCH_TERMS.unit,
       c.name,
       c.factionId,
       factionNames.get(c.factionId),
