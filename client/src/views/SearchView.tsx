@@ -84,8 +84,6 @@ export function SearchView({
     () => partitionFactionLeaders(partitioned.faction_leader),
     [partitioned.faction_leader]
   )
-  const hasParadigms = factionLeaderSections.paradigms.length > 0
-  const hasGenomes = factionLeaderSections.genomes.length > 0
   const hasQuery = query.trim() !== ''
   const showRecent = !hasQuery && recentSearches.length > 0 && !factionFilter
   const showFactionResults = factionFilter && !hasQuery
