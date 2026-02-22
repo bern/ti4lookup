@@ -22,7 +22,6 @@ function partitionAgendas(agendaCards: CardItem[]) {
   const law = sortByName(agendaCards.filter((c) => getAgendaType(c).toLowerCase() === 'law'))
   const directive = sortByName(agendaCards.filter((c) => getAgendaType(c).toLowerCase() === 'directive'))
   const edict = sortByName(agendaCards.filter((c) => getAgendaType(c).toLowerCase() === 'edict'))
-
   return { law, directive, edict }
 }
 
