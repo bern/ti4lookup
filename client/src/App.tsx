@@ -44,22 +44,25 @@ function addRecent(prev: string[], query: string): string[] {
 const HOME_STATE: LocationState = { view: 'home', factionFilter: null }
 const DEFAULT_TITLE = 'TI4 Lookup: Search for anything in Twilight Imperium 4'
 
-const CATEGORY_LABELS: Record<Exclude<LocationState['view'], 'home' | 'search'>, string> = {
-  action: 'Action Cards',
-  agenda: 'Agendas',
-  strategy: 'Strategy Cards',
-  public_objective: 'Public Objectives',
-  secret_objective: 'Secret Objectives',
-  legendary_planet: 'Legendary Planets',
-  exploration: 'Exploration',
-  relic: 'Relics',
-  faction_ability: 'Faction Abilities',
-  faction_leader: 'Faction Leaders',
-  promissory_note: 'Promissory Notes',
-  breakthrough: 'Breakthroughs',
-  technology: 'Technologies',
-  galactic_event: 'Galactic Events',
-  unit: 'Units',
+function getCategoryLabels(expansions: Set<ExpansionId>): Record<Exclude<LocationState['view'], 'home' | 'search'>, string> {
+  const isTwilightsFall = expansions.has('twilightsFall')
+  return {
+    action: 'Action Cards',
+    agenda: isTwilightsFall ? 'Edicts' : 'Agendas',
+    strategy: 'Strategy Cards',
+    public_objective: 'Public Objectives',
+    secret_objective: 'Secret Objectives',
+    legendary_planet: 'Legendary Planets',
+    exploration: 'Exploration',
+    relic: 'Relics',
+    faction_ability: 'Faction Abilities',
+    faction_leader: isTwilightsFall ? 'Genomes & Paradigms' : 'Faction Leaders',
+    promissory_note: 'Promissory Notes',
+    breakthrough: 'Breakthroughs',
+    technology: 'Technologies',
+    galactic_event: 'Galactic Events',
+    unit: 'Units',
+  }
 }
 
 export function App() {
@@ -100,9 +103,13 @@ export function App() {
 
   const visibleFactions = useMemo(() => {
     const versions = expansionIdsToVersions(expansions)
-    return factions.filter((f) =>
+    let result = factions.filter((f) =>
       cardVersionMatchesExpansions(f.version, versions)
     )
+    if (expansions.has('twilightsFall')) {
+      result = result.filter((f) => f.version.toLowerCase() === 'twilights fall')
+    }
+    return result
   }, [factions, expansions])
 
   const techNameToColor = useMemo(() => {
@@ -174,6 +181,18 @@ export function App() {
     if (!hasLegendaryPlanetExpansion) {
       result = result.filter((card) => {
         if (card.type === 'legendary_planet') return false
+        return true
+      })
+    }
+    if (expansions.has('twilightsFall')) {
+      result = result.filter((card) => {
+        if (card.type === 'action' && card.version.toLowerCase() !== 'twilights fall') return false
+        if (card.type === 'agenda' && card.version.toLowerCase() !== 'twilights fall') return false
+        if (card.type === 'faction_leader' && card.version.toLowerCase() !== 'twilights fall') return false
+        if (card.type === 'faction_ability' && card.version.toLowerCase() !== 'twilights fall') return false
+        if (card.type === 'strategy' && card.version.toLowerCase() !== 'twilights fall') return false
+        if (card.type === 'unit' && card.version.toLowerCase() !== 'twilights fall') return false
+        if (card.type === 'technology' && card.version.toLowerCase() !== 'twilights fall') return false
         return true
       })
     }
@@ -272,13 +291,13 @@ export function App() {
     } else if (location.view === 'search') {
       label = 'Search'
     } else {
-      label = CATEGORY_LABELS[location.view]
+      label = getCategoryLabels(expansions)[location.view]
     }
     document.title = `${label} - TI4 Lookup`
     return () => {
       document.title = DEFAULT_TITLE
     }
-  }, [location.view, location.factionFilter, factions])
+  }, [location.view, location.factionFilter, factions, expansions])
 
   if (error) {
     return (
@@ -378,6 +397,7 @@ export function App() {
           <HomeView
             factions={visibleFactions}
             cards={filteredCards}
+            expansions={expansions}
             onOpenSearch={() => navigate({ view: 'search', factionFilter: null })}
             onOpenFaction={(factionId) => navigate({ view: 'search', factionFilter: factionId })}
             onOpenCategory={(v) => navigate({ view: v, factionFilter: null })}

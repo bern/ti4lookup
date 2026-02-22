@@ -181,14 +181,6 @@ export function ExpansionSelector({
         next.delete('codex2')
         next.delete('codex3')
         next.delete('codex4')
-      } else if (id === 'twilightsFall') {
-        next.add('thundersEdge')
-        next.add('pok')
-        next.add('baseGame')
-        next.add('codex1')
-        next.add('codex2')
-        next.add('codex3')
-        next.add('codex4')
       }
     } else {
       next.add(id)
@@ -200,15 +192,7 @@ export function ExpansionSelector({
         next.add('codex2')
         next.add('codex3')
         next.add('codex4')
-      } else if (id === 'twilightsFall') {
-        next.delete('thundersEdge')
-        next.delete('pok')
-        next.delete('baseGame')
-        next.delete('codex1')
-        next.delete('codex2')
-        next.delete('codex3')
-        next.delete('codex4')
-      } 
+      }
     }
     onChange(next)
   }

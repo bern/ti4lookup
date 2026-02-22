@@ -202,7 +202,11 @@ function parsePrerequisiteIds(prereq: string): string[] {
 /** Image ids to show in card footer (faction/tech/trait). */
 function getCardImages(card: CardItem): string[] {
   const ids: string[] = []
-  if (card.type === 'faction_ability' && card.factionId) ids.push(card.factionId)
+  if (card.type === 'faction_ability') {
+    if (card.factionId) ids.push(card.factionId)
+    const t = card.techType?.toLowerCase()
+    if (t && TECH_TYPE_IDS.has(t)) ids.push(t)
+  }
   if (card.type === 'faction_leader') {
     if (card.factionId) ids.push(card.factionId)
     if (card.tribuniId) ids.push(card.tribuniId)
@@ -285,7 +289,7 @@ function getCardBgStyle(card: CardItem): { backgroundColor?: string } {
     const bg = CARD_COLOR_BG[card.color.toLowerCase()]
     return bg ? { backgroundColor: bg } : {}
   }
-  if (card.type === 'technology') {
+  if (card.type === 'technology' || card.type === 'faction_ability') {
     const t = (card.techType ?? '').trim().toLowerCase()
     const bg = TECH_COLOR_BG[t]
     return bg ? { backgroundColor: bg } : {}
@@ -447,11 +451,13 @@ export function ResultRow({ card }: ResultRowProps) {
   }
 
   if (card.type === 'faction_ability') {
+    const meta = [card.techType, card.version].filter(Boolean).join(' · ')
     return (
       <article className="result-row result-row--faction-ability" style={bgStyle}>
         <header className="result-row__header">
           <div className="result-row__header-content">
             <span className="result-row__name">{card.name}</span>
+            {meta ? <span className="result-row__meta">{meta}</span> : null}
           </div>
           <CopyButton card={card} />
         </header>

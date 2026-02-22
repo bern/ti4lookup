@@ -214,6 +214,7 @@ export async function loadFactionAbilities(): Promise<FactionAbility[]> {
     factionId: (row['faction id'] ?? '').trim(),
     name: row.name ?? '',
     text: row.text ?? '',
+    techType: (row.techType ?? '').trim() || undefined,
     version: row.version ?? '',
     excludeAfter: (row['exclude after'] ?? '').trim() || undefined,
   }))

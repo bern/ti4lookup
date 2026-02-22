@@ -3,6 +3,7 @@ import type { Faction } from '../data/loadCards'
 import { FactionGridItem } from '../components/FactionGridItem'
 import { partitionByType } from '../search/useFuseSearch'
 import type { CardItem } from '../types'
+import type { ExpansionId } from '../components/ExpansionSelector'
 
 const FACTION_PORTRAITS_STORAGE_KEY = 'ti4lookup-faction-portraits'
 
@@ -11,30 +12,34 @@ export type View = 'home' | 'search' | 'action' | 'agenda' | 'strategy' | 'publi
 interface HomeViewProps {
   factions: Faction[]
   cards: CardItem[]
+  expansions: Set<ExpansionId>
   onOpenSearch: () => void
   onOpenFaction: (factionId: string) => void
   onOpenCategory: (view: Exclude<View, 'home' | 'search'>) => void
 }
 
-const CATEGORY_BUTTONS: { view: Exclude<View, 'home' | 'search'>; label: string }[] = [
-  { view: 'strategy', label: 'Strategy Cards' },
-  { view: 'faction_ability', label: 'Faction Abilities' },
-  { view: 'technology', label: 'Technologies' },
-  { view: 'unit', label: 'Units' },
-  { view: 'faction_leader', label: 'Faction Leaders' },
-  { view: 'promissory_note', label: 'Promissory Notes' },
-  { view: 'breakthrough', label: 'Breakthroughs' },
-  { view: 'public_objective', label: 'Public Objectives' },
-  { view: 'secret_objective', label: 'Secret Objectives' },
-  { view: 'agenda', label: 'Agendas' },
-  { view: 'action', label: 'Action Cards' },
-  { view: 'legendary_planet', label: 'Legendary Planets' },
-  { view: 'exploration', label: 'Exploration' },
-  { view: 'relic', label: 'Relics' },
-  { view: 'galactic_event', label: 'Galactic Events' },
-]
+function getCategoryButtonLabels(expansions: Set<ExpansionId>): { view: Exclude<View, 'home' | 'search'>; label: string }[] {
+  const isTwilightsFall = expansions.has('twilightsFall')
+  return [
+    { view: 'strategy', label: 'Strategy Cards' },
+    { view: 'faction_ability', label: 'Faction Abilities' },
+    { view: 'technology', label: 'Technologies' },
+    { view: 'unit', label: 'Units' },
+    { view: 'faction_leader', label: isTwilightsFall ? 'Genomes & Paradigms' : 'Faction Leaders' },
+    { view: 'promissory_note', label: 'Promissory Notes' },
+    { view: 'breakthrough', label: 'Breakthroughs' },
+    { view: 'public_objective', label: 'Public Objectives' },
+    { view: 'secret_objective', label: 'Secret Objectives' },
+    { view: 'agenda', label: isTwilightsFall ? 'Edicts' : 'Agendas' },
+    { view: 'action', label: 'Action Cards' },
+    { view: 'legendary_planet', label: 'Legendary Planets' },
+    { view: 'exploration', label: 'Exploration' },
+    { view: 'relic', label: 'Relics' },
+    { view: 'galactic_event', label: 'Galactic Events' },
+  ]
+}
 
-export function HomeView({ factions, cards, onOpenSearch, onOpenFaction, onOpenCategory }: HomeViewProps) {
+export function HomeView({ factions, cards, expansions, onOpenSearch, onOpenFaction, onOpenCategory }: HomeViewProps) {
   const categoriesWithCards = useMemo(() => {
     const p = partitionByType(cards)
     const set = new Set<Exclude<View, 'home' | 'search'>>()
@@ -85,7 +90,7 @@ export function HomeView({ factions, cards, onOpenSearch, onOpenFaction, onOpenC
         Search all…
       </button>
       <nav className="home-categories" aria-label="Categories">
-        {[...CATEGORY_BUTTONS]
+        {[...getCategoryButtonLabels(expansions)]
           .sort((a, b) => (categoryHasCards(a.view) === categoryHasCards(b.view) ? 0 : categoryHasCards(a.view) ? -1 : 1))
           .map(({ view, label }) => {
             const hasCards = categoryHasCards(view)

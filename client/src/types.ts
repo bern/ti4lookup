@@ -92,7 +92,7 @@ export interface Exploration {
 }
 
 /**
- * Faction ability from CSV. Columns: faction id, name, text, version.
+ * Faction ability from CSV. Columns: faction id, name, text, color (for twilight's fall), version.
  * factionName is set at load from factions.csv for display (category footer).
  */
 export interface FactionAbility {
@@ -100,6 +100,7 @@ export interface FactionAbility {
   factionName?: string
   name: string
   text: string
+  techType?: string
   version: string
   excludeAfter?: string
 }
