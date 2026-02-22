@@ -27,7 +27,7 @@ function parseStoredExpansions(s: string | null): Set<ExpansionId> {
   try {
     const parsed = JSON.parse(s) as unknown
     if (!Array.isArray(parsed)) return new Set()
-    const valid = ['pok', 'codex1', 'codex2', 'codex3', 'codex4', 'thundersEdge'] as const
+    const valid = ['pok', 'codex1', 'codex2', 'codex3', 'codex4', 'thundersEdge', 'twilightsFall'] as const
     return new Set(parsed.filter((id): id is ExpansionId => valid.includes(id)))
   } catch {
     return new Set()

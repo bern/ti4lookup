@@ -186,6 +186,13 @@ export function ExpansionSelector({
         next.add('codex2')
         next.add('codex3')
         next.add('codex4')
+      } else if (id === 'twilightsFall') {
+        next.add('pok')
+        next.add('thundersEdge')
+        next.add('codex1')
+        next.add('codex2')
+        next.add('codex3')
+        next.add('codex4')
       }
     }
     onChange(next)
