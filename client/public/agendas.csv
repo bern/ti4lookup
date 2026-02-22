@@ -71,4 +71,4 @@ Bless,Edict,-,"Gain each of the following, then each other player chooses 1 of t
 Execute,Edict,-,"Choose up to 3 planets; destroy half of the infantry on each of those planets, rounded up.",twilights fall,FALSE,,
 Foretell,Edict,-,Look at up to 3 unrevealed public objectives.,twilights fall,FALSE,,
 Artifice,Edict,-,"Draw 1 relic and 1 paradigm; for each point behind the player with the most victory points you are, you may draw an additional card from either deck. Choose one of each type to keep and shuffle the rest back into their respective decks.",twilights fall,FALSE,,
-Arise,Edict,-,Either place 1 infantry on each planet you control or place 1 fighter in each system that contains your ships.,twilights fall,FALSE,,
+Arise,Edict,-,,twilights fall,FALSE,,
