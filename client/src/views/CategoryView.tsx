@@ -111,7 +111,8 @@ export function CategoryView({ cards, category, onBack }: CategoryViewProps) {
     const getAgendaType = (c: CardItem) => ('agendaType' in c ? (c as { agendaType: string }).agendaType : '')
     const law = sortByName(agendaCards.filter((c) => getAgendaType(c).toLowerCase() === 'law'))
     const directive = sortByName(agendaCards.filter((c) => getAgendaType(c).toLowerCase() === 'directive'))
-    return { law, directive }
+    const edict = sortByName(agendaCards.filter((c) => getAgendaType(c).toLowerCase() === 'edict'))
+    return { law, directive, edict }
   }, [category, results])
 
   return (
@@ -251,7 +252,13 @@ export function CategoryView({ cards, category, onBack }: CategoryViewProps) {
                 <ResultsList cards={agendaBySection.directive} />
               </section>
             )}
-            {agendaBySection.law.length === 0 && agendaBySection.directive.length === 0 && (
+            {agendaBySection.edict.length > 0 && (
+              <section className="results-section" aria-label="Edicts">
+                <h3 className="section-title section-title--sub">Edicts</h3>
+                <ResultsList cards={agendaBySection.edict} />
+              </section>
+            )}
+            {agendaBySection.law.length === 0 && agendaBySection.directive.length === 0 && agendaBySection.edict.length === 0 && (
               <p className="results-message">No agendas found.</p>
             )}
           </>

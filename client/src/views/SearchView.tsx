@@ -21,7 +21,9 @@ function partitionAgendas(agendaCards: CardItem[]) {
   const getAgendaType = (c: CardItem) => ('agendaType' in c ? (c as { agendaType: string }).agendaType : '')
   const law = sortByName(agendaCards.filter((c) => getAgendaType(c).toLowerCase() === 'law'))
   const directive = sortByName(agendaCards.filter((c) => getAgendaType(c).toLowerCase() === 'directive'))
-  return { law, directive }
+  const edict = sortByName(agendaCards.filter((c) => getAgendaType(c).toLowerCase() === 'edict'))
+
+  return { law, directive, edict }
 }
 
 interface SearchViewProps {
@@ -309,7 +311,7 @@ export function SearchView({
                 )}
               </section>
             )}
-            {(agendaSections.law.length > 0 || agendaSections.directive.length > 0) && (
+            {(agendaSections.law.length > 0 || agendaSections.directive.length > 0 || agendaSections.edict.length > 0) && (
               <section className="results-section" aria-label="Agendas">
                 <h2 className="section-title">Agendas</h2>
                 {agendaSections.law.length > 0 && (
@@ -322,6 +324,12 @@ export function SearchView({
                   <>
                     <h3 className="section-title section-title--sub">Directives</h3>
                     <ResultsList cards={agendaSections.directive} />
+                  </>
+                )}
+                {agendaSections.edict.length > 0 && (
+                  <>
+                    <h3 className="section-title section-title--sub">Edicts</h3>
+                    <ResultsList cards={agendaSections.edict} />
                   </>
                 )}
               </section>
