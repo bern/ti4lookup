@@ -24,6 +24,9 @@ function getFactionSetupCopyText(faction: Faction): string {
   if (faction.commodities != null) {
     parts.push(`${faction.commodities} Commodities`)
   }
+  if (faction.priority != null) {
+    parts.push(`Twilight's Fall Priority ${faction.priority}`)
+  }
   parts.push(`Faction Setup • ${faction.name}`)
   return parts.join('\n\n')
 }
@@ -81,6 +84,7 @@ export function FactionSetupCard({ faction, techNameToColor }: FactionSetupCardP
   const hasTech = Boolean(faction.startingTechnologies?.trim())
   const hasHomeSystem = Boolean(faction.homeSystem?.trim())
   const hasCommodities = faction.commodities != null
+  const hasPriority = faction.priority != null
   const { prefix, techNames } = parseStartingTechs(faction.startingTechnologies ?? '')
 
   const renderTechContent = () => {
@@ -124,7 +128,7 @@ export function FactionSetupCard({ faction, techNameToColor }: FactionSetupCardP
         </div>
         <FactionCopyButton faction={faction} />
       </header>
-      {(hasFleet || hasTech || hasHomeSystem || hasCommodities) && (
+      {(hasFleet || hasTech || hasHomeSystem || hasCommodities || hasPriority) && (
         <div className="result-row__faction-setup-body">
           {hasFleet && (
             <>
@@ -150,6 +154,11 @@ export function FactionSetupCard({ faction, techNameToColor }: FactionSetupCardP
           {hasCommodities && (
             <>
               <p className="result-row__label">{faction.commodities} Commodities</p>
+            </>
+          )}
+          {hasPriority && (
+            <>
+              <p className="result-row__label">Twilight's Fall Priority {faction.priority}</p>
             </>
           )}
         </div>

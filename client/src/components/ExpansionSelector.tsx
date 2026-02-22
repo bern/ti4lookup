@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 
-export type ExpansionId = 'pok' | 'codex1' | 'codex2' | 'codex3' | 'codex4' | 'thundersEdge'
+export type ExpansionId = 'pok' | 'codex1' | 'codex2' | 'codex3' | 'codex4' | 'thundersEdge' | 'twilightsFall'
 
 export const EXPANSION_OPTIONS: { id: ExpansionId; label: string }[] = [
   { id: 'pok', label: 'Prophecy of Kings' },
@@ -9,6 +9,7 @@ export const EXPANSION_OPTIONS: { id: ExpansionId; label: string }[] = [
   { id: 'codex3', label: 'Codex 3' },
   { id: 'codex4', label: 'Codex 4' },
   { id: 'thundersEdge', label: "Thunder's Edge" },
+  { id: 'twilightsFall', label: "Twilight's Fall" },
 ]
 
 const EXPANSION_TO_VERSION: Record<ExpansionId, string> = {
@@ -18,6 +19,7 @@ const EXPANSION_TO_VERSION: Record<ExpansionId, string> = {
   codex3: 'codex 3',
   codex4: 'codex 4',
   thundersEdge: 'thunders edge',
+  twilightsFall: 'twilights fall',
 }
 
 export function expansionIdsToVersions(ids: Set<ExpansionId>): Set<string> {
@@ -46,6 +48,7 @@ const EXPANSION_ORDER: ExpansionId[] = [
   'codex3',
   'codex4',
   'thundersEdge',
+  'twilightsFall',
 ]
 
 /** Versions that map to expansion IDs (for exclude after comparison). */
@@ -179,6 +182,13 @@ export function ExpansionSelector({
     } else {
       next.add(id)
       if (id === 'thundersEdge') {
+        next.add('codex1')
+        next.add('codex2')
+        next.add('codex3')
+        next.add('codex4')
+      } else if (id === 'twilightsFall') {
+        next.add('pok')
+        next.add('thundersEdge')
         next.add('codex1')
         next.add('codex2')
         next.add('codex3')

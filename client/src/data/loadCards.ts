@@ -169,6 +169,7 @@ export interface Faction {
   startingTechnologies?: string
   homeSystem?: string
   commodities?: number
+  priority?: number
 }
 
 /**
@@ -193,6 +194,9 @@ export async function loadFactions(): Promise<Faction[]> {
   const rows = await parseCsv(FACTIONS_CSV_URL, (row) => {
     const commoditiesRaw = (row.commodities ?? '').trim()
     const commodities = commoditiesRaw ? parseInt(commoditiesRaw, 10) : undefined
+
+    const priorityRaw = (row.priority ?? '').trim()
+    const priority = priorityRaw ? parseInt(priorityRaw, 10) : undefined
     return {
       id: (row.id ?? '').trim(),
       name: (row.name ?? '').trim(),
@@ -201,6 +205,7 @@ export async function loadFactions(): Promise<Faction[]> {
       startingTechnologies: (row['starting technologies'] ?? '').trim() || undefined,
       homeSystem: (row['home system'] ?? '').trim() || undefined,
       commodities: Number.isNaN(commodities) ? undefined : commodities,
+      priority: Number.isNaN(priority) ? undefined : priority
     }
   })
   return rows.filter((r) => r.id)
@@ -214,6 +219,7 @@ export async function loadFactionAbilities(): Promise<FactionAbility[]> {
     factionId: (row['faction id'] ?? '').trim(),
     name: row.name ?? '',
     text: row.text ?? '',
+    techType: (row.techType ?? '').trim() || undefined,
     version: row.version ?? '',
     excludeAfter: (row['exclude after'] ?? '').trim() || undefined,
   }))
@@ -463,6 +469,7 @@ export async function loadAllCards(): Promise<CardItem[]> {
       c.version,
     ].filter(Boolean).join(' '),
   }))
+
   return [
     ...actionItems,
     ...strategyItems,
