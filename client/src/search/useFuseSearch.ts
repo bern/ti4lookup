@@ -151,7 +151,8 @@ function sortByUnitGeneral(cards: CardItem[]): CardItem[] {
 export const FACTION_ORDER = [
   'arborec', 'barony', 'saar', 'muaat', 'hacan', 'sol', 'ghosts', 'lizix', 'mentak', 'naalu', 'nekro', 'sardakk',
   'jolnar', 'winnu', 'xxcha', 'yin', 'yssaril', 'argent', 'empyrean', 'mahact', 'nra', 'nomad', 'titans', 'cabal',
-  'keleres', 'crimson', 'deepwrought', 'firmament', 'obsidian', 'bastion', 'lizards', 'ruby',
+  'keleres', 'crimson', 'deepwrought', 'firmament', 'obsidian', 'bastion', 'lizards', 
+  'avarice', 'janovet', 'viroset', 'lakoe', 'aur', 'ruby', 'saint', 'lurch'
 ]
 
 function sortByUnitFaction(cards: CardItem[]): CardItem[] {

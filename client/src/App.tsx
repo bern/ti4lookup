@@ -415,15 +415,17 @@ export function App() {
           factionFilterName={location.factionFilter ? factions.find((f) => f.id === location.factionFilter)?.name ?? null : null}
           faction={location.factionFilter ? factions.find((f) => f.id === location.factionFilter) ?? null : null}
           techNameToColor={techNameToColor}
+          isTwilightsFall={expansions.has('twilightsFall')}
           onAddRecent={onAddRecent}
           onBack={() => window.history.back()}
         />
       )}
-      {(location.view === 'action' || location.view === 'agenda' || location.view === 'strategy' || location.view === 'public_objective' || location.view === 'secret_objective' || location.view === 'legendary_planet' || location.view === 'exploration' || location.view === 'relic' || location.view === 'faction_ability' || location.view === 'faction_leader' || location.view === 'promissory_note' || location.view === 'breakthrough' || location.view === 'technology' || location.view === 'galactic_event' || location.view === 'unit') && ( //location.view === 'genome'
+      {(location.view === 'action' || location.view === 'agenda' || location.view === 'strategy' || location.view === 'public_objective' || location.view === 'secret_objective' || location.view === 'legendary_planet' || location.view === 'exploration' || location.view === 'relic' || location.view === 'faction_ability' || location.view === 'faction_leader' || location.view === 'promissory_note' || location.view === 'breakthrough' || location.view === 'technology' || location.view === 'galactic_event' || location.view === 'unit') && (
         <CategoryView
           cards={filteredCards}
           category={location.view}
           onBack={() => window.history.back()}
+          isTwilightsFall={expansions.has('twilightsFall')}
         />
       )}
       <AppFooter theme={theme} onThemeChange={setTheme} />

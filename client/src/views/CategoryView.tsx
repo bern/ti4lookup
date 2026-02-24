@@ -5,7 +5,7 @@ import { useFuseSearch, sortByName, partitionByType } from '../search/useFuseSea
 import type { CardItem } from '../types'
 import type { CardType } from '../search/useFuseSearch'
 
-const CATEGORY_LABELS: Record<CardType, string> = {
+const BASE_CATEGORY_LABELS: Record<CardType, string> = {
   action: 'Action Cards',
   agenda: 'Agendas',
   strategy: 'Strategy Cards',
@@ -30,7 +30,14 @@ const CATEGORY_LABELS: Record<CardType, string> = {
   unit_faction: 'Faction Units',
 }
 
-const CATEGORY_PLACEHOLDERS: Record<CardType, string> = {
+const getCategoryLabels = (isTwilightsFall: boolean): Record<CardType, string> => ({
+  ...BASE_CATEGORY_LABELS,
+  agenda: isTwilightsFall ? 'Edicts' : 'Agendas',
+  faction_leader: isTwilightsFall ? 'Genomes & Paradigms' : 'Faction Leaders',
+  faction_ability: isTwilightsFall ? 'Abilities' : 'Faction Abilities',
+})
+
+const BASE_CATEGORY_PLACEHOLDERS: Record<CardType, string> = {
   action: 'Search action cards…',
   agenda: 'Search agendas…',
   strategy: 'Search strategy cards…',
@@ -55,16 +62,27 @@ const CATEGORY_PLACEHOLDERS: Record<CardType, string> = {
   unit_faction: 'Search faction units…',
 }
 
+const getCategoryPlaceholders = (isTwilightsFall: boolean): Record<CardType, string> => ({
+  ...BASE_CATEGORY_PLACEHOLDERS,
+  agenda: isTwilightsFall ? 'Search edicts…' : 'Search agendas…',
+  faction_leader: isTwilightsFall ? 'Search genomes & paradigms…' : 'Search faction leaders…',
+  faction_ability: isTwilightsFall ? 'Search abilities…' : 'Search faction abilities…',
+})
+
 interface CategoryViewProps {
   cards: CardItem[]
   category: CardType
   onBack: () => void
+  isTwilightsFall: boolean
 }
 
-export function CategoryView({ cards, category, onBack }: CategoryViewProps) {
+export function CategoryView({ cards, category, onBack, isTwilightsFall }: CategoryViewProps) {
   const { query, setQuery, results } = useFuseSearch(cards, {
     typeFilter: category,
   })
+
+  const CATEGORY_LABELS = useMemo(() => getCategoryLabels(isTwilightsFall), [isTwilightsFall])
+  const CATEGORY_PLACEHOLDERS = useMemo(() => getCategoryPlaceholders(isTwilightsFall), [isTwilightsFall])
 
   const publicByStage = useMemo(() => {
     if (category !== 'public_objective') return null

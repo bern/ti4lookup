@@ -40,6 +40,7 @@ interface SearchViewProps {
   factionFilterName: string | null
   faction: Faction | null
   techNameToColor: Map<string, string>
+  isTwilightsFall: boolean
   onAddRecent: (query: string) => void
   onBack: () => void
 }
@@ -51,6 +52,7 @@ export function SearchView({
   factionFilterName,
   faction,
   techNameToColor,
+  isTwilightsFall,
   onAddRecent,
   onBack,
 }: SearchViewProps) {
@@ -150,8 +152,8 @@ export function SearchView({
               </section>
             )}
             {partitioned.faction_ability.length > 0 && (
-              <section className="results-section" aria-label="Faction Abilities">
-                <h2 className="section-title">Faction Abilities</h2>
+              <section className="results-section" aria-label={isTwilightsFall ? 'Abilities' : 'Faction Abilities'}>
+                <h2 className="section-title">{isTwilightsFall ? 'Abilities' : 'Faction Abilities'}</h2>
                 <ResultsList cards={partitioned.faction_ability} />
               </section>
             )}
@@ -229,8 +231,8 @@ export function SearchView({
               </section>
             )}
             {partitioned.faction_ability.length > 0 && (
-              <section className="results-section" aria-label="Faction Abilities">
-                <h2 className="section-title">Faction Abilities</h2>
+              <section className="results-section" aria-label={isTwilightsFall ? 'Abilities' : 'Faction Abilities'}>
+                <h2 className="section-title">{isTwilightsFall ? 'Abilities' : 'Faction Abilities'}</h2>
                 <ResultsList cards={partitioned.faction_ability} />
               </section>
             )}
@@ -258,15 +260,9 @@ export function SearchView({
                 <ResultsList cards={partitioned.technology_faction} />
               </section>
             )}
-            {/* {partitioned.faction_leader.length > 0 && (
-              <section className="results-section" aria-label="Faction Leaders">
-                <h2 className="section-title">Faction Leaders</h2>
-                <ResultsList cards={partitioned.faction_leader} />
-              </section>
-            )} */}
             {(factionLeaderSections.genomes.length > 0 || factionLeaderSections.paradigms.length > 0 || factionLeaderSections.leaders.length > 0) && (
-              <section className="results-section" aria-label="Faction Leaders">
-                <h2 className="section-title">Faction Leaders</h2>
+              <section className="results-section" aria-label={isTwilightsFall ? 'Genomes & Paradigms' : 'Faction Leaders'}>
+                <h2 className="section-title">{isTwilightsFall ? 'Genomes & Paradigms' : 'Faction Leaders'}</h2>
                 {factionLeaderSections.genomes.length > 0 && (
                   <>
                     <h3 className="section-title section-title--sub">Genomes</h3>
@@ -346,8 +342,8 @@ export function SearchView({
               </section>
             )}
             {(agendaSections.law.length > 0 || agendaSections.directive.length > 0 || agendaSections.edict.length > 0) && (
-              <section className="results-section" aria-label="Agendas">
-                <h2 className="section-title">Agendas</h2>
+              <section className="results-section" aria-label={isTwilightsFall ? 'Edicts' : 'Agendas'}>
+                <h2 className="section-title">{isTwilightsFall ? 'Edicts' : 'Agendas'}</h2>
                 {agendaSections.law.length > 0 && (
                   <>
                     <h3 className="section-title section-title--sub">Laws</h3>
