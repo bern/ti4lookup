@@ -151,7 +151,7 @@ export function App() {
     }
     if (!expansions.has('pok')) {
       result = result.filter((card) => {
-        if (card.type === 'faction_leader') return false
+        if (card.type === 'faction_leader' && card.version.toLowerCase() !== 'twilights fall') return false
         if (card.type === 'exploration' && (card.explorationType ?? '').toLowerCase() !== 'relic') return false
         if (card.type === 'unit' && (card.unit ?? '').toLowerCase() === 'mech') return false
         return true
@@ -195,7 +195,8 @@ export function App() {
         if (card.type === 'technology' && card.version.toLowerCase() !== 'twilights fall') return false
         if (card.type === 'breakthrough' && card.version.toLowerCase() !== 'twilights fall') return false
         if (card.type === 'promissory_note' && card.version.toLowerCase() !== 'twilights fall') return false
-        
+        if (!expansions.has('pok') && 'requiresPok' in card && card.requiresPok) return false
+        if (card.type === 'technology' && expansions.has('pok') && 'requiresPok' in card && !card.requiresPok && !card.factionId) return false
         return true
       })
     }

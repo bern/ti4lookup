@@ -103,6 +103,7 @@ export interface FactionAbility {
   techType?: string
   version: string
   excludeAfter?: string
+  requiresPok?: boolean
 }
 
 /**
@@ -165,6 +166,7 @@ export interface Technology {
   version: string
   factionName?: string
   excludeAfter?: string
+  requiresPok?: boolean
 }
 
 /**
@@ -205,6 +207,7 @@ export interface Unit {
   version: string
   factionName?: string
   excludeAfter?: string
+  requiresPok?: boolean
 }
 
 /** Combined item for search/display with searchText for Fuse. */
