@@ -199,8 +199,19 @@ export function ExpansionSelector({
     onChange(next)
   }
 
-  const count = selected.size
-  const label = `${count} expansion${count === 1 ? '' : 's'}${includeRetiredCards ? ' + Ω' : ''}`
+  const isTwilightsFall = selected.has('twilightsFall')
+  const tfDisabledIds = new Set<ExpansionId>(['codex1', 'codex2', 'codex3', 'codex4', 'thundersEdge'])
+
+  const triggerContent = isTwilightsFall ? (
+    <>
+      <img src={MAHACT_ICON_SRC} alt="" className="expansion-selector__trigger-icon" aria-hidden />
+      {selected.has('pok') && ' + PoK'}
+      {includeRetiredCards && ' + Ω'}
+      {' ▾'}
+    </>
+  ) : (
+    `${selected.size} expansion${selected.size === 1 ? '' : 's'}${includeRetiredCards ? ' + Ω' : ''} ▾`
+  )
 
   return (
     <div className="expansion-selector" ref={ref}>
@@ -212,20 +223,25 @@ export function ExpansionSelector({
         aria-haspopup="true"
         aria-label="Select expansions"
       >
-        {label} ▾
+        {triggerContent}
       </button>
       {open && (
         <div className="expansion-selector__dropdown" role="group" aria-label="Expansion options">
-          {MAIN_EXPANSION_OPTIONS.map((opt) => (
-            <label key={opt.id} className="expansion-selector__option">
-              <input
-                type="checkbox"
-                checked={selected.has(opt.id)}
-                onChange={() => toggle(opt.id)}
-              />
-              <span>{opt.label}</span>
-            </label>
-          ))}
+          {MAIN_EXPANSION_OPTIONS.map((opt) => {
+            const disabled = isTwilightsFall && tfDisabledIds.has(opt.id)
+            const checked = disabled ? true : selected.has(opt.id)
+            return (
+              <label key={opt.id} className={`expansion-selector__option${disabled ? ' expansion-selector__option--disabled' : ''}`}>
+                <input
+                  type="checkbox"
+                  checked={checked}
+                  disabled={disabled}
+                  onChange={() => !disabled && toggle(opt.id)}
+                />
+                <span>{opt.label}</span>
+              </label>
+            )
+          })}
           <div className="expansion-selector__divider" />
           <label className="expansion-selector__option">
             <input
