@@ -390,6 +390,14 @@ body {
   flex-shrink: 0;
 }
 
+.expansion-selector__twilights-fall-icon {
+  width: 1.1em;
+  height: 1.1em;
+  flex-shrink: 0;
+  vertical-align: middle;
+  margin-left: 0.15rem;
+}
+
 .expansion-selector__divider {
   height: 1px;
   margin: 0.4rem 0;

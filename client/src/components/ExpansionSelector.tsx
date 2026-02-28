@@ -2,15 +2,17 @@ import { useState, useRef, useEffect } from 'react'
 
 export type ExpansionId = 'pok' | 'codex1' | 'codex2' | 'codex3' | 'codex4' | 'thundersEdge' | 'twilightsFall'
 
-export const EXPANSION_OPTIONS: { id: ExpansionId; label: string }[] = [
+const MAIN_EXPANSION_OPTIONS: { id: ExpansionId; label: string }[] = [
   { id: 'pok', label: 'Prophecy of Kings' },
   { id: 'codex1', label: 'Codex 1' },
   { id: 'codex2', label: 'Codex 2' },
   { id: 'codex3', label: 'Codex 3' },
   { id: 'codex4', label: 'Codex 4' },
   { id: 'thundersEdge', label: "Thunder's Edge" },
-  { id: 'twilightsFall', label: "Twilight's Fall" },
 ]
+
+const TWILIGHTS_FALL_OPTION = { id: 'twilightsFall' as const, label: "Twilight's Fall" }
+const MAHACT_ICON_SRC = import.meta.env.BASE_URL + 'images/mahact_icon.png'
 
 const EXPANSION_TO_VERSION: Record<ExpansionId, string> = {
   pok: 'pok',
@@ -214,7 +216,7 @@ export function ExpansionSelector({
       </button>
       {open && (
         <div className="expansion-selector__dropdown" role="group" aria-label="Expansion options">
-          {EXPANSION_OPTIONS.map((opt) => (
+          {MAIN_EXPANSION_OPTIONS.map((opt) => (
             <label key={opt.id} className="expansion-selector__option">
               <input
                 type="checkbox"
@@ -232,6 +234,16 @@ export function ExpansionSelector({
               onChange={(e) => onIncludeRetiredCardsChange(e.target.checked)}
             />
             <span>Include retired cards</span>
+          </label>
+          <div className="expansion-selector__divider" />
+          <label className="expansion-selector__option">
+            <input
+              type="checkbox"
+              checked={selected.has(TWILIGHTS_FALL_OPTION.id)}
+              onChange={() => toggle(TWILIGHTS_FALL_OPTION.id)}
+            />
+            <span>{TWILIGHTS_FALL_OPTION.label}</span>
+            <img src={MAHACT_ICON_SRC} alt="" className="expansion-selector__twilights-fall-icon" aria-hidden />
           </label>
         </div>
       )}
