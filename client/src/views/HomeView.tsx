@@ -25,7 +25,7 @@ function getCategoryButtonLabels(expansions: Set<ExpansionId>): { view: Exclude<
     { view: 'strategy', label: 'Strategy Cards' },
     { view: 'faction_ability', label: isTwilightsFall ? 'Abilities' : 'Faction Abilities' },
     { view: 'technology', label: 'Technologies' },
-    { view: 'unit', label: 'Units' },
+    { view: 'unit', label: isTwilightsFall ? 'Units & Upgrades' : 'Units' },
     { view: 'faction_leader', label: isTwilightsFall ? 'Genomes & Paradigms' : 'Faction Leaders' },
     { view: 'promissory_note', label: 'Promissory Notes' },
     { view: 'breakthrough', label: 'Breakthroughs' },

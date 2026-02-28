@@ -35,6 +35,8 @@ const getCategoryLabels = (isTwilightsFall: boolean): Record<CardType, string> =
   agenda: isTwilightsFall ? 'Edicts' : 'Agendas',
   faction_leader: isTwilightsFall ? 'Genomes & Paradigms' : 'Faction Leaders',
   faction_ability: isTwilightsFall ? 'Abilities' : 'Faction Abilities',
+  unit: isTwilightsFall ? 'Units & Upgrades' : 'Units',
+  unit_faction: isTwilightsFall ? 'Unit Upgrades' : 'Faction Units',
 })
 
 const BASE_CATEGORY_PLACEHOLDERS: Record<CardType, string> = {
@@ -256,8 +258,8 @@ export function CategoryView({ cards, category, onBack, isTwilightsFall }: Categ
               </section>
             )}
             {unitBySection.faction.length > 0 && (
-              <section className="results-section" aria-label="Faction Units">
-                <h3 className="section-title section-title--sub">Faction Units</h3>
+              <section className="results-section" aria-label={isTwilightsFall ? 'Unit Upgrades' : 'Faction Units'}>
+                <h3 className="section-title section-title--sub">{isTwilightsFall ? 'Unit Upgrades' : 'Faction Units'}</h3>
                 <ResultsList cards={unitBySection.faction} />
               </section>
             )}
