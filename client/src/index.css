@@ -343,6 +343,9 @@ body {
 }
 
 .expansion-selector__trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
   padding: 0.35rem 0.6rem;
   font-size: 0.85rem;
   color: var(--color-text);
@@ -395,16 +398,35 @@ body {
   cursor: default;
 }
 
+.expansion-selector__trigger-icon,
+.expansion-selector__twilights-fall-icon {
+  filter: drop-shadow(0 0 0.1px #000) drop-shadow(0 0 0.1px #000);
+}
+
+[data-theme='dark'] .expansion-selector__trigger-icon,
+[data-theme='dark'] .expansion-selector__twilights-fall-icon,
+[data-theme='hylar'] .expansion-selector__trigger-icon,
+[data-theme='hylar'] .expansion-selector__twilights-fall-icon,
+[data-theme='gashlai'] .expansion-selector__trigger-icon,
+[data-theme='gashlai'] .expansion-selector__twilights-fall-icon,
+[data-theme='void'] .expansion-selector__trigger-icon,
+[data-theme='void'] .expansion-selector__twilights-fall-icon,
+[data-theme='mordai'] .expansion-selector__trigger-icon,
+[data-theme='mordai'] .expansion-selector__twilights-fall-icon,
+[data-theme='acheron'] .expansion-selector__trigger-icon,
+[data-theme='acheron'] .expansion-selector__twilights-fall-icon {
+  filter: drop-shadow(0 0 0.5px #fff) drop-shadow(0 0 0.5px #fff);
+}
+
 .expansion-selector__trigger-icon {
-  width: 1em;
-  height: 1em;
-  vertical-align: middle;
-  margin: 0 0.1em;
+  width: 1.8em;
+  height: 1.8em;
+  flex-shrink: 0;
 }
 
 .expansion-selector__twilights-fall-icon {
-  width: 1.1em;
-  height: 1.1em;
+  width: 1.8em;
+  height: 1.8em;
   flex-shrink: 0;
   vertical-align: middle;
   margin-left: 0.15rem;
