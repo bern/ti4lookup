@@ -312,6 +312,11 @@ body {
   margin: 0.25rem 0;
 }
 
+.app-footer__disclaimer {
+  font-style: italic;
+  margin-top: 1rem;
+}
+
 .app-footer__link {
   color: var(--color-accent);
   text-decoration: none;

@@ -1,8 +1,4 @@
-import { useCallback, useState } from 'react'
-import JSZip from 'jszip'
 import { ThemeSelector, type ThemeId } from './ThemeSelector'
-
-const csvModules = import.meta.glob<string>('/public/*.csv', { query: '?raw', import: 'default' })
 
 interface AppFooterProps {
   theme: ThemeId
@@ -10,35 +6,6 @@ interface AppFooterProps {
 }
 
 export function AppFooter({ theme, onThemeChange }: AppFooterProps) {
-  const [downloading, setDownloading] = useState(false)
-
-  const handleDownloadZip = useCallback(async (e: React.MouseEvent) => {
-    e.preventDefault()
-    if (downloading) return
-    setDownloading(true)
-    try {
-      const zip = new JSZip()
-      await Promise.all(
-        Object.entries(csvModules).map(async ([path, load]) => {
-          const name = path.split('/').pop() ?? ''
-          const text = await load()
-          zip.file(name, text)
-        })
-      )
-      const blob = await zip.generateAsync({ type: 'blob' })
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = 'ti4_data.zip'
-      a.click()
-      URL.revokeObjectURL(url)
-    } catch (err) {
-      console.error('Failed to create zip:', err)
-    } finally {
-      setDownloading(false)
-    }
-  }, [downloading])
-
   return (
     <footer className="app-footer">
       <div className="app-footer__theme">
@@ -72,16 +39,29 @@ export function AppFooter({ theme, onThemeChange }: AppFooterProps) {
           Issue on Github
         </a>
       </p>
-      <p className="app-footer__text">
-        Want to play with the data?{' '}
-        <button
-          type="button"
-          className="app-footer__link app-footer__link--btn"
-          onClick={handleDownloadZip}
-        >
-          Click to download
-        </button>
-      </p>
+      <div className="app-footer__disclaimer">
+        <p className="app-footer__text">
+          TI4 Lookup is a fan project and is not affiliated with{' '}
+          <a
+            href="https://www.fantasyflightgames.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="app-footer__link"
+          >
+            Fantasy Flight Games®
+          </a>
+        </p>
+        <p className="app-footer__text">
+          This tool is for reference only. It is not a substitute for owning{' '}
+          <a
+            href="https://www.fantasyflightgames.com/en/products/twilight-imperium-fourth-edition/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="app-footer__link">
+              Twilight Imperium 4th Edition
+          </a>
+        </p>
+      </div>
     </footer>
   )
 }
