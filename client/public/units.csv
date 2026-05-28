@@ -58,7 +58,7 @@ Memoria I,nomad,flagship,8,7(x2),1,3,You may treat this unit as if it were adjac
 Quantum Manipulator,nomad,mech,2,6,,,"While this unit is in a space area during combat, you may use its SUSTAIN DAMAGE ability to cancel a hit that is produced against your ships in this system.",SUSTAIN DAMAGE.,pok,,
 Last Dispatch,lizards,flagship,8,8(x2),2,4,"When this unit retreats, you may destroy 1 ship in the active system that does not have SUSTAIN DAMAGE.",SUSTAIN DAMAGE.,thunders edge,,
 Alarum,lizards,mech,2,6,,,"At the end of a round of combat on this planet, you may move up to 2 ground forces to this planet from planets in adjacent systems.",SUSTAIN DAMAGE.,thunders edge,,
-Linkship I,lizards,destroyer,1,9,3,1,This unit can use the SPACE CANNON ability of one of your structures in its space area; each structure can only be triggered once.,ANTI-FIGHTER BARRAGE 9(x2).,thunders edge,,
+Linkship I,lizards,destroyer,1,9,3,,This unit can use the SPACE CANNON ability of one of your structures in its space area; each structure can only be triggered once.,ANTI-FIGHTER BARRAGE 9(x2).,thunders edge,,
 Heaven's Hollow,obsidian,flagship,8,5(x3),1,3,,SUSTAIN DAMAGE.,thunders edge,,
 Viper Hollow,obsidian,mech,2,6,,,"If this unit was coexisting when this card flipped to this side, gain control of its planet; the other player's units are now coexisting.",SUSTAIN DAMAGE.,thunders edge,,
 Son of Ragh,saar,flagship,8,5(x2),1,3,,SUSTAIN DAMAGE. ANTI-FIGHTER BARRAGE 6(x4).,base game,,
