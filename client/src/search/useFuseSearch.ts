@@ -287,9 +287,13 @@ export function useFuseSearch(cards: CardItem[], options: UseFuseSearchOptions =
     return sortByName(filteredCards)
   }, [filteredCards, typeFilter])
 
+  // True while the debounce hasn't caught up to the latest keystroke (and the
+  // pending query is non-empty). Consumers use this to show a searching spinner.
+  const isSearching = query.trim() !== '' && query.trim() !== debouncedQuery.trim()
+
   const results = useMemo(() => {
     const q = debouncedQuery.trim()
-    if (q === '') return allSorted
+    if (q === '' || isSearching) return []
     const hits = fuse.search(q, { limit })
     const items = hits.map((h) => h.item)
     if (typeFilter === 'strategy') return sortByInitiative(items)
@@ -311,7 +315,7 @@ export function useFuseSearch(cards: CardItem[], options: UseFuseSearchOptions =
       return [...general, ...faction, ...techGeneral, ...techFaction]
     }
     return items
-  }, [debouncedQuery, fuse, allSorted, limit, typeFilter])
+  }, [debouncedQuery, fuse, allSorted, limit, typeFilter, isSearching])
 
-  return { query, setQuery, results, debouncedQuery }
+  return { query, setQuery, results, debouncedQuery, isSearching }
 }

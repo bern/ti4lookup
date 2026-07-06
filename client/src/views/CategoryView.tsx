@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { SearchInput } from '../components/SearchInput'
 import { ResultsList } from '../components/ResultsList'
+import { SearchSpinner } from '../components/SearchSpinner'
 import { useFuseSearch, sortByName, partitionByType } from '../search/useFuseSearch'
 import type { CardItem } from '../types'
 import type { CardType } from '../search/useFuseSearch'
@@ -79,7 +80,7 @@ interface CategoryViewProps {
 }
 
 export function CategoryView({ cards, category, onBack, isTwilightsFall }: CategoryViewProps) {
-  const { query, setQuery, results } = useFuseSearch(cards, {
+  const { query, setQuery, results, isSearching } = useFuseSearch(cards, {
     typeFilter: category,
   })
 
@@ -175,6 +176,7 @@ export function CategoryView({ cards, category, onBack, isTwilightsFall }: Categ
         />
       </div>
       <main id="main-content" className="category-view__main">
+        {isSearching && <SearchSpinner />}
         {publicByStage ? (
           <>
             <h2 className="section-title">{CATEGORY_LABELS[category]}</h2>

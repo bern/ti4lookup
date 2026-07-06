@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { SearchInput } from '../components/SearchInput'
 import { ResultsList } from '../components/ResultsList'
+import { SearchSpinner } from '../components/SearchSpinner'
 import { FactionSetupCard } from '../components/FactionSetupCard'
 import { useFuseSearch, partitionByType, sortByName } from '../search/useFuseSearch'
 import type { CardItem } from '../types'
@@ -56,7 +57,7 @@ export function SearchView({
   onAddRecent,
   onBack,
 }: SearchViewProps) {
-  const { query, setQuery, results } = useFuseSearch(cards, {
+  const { query, setQuery, results, isSearching } = useFuseSearch(cards, {
     limit: 120,
   })
 
@@ -224,6 +225,7 @@ export function SearchView({
         )}
         {hasQuery && (
           <div className="search-results-partitioned">
+            {isSearching && <SearchSpinner />}
             {partitioned.strategy.length > 0 && (
               <section className="results-section" aria-label="Strategy Cards">
                 <h2 className="section-title">Strategy Cards</h2>
@@ -400,7 +402,7 @@ export function SearchView({
                 <ResultsList cards={partitioned.faction_card} />
               </section>
             )}
-            {results.length === 0 && (
+            {results.length === 0 && !isSearching && (
               <p className="results-message">No results found.</p>
             )}
           </div>
