@@ -3,7 +3,7 @@ import Fuse from 'fuse.js'
 import type { CardItem } from '../types'
 
 const MAX_RESULTS = 50
-const DEBOUNCE_MS = 50
+const DEBOUNCE_MS = 200
 
 export type CardType =
   | 'action' | 'agenda' | 'strategy' | 'public_objective' | 'secret_objective' | 'legendary_planet' | 'exploration' | 'relic'
