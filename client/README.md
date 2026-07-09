@@ -43,7 +43,7 @@ The app expects a CSV at **`/public/data/action_cards.csv`** with these columns 
 
 - **Fuse.js** fuzzy-matches your query across `name`, `effect`, `timing`, and `version`.
 - **Name** matches are weighted highest, then effect, timing, and version.
-- Results are limited to the top 50 matches; the query is debounced by ~200 ms.
+- Results are limited to the top 120 matches; the query is debounced by ~50 ms.
 - If the search box is empty, all cards are shown, sorted A–Z by name.
 
 ## Adding more cards
