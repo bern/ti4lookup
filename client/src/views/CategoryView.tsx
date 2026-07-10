@@ -176,14 +176,12 @@ export function CategoryView({ cards, category, onBack, isTwilightsFall }: Categ
         />
       </div>
       <main id="main-content" className="category-view__main">
-        {isSearching ? <SearchSpinner /> : 
-        belowMinLength ? (
-          <>
-            <h2 className="section-title">{CATEGORY_LABELS[category]}</h2>
-            <p className="results-message">
-              Enter at least {MIN_QUERY_LENGTH} characters to search {CATEGORY_LABELS[category].toLowerCase()}.
-            </p>
-          </>
+        { isSearching ?  (
+          <SearchSpinner /> 
+        ) : belowMinLength ? (
+          <p className="results-message">
+            Enter at least {MIN_QUERY_LENGTH} characters to search {CATEGORY_LABELS[category].toLowerCase()}.
+          </p>
         ) : publicByStage ? (
           <>
             <h2 className="section-title">{CATEGORY_LABELS[category]}</h2>
