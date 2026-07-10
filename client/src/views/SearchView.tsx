@@ -59,6 +59,7 @@ export function SearchView({
 }: SearchViewProps) {
   const { query, setQuery, results, isSearching } = useFuseSearch(cards, {
     limit: 120,
+    startShowAll: !!factionFilter,
   })
 
   const commitRecent = (q: string) => {

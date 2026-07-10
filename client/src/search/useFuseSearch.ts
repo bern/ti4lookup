@@ -247,6 +247,8 @@ export interface UseFuseSearchOptions {
   typeFilter?: CardType
   /** Max results (default 50; use higher for global search). */
   limit?: number
+  /** When set, show all results when the query is empty. */
+  startShowAll?: boolean
 }
 
 export function useFuseSearch(cards: CardItem[], options: UseFuseSearchOptions = {}) {
@@ -293,7 +295,8 @@ export function useFuseSearch(cards: CardItem[], options: UseFuseSearchOptions =
 
   const results = useMemo(() => {
     const q = debouncedQuery.trim()
-    if (q === '' || isSearching) return []
+    if (isSearching) return []
+    if (q === '') return options.startShowAll ? allSorted : []
     const hits = fuse.search(q, { limit })
     const items = hits.map((h) => h.item)
     if (typeFilter === 'strategy') return sortByInitiative(items)
