@@ -248,6 +248,8 @@ export interface UseFuseSearchOptions {
   typeFilter?: CardType
   /** Max results (default 50; use higher for global search). */
   limit?: number
+  /** When set, show all results when the query is empty. */
+  startShowAll?: boolean
 }
 
 export function useFuseSearch(cards: CardItem[], options: UseFuseSearchOptions = {}) {
@@ -292,7 +294,7 @@ export function useFuseSearch(cards: CardItem[], options: UseFuseSearchOptions =
 
   // Non-empty but not yet long enough to search — drives a "keep typing" hint
   // instead of an empty "no results" state.
-  const belowMinLength = typeFilter === undefined && trimmedQuery.length > 0 && trimmedQuery.length < MIN_QUERY_LENGTH
+  const belowMinLength = !options.startShowAll && trimmedQuery.length > 0 && trimmedQuery.length < MIN_QUERY_LENGTH
 
   // True while the debounce hasn't caught up to the latest keystroke (and the
   // pending query is non-empty). Consumers use this to show a searching spinner.
@@ -300,7 +302,8 @@ export function useFuseSearch(cards: CardItem[], options: UseFuseSearchOptions =
 
   const results = useMemo(() => {
     const q = debouncedQuery.trim()
-    if (belowMinLength || isSearching) return []
+    if (isSearching || belowMinLength) return []
+    if (q === '') return options.startShowAll ? allSorted : []
     const hits = fuse.search(q, { limit })
     const items = hits.map((h) => h.item)
     if (typeFilter === 'strategy') return sortByInitiative(items)

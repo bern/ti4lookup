@@ -82,6 +82,7 @@ interface CategoryViewProps {
 export function CategoryView({ cards, category, onBack, isTwilightsFall }: CategoryViewProps) {
   const { query, setQuery, results, isSearching, belowMinLength } = useFuseSearch(cards, {
     typeFilter: category,
+    startShowAll: true,
   })
 
   const CATEGORY_LABELS = useMemo(() => getCategoryLabels(isTwilightsFall), [isTwilightsFall])
