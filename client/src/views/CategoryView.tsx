@@ -176,8 +176,8 @@ export function CategoryView({ cards, category, onBack, isTwilightsFall }: Categ
         />
       </div>
       <main id="main-content" className="category-view__main">
-        {isSearching && <SearchSpinner />}
-        {publicByStage ? (
+        {isSearching ? <SearchSpinner /> : 
+        publicByStage ? (
           <>
             <h2 className="section-title">{CATEGORY_LABELS[category]}</h2>
             {publicByStage.stage1.length > 0 && (
