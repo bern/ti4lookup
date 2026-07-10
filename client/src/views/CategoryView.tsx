@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { SearchInput } from '../components/SearchInput'
 import { ResultsList } from '../components/ResultsList'
 import { SearchSpinner } from '../components/SearchSpinner'
-import { useFuseSearch, sortByName, partitionByType } from '../search/useFuseSearch'
+import { useFuseSearch, sortByName, partitionByType, MIN_QUERY_LENGTH } from '../search/useFuseSearch'
 import type { CardItem } from '../types'
 import type { CardType } from '../search/useFuseSearch'
 
@@ -80,7 +80,7 @@ interface CategoryViewProps {
 }
 
 export function CategoryView({ cards, category, onBack, isTwilightsFall }: CategoryViewProps) {
-  const { query, setQuery, results, isSearching } = useFuseSearch(cards, {
+  const { query, setQuery, results, isSearching, belowMinLength } = useFuseSearch(cards, {
     typeFilter: category,
   })
 
@@ -177,7 +177,14 @@ export function CategoryView({ cards, category, onBack, isTwilightsFall }: Categ
       </div>
       <main id="main-content" className="category-view__main">
         {isSearching ? <SearchSpinner /> : 
-        publicByStage ? (
+        belowMinLength ? (
+          <>
+            <h2 className="section-title">{CATEGORY_LABELS[category]}</h2>
+            <p className="results-message">
+              Enter at least {MIN_QUERY_LENGTH} characters to search {CATEGORY_LABELS[category].toLowerCase()}.
+            </p>
+          </>
+        ) : publicByStage ? (
           <>
             <h2 className="section-title">{CATEGORY_LABELS[category]}</h2>
             {publicByStage.stage1.length > 0 && (

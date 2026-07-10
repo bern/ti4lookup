@@ -3,7 +3,7 @@ import { SearchInput } from '../components/SearchInput'
 import { ResultsList } from '../components/ResultsList'
 import { SearchSpinner } from '../components/SearchSpinner'
 import { FactionSetupCard } from '../components/FactionSetupCard'
-import { useFuseSearch, partitionByType, sortByName } from '../search/useFuseSearch'
+import { useFuseSearch, partitionByType, sortByName, MIN_QUERY_LENGTH } from '../search/useFuseSearch'
 import type { CardItem } from '../types'
 import type { Faction } from '../data/loadCards'
 
@@ -57,7 +57,7 @@ export function SearchView({
   onAddRecent,
   onBack,
 }: SearchViewProps) {
-  const { query, setQuery, results, isSearching } = useFuseSearch(cards, {
+  const { query, setQuery, results, isSearching, belowMinLength } = useFuseSearch(cards, {
     limit: 120,
   })
 
@@ -402,9 +402,11 @@ export function SearchView({
                 <ResultsList cards={partitioned.faction_card} />
               </section>
             )}
-            {results.length === 0 && !isSearching && (
+            {belowMinLength ? (
+              <p className="results-message">Enter at least {MIN_QUERY_LENGTH} characters to search.</p>
+            ) : results.length === 0 && !isSearching ? (
               <p className="results-message">No results found.</p>
-            )}
+            ) : null}
           </div>
         )}
       </main>

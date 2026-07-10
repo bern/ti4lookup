@@ -4,6 +4,7 @@ import type { CardItem } from '../types'
 
 const MAX_RESULTS = 50
 const DEBOUNCE_MS = 50
+export const MIN_QUERY_LENGTH = 3
 
 export type CardType =
   | 'action' | 'agenda' | 'strategy' | 'public_objective' | 'secret_objective' | 'legendary_planet' | 'exploration' | 'relic'
@@ -287,13 +288,19 @@ export function useFuseSearch(cards: CardItem[], options: UseFuseSearchOptions =
     return sortByName(filteredCards)
   }, [filteredCards, typeFilter])
 
+  const trimmedQuery = query.trim()
+
+  // Non-empty but not yet long enough to search — drives a "keep typing" hint
+  // instead of an empty "no results" state.
+  const belowMinLength = typeFilter === undefined && trimmedQuery.length > 0 && trimmedQuery.length < MIN_QUERY_LENGTH
+
   // True while the debounce hasn't caught up to the latest keystroke (and the
   // pending query is non-empty). Consumers use this to show a searching spinner.
-  const isSearching = query.trim() !== '' && query.trim() !== debouncedQuery.trim()
+  const isSearching = !belowMinLength && query.trim() !== '' && query.trim() !== debouncedQuery.trim()
 
   const results = useMemo(() => {
     const q = debouncedQuery.trim()
-    if (q === '' || isSearching) return []
+    if (belowMinLength || isSearching) return []
     const hits = fuse.search(q, { limit })
     const items = hits.map((h) => h.item)
     if (typeFilter === 'strategy') return sortByInitiative(items)
@@ -315,7 +322,7 @@ export function useFuseSearch(cards: CardItem[], options: UseFuseSearchOptions =
       return [...general, ...faction, ...techGeneral, ...techFaction]
     }
     return items
-  }, [debouncedQuery, fuse, allSorted, limit, typeFilter, isSearching])
+  }, [debouncedQuery, fuse, allSorted, limit, typeFilter, isSearching, belowMinLength])
 
-  return { query, setQuery, results, debouncedQuery, isSearching }
+  return { query, setQuery, results, debouncedQuery, isSearching, belowMinLength }
 }
