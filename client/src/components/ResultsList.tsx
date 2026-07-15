@@ -7,27 +7,27 @@ interface ResultsListProps {
   error?: string | null
 }
 
-function cardKey(card: CardItem, index: number): string {
+function cardKey(card: CardItem): string {
   const version = 'version' in card ? card.version : ''
-  if (card.type === 'action') return `action-${card.name}-${version}-${index}`
-  if (card.type === 'strategy') return `strategy-${card.name}-${version}-${card.initiative}-${index}`
-  if (card.type === 'agenda') return `agenda-${card.name}-${version}-${index}`
-  if (card.type === 'public_objective') return `public_objective-${card.name}-${version}-${index}`
-  if (card.type === 'secret_objective') return `secret_objective-${card.name}-${version}-${index}`
-  if (card.type === 'legendary_planet') return `legendary_planet-${card.name}-${version}-${index}`
+  if (card.type === 'action') return `action-${card.name}-${version}`
+  if (card.type === 'strategy') return `strategy-${card.name}-${version}-${card.initiative}`
+  if (card.type === 'agenda') return `agenda-${card.name}-${version}`
+  if (card.type === 'public_objective') return `public_objective-${card.name}-${version}`
+  if (card.type === 'secret_objective') return `secret_objective-${card.name}-${version}`
+  if (card.type === 'legendary_planet') return `legendary_planet-${card.name}-${version}`
   if (card.type === 'exploration') {
     const isRelic = (card.explorationType ?? '').toLowerCase() === 'relic'
-    return isRelic ? `relic-${card.name}-${version}-${index}` : `exploration-${card.name}-${card.explorationType}-${version}-${index}`
+    return isRelic ? `relic-${card.name}-${version}` : `exploration-${card.name}-${card.explorationType}-${version}`
   }
-  if (card.type === 'faction_ability') return `faction_ability-${card.factionId}-${card.name}-${index}`
-  if (card.type === 'faction_leader') return `faction_leader-${card.factionId}-${card.name}-${card.leaderType}-${version}-${index}`
-  if (card.type === 'promissory_note') return `promissory_note-${card.factionId}-${card.name}-${version}-${index}`
-  if (card.type === 'breakthrough') return `breakthrough-${card.factionId}-${card.name}-${index}`
-  if (card.type === 'technology') return `technology-${card.factionId}-${card.name}-${card.techType}-${version}-${index}`
-  if (card.type === 'galactic_event') return `galactic_event-${card.name}-${version}-${index}`
-  if (card.type === 'faction_card') return `faction_card-${card.name}-${version}-${index}`
-  if (card.type === 'unit') return `unit-${card.factionId}-${card.name}-${card.unit}-${version}-${index}`
-  return `fallback-${index}`
+  if (card.type === 'faction_ability') return `faction_ability-${card.factionId}-${card.name}`
+  if (card.type === 'faction_leader') return `faction_leader-${card.factionId}-${card.name}-${card.leaderType}-${version}`
+  if (card.type === 'promissory_note') return `promissory_note-${card.factionId}-${card.name}-${version}`
+  if (card.type === 'breakthrough') return `breakthrough-${card.factionId}-${card.name}`
+  if (card.type === 'technology') return `technology-${card.factionId}-${card.name}-${card.techType}-${version}`
+  if (card.type === 'galactic_event') return `galactic_event-${card.name}-${version}`
+  if (card.type === 'faction_card') return `faction_card-${card.name}-${version}`
+  if (card.type === 'unit') return `unit-${card.factionId}-${card.name}-${card.unit}-${version}`
+  return `fallback`
 }
 
 export function ResultsList({ cards, loading, error }: ResultsListProps) {
