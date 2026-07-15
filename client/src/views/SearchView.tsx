@@ -58,6 +58,7 @@ export function SearchView({
 }: SearchViewProps) {
   const { query, setQuery, results, debouncedQuery } = useFuseSearch(cards, {
     limit: 120,
+    hideInitial: factionFilter === null,
   })
 
   const commitRecent = (q: string) => {
