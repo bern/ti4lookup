@@ -42,8 +42,8 @@ export function ResultsList({ cards, loading, error }: ResultsListProps) {
   }
   return (
     <ul className="results-list" role="list">
-      {cards.map((card, i) => (
-        <li key={cardKey(card, i)} className="results-list__item">
+      {cards.map((card) => (
+        <li key={cardKey(card)} className="results-list__item">
           <ResultRow card={card} />
         </li>
       ))}
