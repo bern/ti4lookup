@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { SearchInput } from '../components/SearchInput'
-import { ResultsList } from '../components/ResultsList'
+import { ProgressiveSections, type ResultSection, type ResultGroup } from '../components/ProgressiveSections'
 import { useFuseSearch, sortByName, partitionByType } from '../search/useFuseSearch'
 import type { CardItem } from '../types'
 import type { CardType } from '../search/useFuseSearch'
@@ -79,7 +79,7 @@ interface CategoryViewProps {
 }
 
 export function CategoryView({ cards, category, onBack, isTwilightsFall }: CategoryViewProps) {
-  const { query, setQuery, results } = useFuseSearch(cards, {
+  const { query, setQuery, results, debouncedQuery } = useFuseSearch(cards, {
     typeFilter: category,
   })
 
@@ -155,6 +155,83 @@ export function CategoryView({ cards, category, onBack, isTwilightsFall }: Categ
     return { genomes, paradigms, leaders }
   }, [category, results])
 
+  // Collapse the category's sub-sections into groups for the progressive renderer.
+  const { sectionGroups, emptyMessage } = useMemo((): { sectionGroups: ResultGroup[]; emptyMessage: string } => {
+    if (publicByStage) {
+      return {
+        sectionGroups: [
+          { subtitle: 'Stage 1', cards: publicByStage.stage1 },
+          { subtitle: 'Stage 2', cards: publicByStage.stage2 },
+        ],
+        emptyMessage: 'No objectives found.',
+      }
+    }
+    if (secretByPhase) {
+      return {
+        sectionGroups: [
+          { subtitle: 'Status Phase', cards: secretByPhase.secretStatus },
+          { subtitle: 'Action Phase', cards: secretByPhase.secretAction },
+          { subtitle: 'Agenda Phase', cards: secretByPhase.secretAgenda },
+        ],
+        emptyMessage: 'No objectives found.',
+      }
+    }
+    if (technologyBySection) {
+      return {
+        sectionGroups: [
+          { subtitle: 'Technologies (General)', cards: technologyBySection.general },
+          { subtitle: 'Faction Technologies', cards: technologyBySection.faction },
+        ],
+        emptyMessage: 'No technologies found.',
+      }
+    }
+    if (promissoryNoteBySection) {
+      return {
+        sectionGroups: [
+          { subtitle: 'Promissory Notes (General)', cards: promissoryNoteBySection.general },
+          { subtitle: 'Faction Promissory Notes', cards: promissoryNoteBySection.faction },
+        ],
+        emptyMessage: 'No promissory notes found.',
+      }
+    }
+    if (unitBySection) {
+      return {
+        sectionGroups: [
+          { subtitle: 'Units (General)', cards: unitBySection.general },
+          { subtitle: isTwilightsFall ? 'Unit Upgrades' : 'Faction Units', cards: unitBySection.faction },
+          { subtitle: 'Unit Upgrades', cards: unitUpgradeTechnologies },
+        ],
+        emptyMessage: 'No units found.',
+      }
+    }
+    if (agendaBySection) {
+      return {
+        sectionGroups: [
+          { subtitle: 'Laws', cards: agendaBySection.law },
+          { subtitle: 'Directives', cards: agendaBySection.directive },
+          { subtitle: 'Edicts', cards: agendaBySection.edict },
+        ],
+        emptyMessage: 'No agendas found.',
+      }
+    }
+    if (leadersBySection) {
+      return {
+        sectionGroups: [
+          // TF
+          { subtitle: 'Genomes', cards: leadersBySection.genomes },
+          { subtitle: 'Paradigms', cards: leadersBySection.paradigms },
+
+          // TE
+          { cards: leadersBySection.leaders },
+        ],
+        emptyMessage: 'No leaders found.',
+      }
+    }
+    return { sectionGroups: [{ cards: results }], emptyMessage: 'No cards found.' }
+  }, [publicByStage, secretByPhase, technologyBySection, promissoryNoteBySection, unitBySection, unitUpgradeTechnologies, agendaBySection, leadersBySection, results, isTwilightsFall])
+
+  const sections: ResultSection[] = [{ key: category, groups: sectionGroups }]
+
   return (
     <div className="category-view">
       <div className="view-bar">
@@ -175,169 +252,10 @@ export function CategoryView({ cards, category, onBack, isTwilightsFall }: Categ
         />
       </div>
       <main id="main-content" className="category-view__main">
-        {publicByStage ? (
-          <>
-            <h2 className="section-title">{CATEGORY_LABELS[category]}</h2>
-            {publicByStage.stage1.length > 0 && (
-              <section className="results-section" aria-label="Stage 1">
-                <h3 className="section-title section-title--sub">Stage 1</h3>
-                <ResultsList cards={publicByStage.stage1} />
-              </section>
-            )}
-            {publicByStage.stage2.length > 0 && (
-              <section className="results-section" aria-label="Stage 2">
-                <h3 className="section-title section-title--sub">Stage 2</h3>
-                <ResultsList cards={publicByStage.stage2} />
-              </section>
-            )}
-            {publicByStage.stage1.length === 0 && publicByStage.stage2.length === 0 && (
-              <p className="results-message">No objectives found.</p>
-            )}
-          </>
-        ) : secretByPhase ? (
-          <>
-            <h2 className="section-title">{CATEGORY_LABELS[category]}</h2>
-            {secretByPhase.secretStatus.length > 0 && (
-              <section className="results-section" aria-label="Status Phase">
-                <h3 className="section-title section-title--sub">Status Phase</h3>
-                <ResultsList cards={secretByPhase.secretStatus} />
-              </section>
-            )}
-            {secretByPhase.secretAction.length > 0 && (
-              <section className="results-section" aria-label="Action Phase">
-                <h3 className="section-title section-title--sub">Action Phase</h3>
-                <ResultsList cards={secretByPhase.secretAction} />
-              </section>
-            )}
-            {secretByPhase.secretAgenda.length > 0 && (
-              <section className="results-section" aria-label="Agenda Phase">
-                <h3 className="section-title section-title--sub">Agenda Phase</h3>
-                <ResultsList cards={secretByPhase.secretAgenda} />
-              </section>
-            )}
-            {secretByPhase.secretAction.length === 0 && secretByPhase.secretStatus.length === 0 &&
-              secretByPhase.secretAgenda.length === 0 && (
-              <p className="results-message">No objectives found.</p>
-            )}
-          </>
-        ) : technologyBySection ? (
-          <>
-            <h2 className="section-title">{CATEGORY_LABELS[category]}</h2>
-            {technologyBySection.general.length > 0 && (
-              <section className="results-section" aria-label="Technologies (General)">
-                <h3 className="section-title section-title--sub">Technologies (General)</h3>
-                <ResultsList cards={technologyBySection.general} />
-              </section>
-            )}
-            {technologyBySection.faction.length > 0 && (
-              <section className="results-section" aria-label="Faction Technologies">
-                <h3 className="section-title section-title--sub">Faction Technologies</h3>
-                <ResultsList cards={technologyBySection.faction} />
-              </section>
-            )}
-            {technologyBySection.general.length === 0 && technologyBySection.faction.length === 0 && (
-              <p className="results-message">No technologies found.</p>
-            )}
-          </>
-        ) : promissoryNoteBySection ? (
-          <>
-            <h2 className="section-title">{CATEGORY_LABELS[category]}</h2>
-            {promissoryNoteBySection.general.length > 0 && (
-              <section className="results-section" aria-label="Promissory Notes (General)">
-                <h3 className="section-title section-title--sub">Promissory Notes (General)</h3>
-                <ResultsList cards={promissoryNoteBySection.general} />
-              </section>
-            )}
-            {promissoryNoteBySection.faction.length > 0 && (
-              <section className="results-section" aria-label="Faction Promissory Notes">
-                <h3 className="section-title section-title--sub">Faction Promissory Notes</h3>
-                <ResultsList cards={promissoryNoteBySection.faction} />
-              </section>
-            )}
-            {promissoryNoteBySection.general.length === 0 && promissoryNoteBySection.faction.length === 0 && (
-              <p className="results-message">No promissory notes found.</p>
-            )}
-          </>
-        ) : unitBySection ? (
-          <>
-            <h2 className="section-title">{CATEGORY_LABELS[category]}</h2>
-            {unitBySection.general.length > 0 && (
-              <section className="results-section" aria-label="Units (General)">
-                <h3 className="section-title section-title--sub">Units (General)</h3>
-                <ResultsList cards={unitBySection.general} />
-              </section>
-            )}
-            {unitBySection.faction.length > 0 && (
-              <section className="results-section" aria-label={isTwilightsFall ? 'Unit Upgrades' : 'Faction Units'}>
-                <h3 className="section-title section-title--sub">{isTwilightsFall ? 'Unit Upgrades' : 'Faction Units'}</h3>
-                <ResultsList cards={unitBySection.faction} />
-              </section>
-            )}
-            {unitBySection.general.length === 0 && unitBySection.faction.length === 0 && (
-              <p className="results-message">No units found.</p>
-            )}
-            {unitUpgradeTechnologies.length > 0 && (
-              <section className="results-section" aria-label="Unit Upgrades">
-                <h3 className="section-title section-title--sub">Unit Upgrades</h3>
-                <ResultsList cards={unitUpgradeTechnologies} />
-              </section>
-            )}
-          </>
-        ) : agendaBySection ? (
-          <>
-            <h2 className="section-title">{CATEGORY_LABELS[category]}</h2>
-            {agendaBySection.law.length > 0 && (
-              <section className="results-section" aria-label="Laws">
-                <h3 className="section-title section-title--sub">Laws</h3>
-                <ResultsList cards={agendaBySection.law} />
-              </section>
-            )}
-            {agendaBySection.directive.length > 0 && (
-              <section className="results-section" aria-label="Directives">
-                <h3 className="section-title section-title--sub">Directives</h3>
-                <ResultsList cards={agendaBySection.directive} />
-              </section>
-            )}
-            {agendaBySection.edict.length > 0 && (
-              <section className="results-section" aria-label="Edicts">
-                <h3 className="section-title section-title--sub">Edicts</h3>
-                <ResultsList cards={agendaBySection.edict} />
-              </section>
-            )}
-            {agendaBySection.law.length === 0 && agendaBySection.directive.length === 0 && agendaBySection.edict.length === 0 && (
-              <p className="results-message">No agendas found.</p>
-            )}
-          </>
-        ) : leadersBySection ? (
-          <>
-            <h2 className='section-title'>{CATEGORY_LABELS[category]}</h2>
-            {leadersBySection.genomes.length > 0 && (
-              <section className="results-section" aria-label="Genomes">
-                <h3 className="section-title section-title--sub">Genomes</h3>
-                <ResultsList cards={leadersBySection.genomes} />
-              </section>
-            )}
-            {leadersBySection.paradigms.length > 0 && (
-              <section className="results-section" aria-label="Paradigms">
-                <h3 className="section-title section-title--sub">Paradigms</h3>
-                <ResultsList cards={leadersBySection.paradigms} />
-              </section>
-            )}
-            {leadersBySection.leaders.length > 0 && (
-              <section className="results-section" aria-label="Faction Leaders">
-                <h3 className="section-title section-title--sub">Faction Leaders</h3>
-                <ResultsList cards={leadersBySection.leaders} />
-              </section>
-            )}
-            {leadersBySection.genomes.length === 0 && leadersBySection.paradigms.length === 0 && leadersBySection.leaders.length === 0 && (
-              <p className="results-message">No leaders found.</p>
-            )}
-          </>
-        ) : (
-          <>
-            <h2 className="section-title">{CATEGORY_LABELS[category]}</h2>
-            <ResultsList cards={results} />
-          </>
+        <h2 className="section-title">{CATEGORY_LABELS[category]}</h2>
+        <ProgressiveSections sections={sections} resetKey={`${category}:${debouncedQuery}`} />
+        {results.length === 0 && (
+          <p className="results-message">{emptyMessage}</p>
         )}
       </main>
     </div>

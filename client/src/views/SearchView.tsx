@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { SearchInput } from '../components/SearchInput'
-import { ResultsList } from '../components/ResultsList'
 import { FactionSetupCard } from '../components/FactionSetupCard'
+import { ProgressiveSections, type ResultSection } from '../components/ProgressiveSections'
 import { useFuseSearch, partitionByType, sortByName } from '../search/useFuseSearch'
 import type { CardItem } from '../types'
 import type { Faction } from '../data/loadCards'
@@ -56,7 +56,7 @@ export function SearchView({
   onAddRecent,
   onBack,
 }: SearchViewProps) {
-  const { query, setQuery, results } = useFuseSearch(cards, {
+  const { query, setQuery, results, debouncedQuery } = useFuseSearch(cards, {
     limit: 120,
   })
 
@@ -75,9 +75,6 @@ export function SearchView({
     () => partitionSecretObjectives(partitioned.secret_objective),
     [partitioned.secret_objective]
   )
-  const hasPublicObjectives = publicObjectiveSections.stage1.length > 0 || publicObjectiveSections.stage2.length > 0
-  const hasSecretObjectives = secretObjectiveSections.secretAction.length > 0 ||
-    secretObjectiveSections.secretStatus.length > 0 || secretObjectiveSections.secretAgenda.length > 0
   const agendaSections = useMemo(
     () => partitionAgendas(partitioned.agenda),
     [partitioned.agenda]
@@ -89,6 +86,98 @@ export function SearchView({
   const hasQuery = query.trim() !== ''
   const showRecent = !hasQuery && recentSearches.length > 0 && !factionFilter
   const showFactionResults = factionFilter && !hasQuery
+
+  const factionAbilityLabel = isTwilightsFall ? 'Abilities' : 'Faction Abilities'
+  const factionUnitLabel = isTwilightsFall ? 'Unit Upgrades' : 'Faction Units'
+  const factionLeaderLabel = isTwilightsFall ? 'Genomes & Paradigms' : 'Faction Leaders'
+  const agendaLabel = isTwilightsFall ? 'Edicts' : 'Agendas'
+
+  // Sections for a faction browse (no query). Faction leaders are not sub-grouped here.
+  const factionSections: ResultSection[] = [
+    ...(faction
+      ? [{
+          key: 'faction-setup',
+          ariaLabel: 'Faction Setup',
+          leadNode: (
+            <ul className="results-list" role="list">
+              <li className="results-list__item">
+                <FactionSetupCard faction={faction} techNameToColor={techNameToColor} isTwilightsFall={isTwilightsFall} />
+              </li>
+            </ul>
+          ),
+          groups: [],
+        } as ResultSection]
+      : []),
+    { key: 'strategy', title: 'Strategy Cards', groups: [{ cards: partitioned.strategy }] },
+    { key: 'faction_ability', title: factionAbilityLabel, groups: [{ cards: partitioned.faction_ability }] },
+    { key: 'technology_general', title: 'Technologies (General)', groups: [{ cards: partitioned.technology_general }] },
+    { key: 'unit_general', title: 'Units (General)', groups: [{ cards: partitioned.unit_general }] },
+    { key: 'unit_faction', title: factionUnitLabel, groups: [{ cards: partitioned.unit_faction }] },
+    { key: 'technology_faction', title: 'Faction Technologies', groups: [{ cards: partitioned.technology_faction }] },
+    { key: 'faction_leader', title: factionLeaderLabel, groups: [{ cards: partitioned.faction_leader }] },
+    { key: 'promissory_note_general', title: 'Promissory Notes (General)', groups: [{ cards: partitioned.promissory_note_general }] },
+    { key: 'promissory_note_faction', title: 'Faction Promissory Notes', groups: [{ cards: partitioned.promissory_note_faction }] },
+    { key: 'breakthrough', title: 'Breakthroughs', groups: [{ cards: partitioned.breakthrough }] },
+    { key: 'legendary_planet', title: 'Legendary Planets', groups: [{ cards: partitioned.legendary_planet }] },
+    { key: 'faction_card', title: 'Faction Cards', groups: [{ cards: partitioned.faction_card }] },
+  ]
+
+  // Sections for a text query, in the same display order as before.
+  const querySections: ResultSection[] = [
+    { key: 'strategy', title: 'Strategy Cards', groups: [{ cards: partitioned.strategy }] },
+    { key: 'faction_ability', title: factionAbilityLabel, groups: [{ cards: partitioned.faction_ability }] },
+    { key: 'technology_general', title: 'Technologies (General)', groups: [{ cards: partitioned.technology_general }] },
+    { key: 'unit_general', title: 'Units (General)', groups: [{ cards: partitioned.unit_general }] },
+    { key: 'unit_faction', title: factionUnitLabel, groups: [{ cards: partitioned.unit_faction }] },
+    { key: 'technology_faction', title: 'Faction Technologies', groups: [{ cards: partitioned.technology_faction }] },
+    {
+      key: 'faction_leader',
+      title: factionLeaderLabel,
+      groups: [
+        // TF
+        { subtitle: 'Genomes', cards: factionLeaderSections.genomes },
+        { subtitle: 'Paradigms', cards: factionLeaderSections.paradigms },
+
+        // TE
+        { cards: factionLeaderSections.leaders },
+      ],
+    },
+    { key: 'promissory_note_general', title: 'Promissory Notes (General)', groups: [{ cards: partitioned.promissory_note_general }] },
+    { key: 'promissory_note_faction', title: 'Faction Promissory Notes', groups: [{ cards: partitioned.promissory_note_faction }] },
+    { key: 'breakthrough', title: 'Breakthroughs', groups: [{ cards: partitioned.breakthrough }] },
+    {
+      key: 'public_objective',
+      title: 'Public Objectives',
+      groups: [
+        { subtitle: 'Stage 1', cards: publicObjectiveSections.stage1 },
+        { subtitle: 'Stage 2', cards: publicObjectiveSections.stage2 },
+      ],
+    },
+    {
+      key: 'secret_objective',
+      title: 'Secret Objectives',
+      groups: [
+        { subtitle: 'Status Phase', cards: secretObjectiveSections.secretStatus },
+        { subtitle: 'Action Phase', cards: secretObjectiveSections.secretAction },
+        { subtitle: 'Agenda Phase', cards: secretObjectiveSections.secretAgenda },
+      ],
+    },
+    {
+      key: 'agenda',
+      title: agendaLabel,
+      groups: [
+        { subtitle: 'Laws', cards: agendaSections.law },
+        { subtitle: 'Directives', cards: agendaSections.directive },
+        { subtitle: 'Edicts', cards: agendaSections.edict },
+      ],
+    },
+    { key: 'action', title: 'Action Cards', groups: [{ cards: partitioned.action }] },
+    { key: 'legendary_planet', title: 'Legendary Planets', groups: [{ cards: partitioned.legendary_planet }] },
+    { key: 'exploration', title: 'Exploration', groups: [{ cards: partitioned.exploration }] },
+    { key: 'relic', title: 'Relics', groups: [{ cards: partitioned.relic }] },
+    { key: 'galactic_event', title: 'Galactic Events', groups: [{ cards: partitioned.galactic_event }] },
+    { key: 'faction_card', title: 'Faction Cards', groups: [{ cards: partitioned.faction_card }] },
+  ]
 
   return (
     <div className="search-view">
@@ -136,87 +225,7 @@ export function SearchView({
                 {factionFilterName}
               </h2>
             )}
-            {faction && (
-              <section className="results-section" aria-label="Faction Setup">
-                <ul className="results-list" role="list">
-                  <li className="results-list__item">
-                    <FactionSetupCard faction={faction} techNameToColor={techNameToColor} isTwilightsFall={isTwilightsFall} />
-                  </li>
-                </ul>
-              </section>
-            )}
-            {partitioned.strategy.length > 0 && (
-              <section className="results-section" aria-label="Strategy Cards">
-                <h2 className="section-title">Strategy Cards</h2>
-                <ResultsList cards={partitioned.strategy} />
-              </section>
-            )}
-            {partitioned.faction_ability.length > 0 && (
-              <section className="results-section" aria-label={isTwilightsFall ? 'Abilities' : 'Faction Abilities'}>
-                <h2 className="section-title">{isTwilightsFall ? 'Abilities' : 'Faction Abilities'}</h2>
-                <ResultsList cards={partitioned.faction_ability} />
-              </section>
-            )}
-            {partitioned.technology_general.length > 0 && (
-              <section className="results-section" aria-label="Technologies (General)">
-                <h2 className="section-title">Technologies (General)</h2>
-                <ResultsList cards={partitioned.technology_general} />
-              </section>
-            )}
-            {partitioned.unit_general.length > 0 && (
-              <section className="results-section" aria-label="Units (General)">
-                <h2 className="section-title">Units (General)</h2>
-                <ResultsList cards={partitioned.unit_general} />
-              </section>
-            )}
-            {partitioned.unit_faction.length > 0 && (
-              <section className="results-section" aria-label={isTwilightsFall ? 'Unit Upgrades' : 'Faction Units'}>
-                <h2 className="section-title">{isTwilightsFall ? 'Unit Upgrades' : 'Faction Units'}</h2>
-                <ResultsList cards={partitioned.unit_faction} />
-              </section>
-            )}
-            {partitioned.technology_faction.length > 0 && (
-              <section className="results-section" aria-label="Faction Technologies">
-                <h2 className="section-title">Faction Technologies</h2>
-                <ResultsList cards={partitioned.technology_faction} />
-              </section>
-            )}
-            {partitioned.faction_leader.length > 0 && (
-              <section className="results-section" aria-label={isTwilightsFall ? 'Genomes & Paradigms' : 'Faction Leaders'}>
-                <h2 className="section-title">{isTwilightsFall ? 'Genomes & Paradigms' : 'Faction Leaders'}</h2>
-                <ResultsList cards={partitioned.faction_leader} />
-              </section>
-            )}
-            {partitioned.promissory_note_general.length > 0 && (
-              <section className="results-section" aria-label="Promissory Notes (General)">
-                <h2 className="section-title">Promissory Notes (General)</h2>
-                <ResultsList cards={partitioned.promissory_note_general} />
-              </section>
-            )}
-            {partitioned.promissory_note_faction.length > 0 && (
-              <section className="results-section" aria-label="Faction Promissory Notes">
-                <h2 className="section-title">Faction Promissory Notes</h2>
-                <ResultsList cards={partitioned.promissory_note_faction} />
-              </section>
-            )}
-            {partitioned.breakthrough.length > 0 && (
-              <section className="results-section" aria-label="Breakthroughs">
-                <h2 className="section-title">Breakthroughs</h2>
-                <ResultsList cards={partitioned.breakthrough} />
-              </section>
-            )}
-            {partitioned.legendary_planet.length > 0 && (
-              <section className="results-section" aria-label="Legendary Planets">
-                <h2 className="section-title">Legendary Planets</h2>
-                <ResultsList cards={partitioned.legendary_planet} />
-              </section>
-            )}
-            {partitioned.faction_card.length > 0 && (
-              <section className="results-section" aria-label="Faction Cards">
-                <h2 className="section-title">Faction Cards</h2>
-                <ResultsList cards={partitioned.faction_card} />
-              </section>
-            )}
+            <ProgressiveSections sections={factionSections} resetKey={factionFilter ?? ''} />
             {results.length === 0 && (
               <p className="results-message">No cards found for this faction.</p>
             )}
@@ -224,182 +233,7 @@ export function SearchView({
         )}
         {hasQuery && (
           <div className="search-results-partitioned">
-            {partitioned.strategy.length > 0 && (
-              <section className="results-section" aria-label="Strategy Cards">
-                <h2 className="section-title">Strategy Cards</h2>
-                <ResultsList cards={partitioned.strategy} />
-              </section>
-            )}
-            {partitioned.faction_ability.length > 0 && (
-              <section className="results-section" aria-label={isTwilightsFall ? 'Abilities' : 'Faction Abilities'}>
-                <h2 className="section-title">{isTwilightsFall ? 'Abilities' : 'Faction Abilities'}</h2>
-                <ResultsList cards={partitioned.faction_ability} />
-              </section>
-            )}
-            {partitioned.technology_general.length > 0 && (
-              <section className="results-section" aria-label="Technologies (General)">
-                <h2 className="section-title">Technologies (General)</h2>
-                <ResultsList cards={partitioned.technology_general} />
-              </section>
-            )}
-            {partitioned.unit_general.length > 0 && (
-              <section className="results-section" aria-label="Units (General)">
-                <h2 className="section-title">Units (General)</h2>
-                <ResultsList cards={partitioned.unit_general} />
-              </section>
-            )}
-            {partitioned.unit_faction.length > 0 && (
-              <section className="results-section" aria-label={isTwilightsFall ? 'Unit Upgrades' : 'Faction Units'}>
-                <h2 className="section-title">{isTwilightsFall ? 'Unit Upgrades' : 'Faction Units'}</h2>
-                <ResultsList cards={partitioned.unit_faction} />
-              </section>
-            )}
-            {partitioned.technology_faction.length > 0 && (
-              <section className="results-section" aria-label="Faction Technologies">
-                <h2 className="section-title">Faction Technologies</h2>
-                <ResultsList cards={partitioned.technology_faction} />
-              </section>
-            )}
-            {(factionLeaderSections.genomes.length > 0 || factionLeaderSections.paradigms.length > 0 || factionLeaderSections.leaders.length > 0) && (
-              <section className="results-section" aria-label={isTwilightsFall ? 'Genomes & Paradigms' : 'Faction Leaders'}>
-                <h2 className="section-title">{isTwilightsFall ? 'Genomes & Paradigms' : 'Faction Leaders'}</h2>
-                {factionLeaderSections.genomes.length > 0 && (
-                  <>
-                    <h3 className="section-title section-title--sub">Genomes</h3>
-                    <ResultsList cards={factionLeaderSections.genomes} />
-                  </>
-                )}
-                {factionLeaderSections.paradigms.length > 0 && (
-                  <>
-                    <h3 className="section-title section-title--sub">Paradigms</h3>
-                    <ResultsList cards={factionLeaderSections.paradigms} />
-                  </>
-                )}
-                {factionLeaderSections.leaders.length > 0 && (
-                  <>
-                    <h3 className="section-title section-title--sub">Faction Leaders</h3>
-                    <ResultsList cards={factionLeaderSections.leaders} />
-                  </>
-                )}
-              </section>
-            )}
-            {partitioned.promissory_note_general.length > 0 && (
-              <section className="results-section" aria-label="Promissory Notes (General)">
-                <h2 className="section-title">Promissory Notes (General)</h2>
-                <ResultsList cards={partitioned.promissory_note_general} />
-              </section>
-            )}
-            {partitioned.promissory_note_faction.length > 0 && (
-              <section className="results-section" aria-label="Faction Promissory Notes">
-                <h2 className="section-title">Faction Promissory Notes</h2>
-                <ResultsList cards={partitioned.promissory_note_faction} />
-              </section>
-            )}
-            {partitioned.breakthrough.length > 0 && (
-              <section className="results-section" aria-label="Breakthroughs">
-                <h2 className="section-title">Breakthroughs</h2>
-                <ResultsList cards={partitioned.breakthrough} />
-              </section>
-            )}
-            {hasPublicObjectives && (
-              <section className="results-section" aria-label="Public Objectives">
-                <h2 className="section-title">Public Objectives</h2>
-                {publicObjectiveSections.stage1.length > 0 && (
-                  <>
-                    <h3 className="section-title section-title--sub">Stage 1</h3>
-                    <ResultsList cards={publicObjectiveSections.stage1} />
-                  </>
-                )}
-                {publicObjectiveSections.stage2.length > 0 && (
-                  <>
-                    <h3 className="section-title section-title--sub">Stage 2</h3>
-                    <ResultsList cards={publicObjectiveSections.stage2} />
-                  </>
-                )}
-              </section>
-            )}
-            {hasSecretObjectives && (
-              <section className="results-section" aria-label="Secret Objectives">
-                <h2 className="section-title">Secret Objectives</h2>
-                {secretObjectiveSections.secretStatus.length > 0 && (
-                  <>
-                    <h3 className="section-title section-title--sub">Status Phase</h3>
-                    <ResultsList cards={secretObjectiveSections.secretStatus} />
-                  </>
-                )}
-                {secretObjectiveSections.secretAction.length > 0 && (
-                  <>
-                    <h3 className="section-title section-title--sub">Action Phase</h3>
-                    <ResultsList cards={secretObjectiveSections.secretAction} />
-                  </>
-                )}
-                {secretObjectiveSections.secretAgenda.length > 0 && (
-                  <>
-                    <h3 className="section-title section-title--sub">Agenda Phase</h3>
-                    <ResultsList cards={secretObjectiveSections.secretAgenda} />
-                  </>
-                )}
-              </section>
-            )}
-            {(agendaSections.law.length > 0 || agendaSections.directive.length > 0 || agendaSections.edict.length > 0) && (
-              <section className="results-section" aria-label={isTwilightsFall ? 'Edicts' : 'Agendas'}>
-                <h2 className="section-title">{isTwilightsFall ? 'Edicts' : 'Agendas'}</h2>
-                {agendaSections.law.length > 0 && (
-                  <>
-                    <h3 className="section-title section-title--sub">Laws</h3>
-                    <ResultsList cards={agendaSections.law} />
-                  </>
-                )}
-                {agendaSections.directive.length > 0 && (
-                  <>
-                    <h3 className="section-title section-title--sub">Directives</h3>
-                    <ResultsList cards={agendaSections.directive} />
-                  </>
-                )}
-                {agendaSections.edict.length > 0 && (
-                  <>
-                    <h3 className="section-title section-title--sub">Edicts</h3>
-                    <ResultsList cards={agendaSections.edict} />
-                  </>
-                )}
-              </section>
-            )}
-            {partitioned.action.length > 0 && (
-              <section className="results-section" aria-label="Action Cards">
-                <h2 className="section-title">Action Cards</h2>
-                <ResultsList cards={partitioned.action} />
-              </section>
-            )}
-            {partitioned.legendary_planet.length > 0 && (
-              <section className="results-section" aria-label="Legendary Planets">
-                <h2 className="section-title">Legendary Planets</h2>
-                <ResultsList cards={partitioned.legendary_planet} />
-              </section>
-            )}
-            {partitioned.exploration.length > 0 && (
-              <section className="results-section" aria-label="Exploration">
-                <h2 className="section-title">Exploration</h2>
-                <ResultsList cards={partitioned.exploration} />
-              </section>
-            )}
-            {partitioned.relic.length > 0 && (
-              <section className="results-section" aria-label="Relics">
-                <h2 className="section-title">Relics</h2>
-                <ResultsList cards={partitioned.relic} />
-              </section>
-            )}
-            {partitioned.galactic_event.length > 0 && (
-              <section className="results-section" aria-label="Galactic Events">
-                <h2 className="section-title">Galactic Events</h2>
-                <ResultsList cards={partitioned.galactic_event} />
-              </section>
-            )}
-            {partitioned.faction_card.length > 0 && (
-              <section className="results-section" aria-label="Faction Cards">
-                <h2 className="section-title">Faction Cards</h2>
-                <ResultsList cards={partitioned.faction_card} />
-              </section>
-            )}
+            <ProgressiveSections sections={querySections} resetKey={debouncedQuery} />
             {results.length === 0 && (
               <p className="results-message">No results found.</p>
             )}
