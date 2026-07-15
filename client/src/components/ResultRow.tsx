@@ -256,7 +256,7 @@ function CardFooter({ card }: { card: CardItem }) {
       {imageIds.length > 0 && (
         <span className="result-row__images">
           {imageIds.map((id) => (
-            <img key={id} src={`${IMAGES_BASE}/${id}.png`} alt="" className="result-row__icon" />
+            <img key={id} src={`${IMAGES_BASE}/${id}.png`} alt="" className="result-row__icon" loading="lazy" decoding="async" />
           ))}
         </span>
       )}
@@ -522,7 +522,7 @@ export function ResultRow({ card }: ResultRowProps) {
             <p className="result-row__label">Synergy</p>
             <span className="result-row__prerequisites">
               {synergyIds.map((id, i) => (
-                <img key={`${id}-${i}`} src={`${IMAGES_BASE}/${id}.png`} alt={`${id} technology`} className="result-row__icon" />
+                <img key={`${id}-${i}`} src={`${IMAGES_BASE}/${id}.png`} alt={`${id} technology`} className="result-row__icon" loading="lazy" decoding="async" />
               ))}
             </span>
           </>
@@ -550,7 +550,7 @@ export function ResultRow({ card }: ResultRowProps) {
             <p className="result-row__label">Prerequisites:</p>
             <span className="result-row__prerequisites">
               {prereqIds.map((id, i) => (
-                <img key={`${id}-${i}`} src={`${IMAGES_BASE}/${id}.png`} alt={`${id} technology prerequisite`} className="result-row__icon" />
+                <img key={`${id}-${i}`} src={`${IMAGES_BASE}/${id}.png`} alt={`${id} technology prerequisite`} className="result-row__icon" loading="lazy" decoding="async" />
               ))}
             </span>
           </>
