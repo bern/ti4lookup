@@ -4,6 +4,7 @@ import type { Faction } from '../data/loadCards'
 const IMAGES_BASE = import.meta.env.BASE_URL + 'images'
 const COPY_ICON_SRC = import.meta.env.BASE_URL + 'svg/copy.svg'
 const COPY_ICON_DARK_SRC = import.meta.env.BASE_URL + 'svg/copy_dark.svg'
+const COPY_ATTRIBUTION = '(🔍 via ti4lookup.com)'
 
 interface FactionSetupCardProps {
   faction: Faction
@@ -45,7 +46,8 @@ function FactionCopyButton({ faction, isTwilightsFall }: { faction: Faction; isT
   }, [copied])
   const handleClick = useCallback(async () => {
     try {
-      await navigator.clipboard.writeText(getFactionSetupCopyText(faction, isTwilightsFall))
+      const text = getFactionSetupCopyText(faction, isTwilightsFall)
+      await navigator.clipboard.writeText(`${text}\n\n${COPY_ATTRIBUTION}`)
       setCopied(true)
     } catch {
       /* ignore */

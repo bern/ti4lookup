@@ -4,6 +4,7 @@ import type { CardItem } from '../types'
 const IMAGES_BASE = import.meta.env.BASE_URL + 'images'
 const COPY_ICON_SRC = import.meta.env.BASE_URL + 'svg/copy.svg'
 const COPY_ICON_DARK_SRC = import.meta.env.BASE_URL + 'svg/copy_dark.svg'
+const COPY_ATTRIBUTION = '(🔍 via ti4lookup.com)'
 
 /** Join non-empty strings with double newlines. */
 function joinSections(...parts: (string | undefined)[]): string {
@@ -145,7 +146,7 @@ function CopyButton({ card }: { card: CardItem }) {
   const handleClick = useCallback(async () => {
     const text = getCardCopyText(card)
     try {
-      await navigator.clipboard.writeText(text)
+      await navigator.clipboard.writeText(`${text}\n\n${COPY_ATTRIBUTION}`)
       setCopied(true)
     } catch {
       /* ignore */
