@@ -880,6 +880,18 @@ body {
 
 .results-list__item {
   margin-bottom: 0.75rem;
+  /*
+   * Only render rows in/near the viewport. Off-screen rows skip layout, paint,
+   * and image decode until scrolled to (native "infinite scroll"). The browser
+   * remembers each row's real height after first render (the `auto` keyword);
+   * 160px is only the pre-render estimate used to size the scrollbar.
+   */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 160px;
+}
+
+.results-sentinel {
+  min-height: 1px;
 }
 
 .result-row {
