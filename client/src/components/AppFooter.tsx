@@ -26,7 +26,13 @@ export function AppFooter({ theme, onThemeChange }: AppFooterProps) {
           target="_blank"
           rel="noopener noreferrer"
           className="app-footer__link"
-        >scharney</a>
+        >scharney</a>,{' '}
+        <a
+          href="https://github.com/ben-phillips"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="app-footer__link"
+        >ben-phillips</a>
       </p>
       <p className="app-footer__text">
         Have requests or spot a typo? Let me know by opening an{' '}
