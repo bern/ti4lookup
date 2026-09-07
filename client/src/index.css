@@ -101,7 +101,7 @@
 
 [data-theme='norr'] body {
   background-image:
-    radial-gradient(ellipse at 70% 0, transparent 60%, rgba(201, 216, 93, 0.02) 66%, transparent 70%);
+    radial-gradient(ellipse at 70% 0, transparent 60%, rgba(201, 216, 93, 0.01) 66%, transparent 70%);
   background-position: 0 0;
   background-size: 64px 42px;
   background-attachment: fixed;
