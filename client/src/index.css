@@ -99,6 +99,14 @@
   --shadow-focus: 0 0 0 2px rgba(224, 135, 114, 0.35);
 }
 
+[data-theme='norr'] body {
+  background-image:
+    radial-gradient(ellipse at 70% 0, transparent 60%, rgba(201, 216, 93, 0.02) 66%, transparent 70%);
+  background-position: 0 0;
+  background-size: 64px 42px;
+  background-attachment: fixed;
+}
+
 [data-theme='norr'] .result-row,
 [data-theme='norr'] .home-category-btn {
   box-shadow:
