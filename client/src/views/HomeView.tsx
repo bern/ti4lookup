@@ -4,6 +4,7 @@ import { FactionGridItem } from '../components/FactionGridItem'
 import { partitionByType } from '../search/useFuseSearch'
 import type { CardItem } from '../types'
 import type { ExpansionId } from '../components/ExpansionSelector'
+import { locationToPath } from '../routes'
 
 const FACTION_PORTRAITS_STORAGE_KEY = 'ti4lookup-faction-portraits'
 
@@ -95,16 +96,31 @@ export function HomeView({ factions, priorityFactions, cards, expansions, onOpen
           .sort((a, b) => (categoryHasCards(a.view) === categoryHasCards(b.view) ? 0 : categoryHasCards(a.view) ? -1 : 1))
           .map(({ view, label }) => {
             const hasCards = categoryHasCards(view)
+            if (!hasCards) {
+              return (
+                <button
+                  key={view}
+                  type="button"
+                  className="home-category-btn"
+                  disabled
+                >
+                  {label}
+                </button>
+              )
+            }
             return (
-              <button
+              <a
                 key={view}
-                type="button"
                 className="home-category-btn"
-                disabled={!hasCards}
-                onClick={() => onOpenCategory(view)}
+                href={locationToPath({ view, factionFilter: null })}
+                onClick={(event) => {
+                  if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
+                  event.preventDefault()
+                  onOpenCategory(view)
+                }}
               >
                 {label}
-              </button>
+              </a>
             )
           })}
       </nav>

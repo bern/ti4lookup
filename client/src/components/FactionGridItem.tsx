@@ -1,4 +1,5 @@
 import type { Faction } from '../data/loadCards'
+import { locationToPath } from '../routes'
 
 const IMAGES_BASE = import.meta.env.BASE_URL + 'images'
 
@@ -15,10 +16,14 @@ export function FactionGridItem({ faction, portraitMode, onOpenFaction }: Factio
 
   return (
     <div className="faction-grid__item">
-      <button
-        type="button"
+      <a
         className={`faction-grid__btn ${portraitMode ? 'faction-grid__btn--portrait' : 'faction-grid__btn--symbol'}`}
-        onClick={() => onOpenFaction(faction.id)}
+        href={locationToPath({ view: 'search', factionFilter: faction.id })}
+        onClick={(event) => {
+          if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
+          event.preventDefault()
+          onOpenFaction(faction.id)
+        }}
         aria-label={`View cards for ${faction.name}`}
       >
         {portraitMode ? (
@@ -39,7 +44,7 @@ export function FactionGridItem({ faction, portraitMode, onOpenFaction }: Factio
             </span>
           </>
         )}
-      </button>
+      </a>
       {portraitMode && <span className="faction-grid__label faction-grid__label--below">{faction.name}</span>}
     </div>
   )

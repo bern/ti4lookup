@@ -245,13 +245,7 @@ export function App() {
 
   useEffect(() => {
     const state = pathToLocation(window.location.pathname)
-    if (state.view !== 'home') {
-      // Insert home into history so back from a direct deep link goes to root
-      window.history.replaceState(HOME_STATE, '', locationToPath(HOME_STATE))
-      window.history.pushState(state, '', locationToPath(state))
-    } else {
-      window.history.replaceState(state, '', locationToPath(state))
-    }
+    window.history.replaceState(state, '', locationToPath(state))
     setLocation(state)
   }, [])
 
@@ -440,14 +434,14 @@ export function App() {
           techNameToColor={techNameToColor}
           isTwilightsFall={expansions.has('twilightsFall')}
           onAddRecent={onAddRecent}
-          onBack={() => window.history.back()}
+          onBack={goHome}
         />
       )}
       {(location.view === 'action' || location.view === 'agenda' || location.view === 'strategy' || location.view === 'public_objective' || location.view === 'secret_objective' || location.view === 'legendary_planet' || location.view === 'exploration' || location.view === 'relic' || location.view === 'faction_ability' || location.view === 'faction_leader' || location.view === 'promissory_note' || location.view === 'breakthrough' || location.view === 'technology' || location.view === 'galactic_event' || location.view === 'unit') && (
         <CategoryView
           cards={filteredCards}
           category={location.view}
-          onBack={() => window.history.back()}
+          onBack={goHome}
           isTwilightsFall={expansions.has('twilightsFall')}
         />
       )}
